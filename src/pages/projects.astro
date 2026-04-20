@@ -1,0 +1,143 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MarqueeStrip from '../components/MarqueeStrip.astro';
+import CTASection from '../components/CTASection.astro';
+
+const timeline = [
+  { year: "2008", event: "TECIL Integrated Services Limited founded — begins operations in renewable energy sector" },
+  { year: "2014", event: "Completes first documented institutional projects — Cuso International & Chapel of Redemption, Unical" },
+  { year: "2015", event: "Delivers 80KVA combined inverter system for ASUU-Unical Chapter — 30 households" },
+  { year: "2016", event: "Completes NGN 27.5M solar street light project for Cross River Basin Development Authority" },
+  { year: "2018", event: "Landmark 60KW off-grid solar project for Biase Plantations (Wilmar) — NGN 48M" },
+  { year: "2019", event: "Expands to Uyo; delivers projects for Nigerian Navy, HIIT PLC (Abuja) subcontracts" },
+  { year: "2020", event: "Delivers for UCTH Radiology Dept, Eastern Naval Command, and two universities in Enugu State" },
+  { year: "2021", event: "Executes 6 corporate projects including Havilla University, Foresight High School, Old Netim Community" },
+  { year: "2022", event: "Major Uddyking Oil projects totalling NGN 40M+; Unical Microfinance Bank HQ — NGN 12M" },
+  { year: "2024", event: "Reaches 7 operational branches across 5 states; expands Lagos presence" },
+  { year: "2026", event: "Launches 2026 Brand Identity System; positions for EaaS and Training Institute development" },
+];
+
+const projects = [
+  { client: "Biase Plantations Ltd (Wilmar)", type: "60KW Solar + 72KVA Hybrid Inverters (Off-Grid)", value: "₦48M", date: "Apr 2018", tag: "Industrial" },
+  { client: "Cross River Basin Dev. Authority", type: "Solar Street Light Network", value: "₦27.5M", date: "Dec 2016", tag: "Infrastructure" },
+  { client: "Uddyking Oil Ltd (3 projects)", type: "20–30KVA Hybrid Systems + Lithium Batteries", value: "₦40M+", date: "2022", tag: "Commercial" },
+  { client: "Unical Microfinance Bank HQ", type: "15KVA Hybrid + 18KW Solar", value: "₦12M", date: "Apr 2022", tag: "Institutional" },
+  { client: "Mea Mater Elizabeth High School", type: "All-in-One Solar Street & Floodlights", value: "₦13M", date: "Nov 2020", tag: "Education" },
+  { client: "Renaissance University, Enugu", type: "Solar Street & Floodlights, Staff Quarters", value: "₦9M", date: "Oct 2020", tag: "Education" },
+  { client: "Happkings Hotel Ltd, Ikom", type: "25KVA Hybrid + 15KW Solar Backup", value: "₦9M", date: "Sep 2019", tag: "Hospitality" },
+  { client: "Cameroun Consulate, Calabar", type: "5KVA Hybrid Inverter + 12KW Solar", value: "₦6.5M", date: "May 2021", tag: "Diplomatic" },
+  { client: "Eastern Naval Command HQ", type: "4 × 5KVA Hybrid Backup Systems", value: "₦4M", date: "Jul 2020", tag: "Military" },
+  { client: "University of Calabar (CES Block)", type: "20KVA Solar Hybrid + 32 × 200AH Batteries", value: "₦7M", date: "Aug 2018", tag: "Education" },
+  { client: "Havilla University, Nde-Ikom", type: "3 × 5KVA Hybrid Systems + 3KW Solar Each", value: "₦7M", date: "Sep 2021", tag: "Education" },
+  { client: "ASUU Unical Chapter (30 units)", type: "80KVA Combined Inverter + 100 Batteries", value: "₦9.5M", date: "Oct 2015", tag: "Residential Estate" },
+];
+---
+
+<Layout title="Projects & Track Record — TECIL Solar" description="34+ documented corporate projects from 2014 to present. Hospitals, universities, military facilities, government agencies, industrial estates." page="projects">
+
+  <section class="page-hero">
+    <div class="ph-bg"></div>
+    <div class="ph-orb"></div>
+    <div class="container">
+      <span class="section-tag">Track Record</span>
+      <h1>34+ Projects. <span class="text-red-gradient">One Standard.</span></h1>
+      <p class="ph-sub">From a ₦4M military backup system to a ₦48M off-grid plantation installation — documented, commissioned, and delivered since 2014.</p>
+    </div>
+  </section>
+
+  <MarqueeStrip variant="red" />
+
+  <!-- Projects Table -->
+  <section class="projects-table-section dark-2-section section">
+    <div class="container">
+      <span class="section-tag">Corporate Portfolio</span>
+      <h2 style="color:#fff; margin-bottom: 3rem;">Selected Project <span class="text-red-gradient">Portfolio</span></h2>
+      <div class="table-wrap">
+        <table class="proj-table">
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Project Type</th>
+              <th>Sector</th>
+              <th>Value</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {projects.map((p, i) => (
+              <tr class={`reveal reveal-delay-${i % 4}`}>
+                <td class="td-client">{p.client}</td>
+                <td class="td-type">{p.type}</td>
+                <td><span class="td-tag">{p.tag}</span></td>
+                <td class="td-value">{p.value}</td>
+                <td class="td-date">{p.date}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">Note: Full portfolio includes 34+ documented corporate engagements from 2014 to 2024, plus a significantly larger body of residential and SME installations.</p>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="timeline-section dark-section section">
+    <div class="container">
+      <span class="section-tag">Company History</span>
+      <h2 style="color:#fff; margin-bottom: 3.5rem;">16+ Years of <span class="text-red-gradient">Milestones</span></h2>
+      <div class="timeline">
+        {timeline.map((t, i) => (
+          <div class={`tl-item reveal reveal-delay-${i % 3}`}>
+            <div class="tl-year">{t.year}</div>
+            <div class="tl-dot"></div>
+            <div class="tl-event">{t.event}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTASection />
+
+</Layout>
+
+<style>
+  .page-hero {
+    min-height: 40vh; background: #111;
+    display: flex; align-items: center;
+    padding: 120px 5% 80px;
+    position: relative; overflow: hidden;
+  }
+  .ph-bg { position: absolute; inset: 0; background-image: linear-gradient(rgba(204,20,23,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(204,20,23,0.04) 1px, transparent 1px); background-size: 64px 64px; }
+  .ph-orb { position: absolute; border-radius: 50%; filter: blur(80px); width: 500px; height: 500px; background: radial-gradient(circle, rgba(204,20,23,0.1) 0%, transparent 70%); top: -100px; right: -50px; }
+  .page-hero .container { position: relative; z-index: 1; }
+  .page-hero h1 { color: #fff; margin: 8px 0 16px; }
+  .ph-sub { font-size: 1.05rem; color: rgba(255,255,255,0.5); max-width: 560px; line-height: 1.75; }
+
+  .projects-table-section { background: #1A1A1A; }
+  .table-wrap { overflow-x: auto; }
+  .proj-table { width: 100%; border-collapse: collapse; }
+  .proj-table thead tr { background: #CC1417; }
+  .proj-table th { padding: 14px 18px; text-align: left; font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; }
+  .proj-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.2s; }
+  .proj-table tbody tr:hover { background: rgba(232,96,26,0.05); }
+  .proj-table td { padding: 16px 18px; font-size: 0.86rem; color: rgba(255,255,255,0.65); vertical-align: middle; }
+  .td-client { color: #fff !important; font-weight: 600; }
+  .td-type { color: rgba(255,255,255,0.5) !important; }
+  .td-tag { background: rgba(232,96,26,0.1); border: 1px solid rgba(232,96,26,0.2); color: #E8601A; font-size: 0.68rem; font-weight: 700; padding: 3px 8px; border-radius: 2px; white-space: nowrap; letter-spacing: 0.04em; text-transform: uppercase; }
+  .td-value { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 900; color: #CC1417 !important; }
+  .td-date { white-space: nowrap; color: rgba(255,255,255,0.35) !important; }
+  .table-note { font-size: 0.78rem; color: rgba(255,255,255,0.3); margin-top: 1.5rem; font-style: italic; }
+
+  .timeline-section { background: #111; }
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .tl-item {
+    display: grid; grid-template-columns: 80px 32px 1fr;
+    gap: 0 1.5rem; align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .tl-year { font-family: 'Barlow Condensed', sans-serif; font-size: 1.2rem; font-weight: 900; color: #E8601A; }
+  .tl-dot { width: 10px; height: 10px; background: #CC1417; border-radius: 50%; justify-self: center; flex-shrink: 0; box-shadow: 0 0 12px rgba(204,20,23,0.5); }
+  .tl-event { font-size: 0.92rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
+</style>

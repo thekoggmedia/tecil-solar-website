@@ -1,0 +1,344 @@
+/* ═══════════════════════════════════════════
+   TECIL SOLAR — GLOBAL BRAND STYLES
+   ...the inverter place
+═══════════════════════════════════════════ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── GOOGLE FONTS ── */
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ── CSS BRAND VARIABLES ── */
+:root {
+  /* Core Brand Colors — TECIL Solar 2026 */
+  --red:         #CC1417;
+  --red-dark:    #A30F11;
+  --red-glow:    rgba(204, 20, 23, 0.15);
+  --orange:      #E8601A;
+  --orange-soft: rgba(232, 96, 26, 0.12);
+  --gold:        #C8960C;
+  --teal:        #006D77;
+  --dark:        #111111;
+  --dark-2:      #1A1A1A;
+  --dark-3:      #242424;
+  --white:       #FFFFFF;
+  --cream:       #FFF0E6;
+  --gray:        #666666;
+  --gray-light:  #999999;
+  --border:      rgba(255,255,255,0.08);
+  --border-red:  rgba(204,20,23,0.25);
+  --border-orange: rgba(232,96,26,0.2);
+
+  /* Typography */
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body:    'Inter', sans-serif;
+
+  /* Spacing */
+  --section-pad: 7rem 5%;
+  --container:   1280px;
+
+  /* Transitions — same cubic-bezier as KOGG */
+  --ease: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── BASE RESET ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--dark);
+  color: var(--white);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── SELECTION ── */
+::selection {
+  background: var(--red);
+  color: var(--white);
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--dark-2); }
+::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--orange); }
+
+/* ── TYPOGRAPHY ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 1.0;
+  letter-spacing: 0.01em;
+}
+
+h1 { font-size: clamp(3rem, 8vw, 7rem); }
+h2 { font-size: clamp(2rem, 4.5vw, 3.5rem); }
+h3 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); }
+h4 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
+
+p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.8;
+}
+
+a {
+  color: var(--orange);
+  text-decoration: none;
+  transition: var(--ease);
+}
+
+/* ── UTILITIES ── */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+.section {
+  padding: var(--section-pad);
+}
+
+/* ── SECTION LABEL ── */
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--orange);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.section-tag::before {
+  content: '';
+  width: 28px;
+  height: 2px;
+  background: var(--orange);
+  flex-shrink: 0;
+}
+
+/* ── BUTTONS ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 14px 30px;
+  background: var(--red);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 2px solid var(--red);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: var(--ease);
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background: var(--red-dark);
+  border-color: var(--red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(204,20,23,0.35);
+  color: var(--white);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 14px 30px;
+  background: transparent;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: var(--ease);
+  text-decoration: none;
+}
+
+.btn-outline:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+  transform: translateY(-2px);
+}
+
+.btn-orange {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 14px 30px;
+  background: var(--orange);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 2px solid var(--orange);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: var(--ease);
+  text-decoration: none;
+}
+
+.btn-orange:hover {
+  background: transparent;
+  color: var(--orange);
+  transform: translateY(-2px);
+}
+
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 14px 24px;
+  background: rgba(37,211,102,0.08);
+  color: #25D366;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  border: 1px solid rgba(37,211,102,0.25);
+  border-radius: 3px;
+  text-decoration: none;
+  transition: var(--ease);
+}
+.btn-whatsapp:hover {
+  background: #25D366;
+  color: #fff;
+  border-color: #25D366;
+  transform: translateY(-2px);
+}
+
+/* ── CARDS ── */
+.card {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2rem;
+  transition: var(--ease);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--red), var(--orange));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+  border-color: var(--border-orange);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(232,96,26,0.08);
+  background: rgba(232,96,26,0.04);
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50%       { transform: translateY(-25px) scale(1.04); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(1.5); }
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50%       { opacity: 1; transform: scaleY(1.1); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes spinR {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+
+/* ── TEXT GRADIENT ── */
+.text-red-gradient {
+  background: linear-gradient(135deg, var(--red) 0%, var(--orange) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── DARK SECTION ── */
+.dark-section { background: var(--dark); }
+.dark-2-section { background: var(--dark-2); }
+.dark-3-section { background: var(--dark-3); }
+
+/* ── RESPONSIVE HELPERS ── */
+@media (max-width: 768px) {
+  :root { --section-pad: 5rem 5%; }
+  h1 { font-size: clamp(2.8rem, 12vw, 4.5rem); }
+}

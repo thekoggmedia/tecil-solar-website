@@ -1,0 +1,140 @@
+---
+const audiences = [
+  {
+    type: "For Homeowners",
+    icon: "🏠",
+    headline: "Stop Paying for Generator Fuel Every Month.",
+    body: "TECIL Solar systems are designed for the Nigerian home — built to handle your load, survive our weather, and last for years. We've been doing this since 2008. Your neighbours will notice.",
+    color: "red",
+  },
+  {
+    type: "For Business Owners",
+    icon: "🏪",
+    headline: "Downtime Costs Money.",
+    body: "A properly specified TECIL Solar system keeps your business running when the grid doesn't — and pays for itself faster than you think. Talk to us about the numbers.",
+    color: "orange",
+  },
+  {
+    type: "For Institutions & Government",
+    icon: "🏛",
+    headline: "Credentials, Track Record, Technical Depth.",
+    body: "We've delivered for universities, hospitals, military facilities, consulates, and microfinance banks across Nigeria. We have the credentials, project history, and technical depth to meet your procurement standards.",
+    color: "teal",
+  },
+  {
+    type: "For Contractors & Developers",
+    icon: "🏗",
+    headline: "We Supply, Install, Commission — and Document Everything.",
+    body: "Need a reliable solar sub-contractor? Our project portfolio and 15+ brand partnerships speak for us. We document every job. Let's discuss your spec.",
+    color: "gold",
+  },
+];
+---
+
+<section class="audience-section dark-2-section section" id="audience">
+  <div class="container">
+
+    <div class="audience-header">
+      <span class="section-tag">Who We Serve</span>
+      <h2>A Solution for <span class="text-red-gradient">Every Client</span></h2>
+      <p class="audience-intro">
+        Whether you're a frustrated homeowner, an SME, a government institution, or a contractor —
+        TECIL Solar has been solving your energy problem since 2008.
+      </p>
+    </div>
+
+    <div class="audience-grid">
+      {audiences.map((a, i) => (
+        <div class={`audience-card aud-${a.color} reveal reveal-delay-${i}`}>
+          <div class="aud-type">
+            <span class="aud-icon">{a.icon}</span>
+            {a.type}
+          </div>
+          <h3 class="aud-headline">{a.headline}</h3>
+          <p class="aud-body">{a.body}</p>
+          <a href="/contact" class="aud-link">
+            Talk to us
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .audience-section { background: #1A1A1A; }
+
+  .audience-header { text-align: center; margin-bottom: 4rem; }
+  .audience-header h2 { color: #fff; margin-bottom: 1rem; }
+  .audience-intro { max-width: 540px; margin: 0 auto; color: rgba(255,255,255,0.5); }
+
+  .audience-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+
+  .audience-card {
+    padding: 3rem;
+    border: 1px solid rgba(255,255,255,0.05);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .audience-card:hover { transform: translateY(-3px); filter: brightness(1.08); }
+
+  .aud-red   { background: rgba(204,20,23,0.07); }
+  .aud-orange{ background: rgba(232,96,26,0.07); }
+  .aud-teal  { background: rgba(0,109,119,0.07); }
+  .aud-gold  { background: rgba(200,150,12,0.07); }
+
+  .aud-type {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .aud-red .aud-type   { color: #CC1417; }
+  .aud-orange .aud-type{ color: #E8601A; }
+  .aud-teal .aud-type  { color: #006D77; }
+  .aud-gold .aud-type  { color: #C8960C; }
+
+  .aud-icon { font-size: 1rem; }
+
+  .aud-headline {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+    font-weight: 900; text-transform: uppercase;
+    color: #ffffff; line-height: 1.05;
+  }
+
+  .aud-body {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.75;
+    font-style: italic;
+    flex: 1;
+  }
+
+  .aud-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    text-decoration: none;
+    transition: gap 0.2s ease;
+  }
+  .aud-link:hover { gap: 10px; }
+  .aud-red .aud-link   { color: #CC1417; }
+  .aud-orange .aud-link{ color: #E8601A; }
+  .aud-teal .aud-link  { color: #006D77; }
+  .aud-gold .aud-link  { color: #C8960C; }
+
+  @media (max-width: 768px) {
+    .audience-grid { grid-template-columns: 1fr; }
+    .audience-card { padding: 2rem; }
+  }
+</style>

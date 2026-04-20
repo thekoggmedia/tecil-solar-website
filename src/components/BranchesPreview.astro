@@ -1,0 +1,140 @@
+---
+const branches = [
+  { name: "Calabar HQ", state: "Cross River State", address: "Macson Plaza, 89 Ndidem Usang Iso Road, Calabar", tel: "0803 713 5545", hq: true },
+  { name: "Calabar South", state: "Cross River State", address: "6 Target Road, Calabar South", tel: "0907 124 2120" },
+  { name: "Ikom", state: "Cross River State", address: "16 Obudu Road, Four Corners, Ikom", tel: "0803 560 1371" },
+  { name: "Port Harcourt 1", state: "Rivers State", address: "Riz Plaza, Plot 54 Stadium Road, PH", tel: "0701 616 4397" },
+  { name: "Port Harcourt 2", state: "Rivers State", address: "18 Ogbunabali Road, Port Harcourt", tel: "0701 616 4397" },
+  { name: "Uyo", state: "Akwa Ibom State", address: "109 Oron Road, Uyo", tel: "0812 113 8060" },
+  { name: "Lagos / Ikeja", state: "Lagos State", address: "90 Obafemi Awolowo Way, Ikeja, Lagos", tel: "0802 683 5985" },
+];
+---
+
+<section class="branches-section dark-2-section section" id="branches">
+  <div class="container">
+
+    <div class="branches-header">
+      <div>
+        <span class="section-tag">Find Us</span>
+        <h2>7 Branches. <span class="text-red-gradient">5 States.</span> One Standard.</h2>
+      </div>
+      <a href="/branches" class="btn-outline">
+        View All Branches
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="branches-grid">
+      {branches.map((b, i) => (
+        <div class={`branch-card reveal reveal-delay-${i % 4}`}>
+          {b.hq && <span class="hq-badge">HQ</span>}
+          <div class="b-state">{b.state}</div>
+          <div class="b-name">{b.name}</div>
+          <div class="b-address">{b.address}</div>
+          <a href={`tel:+234${b.tel.replace(/\s/g,'').slice(1)}`} class="b-tel">{b.tel}</a>
+        </div>
+      ))}
+      <div class="branch-card branch-expand reveal reveal-delay-3">
+        <div class="be-icon">📍</div>
+        <div class="be-title">Expanding Further</div>
+        <div class="be-sub">Growing West Africa presence</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .branches-section { background: #1A1A1A; }
+
+  .branches-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem;
+  }
+  .branches-header h2 { color: #fff; }
+
+  .branches-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .branch-card {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 1.75rem 1.5rem;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  }
+  .branch-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, #CC1417, #E8601A);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .branch-card:hover {
+    background: rgba(232,96,26,0.06);
+    border-color: rgba(232,96,26,0.2);
+    transform: translateY(-3px);
+  }
+  .branch-card:hover::before { transform: scaleX(1); }
+
+  .hq-badge {
+    position: absolute; top: 10px; right: 12px;
+    background: #CC1417; color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.58rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 3px 7px; border-radius: 2px;
+  }
+
+  .b-state {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: #E8601A; margin-bottom: 6px;
+  }
+  .b-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.15rem; font-weight: 800;
+    text-transform: uppercase; color: #fff;
+    margin-bottom: 10px; line-height: 1.1;
+  }
+  .b-address {
+    font-size: 0.78rem; color: rgba(255,255,255,0.4);
+    line-height: 1.6; margin-bottom: 12px;
+  }
+  .b-tel {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem; font-weight: 600;
+    color: #E8601A; text-decoration: none;
+    transition: color 0.2s;
+  }
+  .b-tel:hover { color: #CC1417; }
+
+  .branch-expand {
+    background: rgba(232,96,26,0.04) !important;
+    border-color: rgba(232,96,26,0.12) !important;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 2rem 1rem;
+  }
+  .be-icon { font-size: 1.8rem; margin-bottom: 10px; }
+  .be-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem; font-weight: 800;
+    text-transform: uppercase; color: #E8601A; margin-bottom: 4px;
+  }
+  .be-sub { font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+
+  @media (max-width: 1100px) {
+    .branches-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .branches-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .branches-grid { grid-template-columns: 1fr; }
+  }
+</style>

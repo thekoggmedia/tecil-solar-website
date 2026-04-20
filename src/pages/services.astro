@@ -1,0 +1,171 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MarqueeStrip from '../components/MarqueeStrip.astro';
+import CTASection from '../components/CTASection.astro';
+
+const services = [
+  {
+    id: "installation",
+    num: "01",
+    title: "Professional System Installation",
+    body: "End-to-end installation of solar power systems, inverter backup systems, and hybrid configurations for residential, commercial, and institutional clients. All installations are documented with commissioning reports and system performance baselines.",
+    detail: ["Site survey & load analysis", "Custom system design", "Professional installation by certified technicians", "Full commissioning & performance testing", "Signed commissioning report provided", "Post-installation walkthrough & handover"],
+    icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+  },
+  {
+    id: "maintenance",
+    num: "02",
+    title: "Maintenance & Repair",
+    body: "Scheduled preventive maintenance programmes and reactive repair services for all TECIL Solar-installed systems and third-party solar/inverter installations. Service Level Agreements (SLAs) available for commercial and institutional clients.",
+    detail: ["Scheduled preventive maintenance visits", "Reactive repair & fault resolution", "Battery health assessments", "Inverter servicing & firmware updates", "SLAs: 24hr commercial / 48hr residential", "Third-party system servicing accepted"],
+    icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+  },
+  {
+    id: "assessment",
+    num: "03",
+    title: "Load Assessment & Technical Advisory",
+    body: "Pre-installation energy audits and load assessments to ensure right-sizing of systems. Includes ROI analysis, system design recommendations, and brand-neutral product advice for clients sourcing independently.",
+    detail: ["Full energy audit & load profiling", "Right-sizing calculations", "ROI & payback period analysis", "System design & spec documentation", "Brand-neutral product recommendations", "Advisory for independent sourcers"],
+    icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`,
+  },
+  {
+    id: "training",
+    num: "04",
+    title: "Training & Capacity Building",
+    body: "TECIL Solar operates a training unit delivering solar/inverter design, installation, and maintenance courses to both internal technical staff and external participants — including TVET students, building contractors, and RE entrepreneurs. In 2026, evolving into the TECIL Solar Training Institute.",
+    detail: ["Solar/inverter system design courses", "Installation & commissioning practicals", "Maintenance & troubleshooting training", "Open to external participants", "TVET & contractor programmes", "2026: TECIL Solar Training Institute launch"],
+    icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+  },
+  {
+    id: "projects",
+    num: "05",
+    title: "Large-Scale EPC Projects",
+    body: "Under the TECIL Solar Projects sub-brand — full Engineering, Procurement and Construction for government, institutional, and industrial clients. We supply, install, and commission with full documentation and project management.",
+    detail: ["Full EPC delivery", "Government & institutional procurement ready", "Project management & site supervision", "Bill of Quantities (BOQ) documentation", "Commissioning reports & SLA handover", "34+ documented corporate projects"],
+    icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
+  },
+  {
+    id: "eaas",
+    num: "06",
+    title: "Energy-as-a-Service (EaaS) — Pipeline",
+    body: "TECIL Solar is developing structured energy-as-a-service offerings for SMEs and commercial landlords — enabling clients to access solar power without upfront capital outlay, in exchange for a monthly service or energy fee. In partnership with financing institutions.",
+    detail: ["No upfront capital required", "Monthly service or energy fee model", "Designed for SMEs & commercial landlords", "In partnership with financing institutions", "Currently in pipeline — register interest", "2026–2028 rollout target"],
+    icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+  },
+];
+---
+
+<Layout title="Services — TECIL Solar" description="End-to-end solar energy services: installation, maintenance, load assessment, training, EPC projects, and Energy-as-a-Service." page="services">
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="ph-bg"></div>
+    <div class="ph-orb ph-orb-1"></div>
+    <div class="container">
+      <span class="section-tag">What We Do</span>
+      <h1>Our <span class="text-red-gradient">Services</span></h1>
+      <p class="ph-sub">End-to-end renewable energy solutions — from a single home system to a 60KW off-grid industrial project. We handle everything in-house.</p>
+    </div>
+  </section>
+
+  <MarqueeStrip variant="red" />
+
+  <!-- Services List -->
+  <section class="services-full dark-2-section section">
+    <div class="container">
+      {services.map((s, i) => (
+        <div id={s.id} class={`sf-item reveal ${i % 2 === 1 ? 'sf-flip' : ''}`}>
+          <div class="sf-icon-col">
+            <div class="sf-icon-wrap">
+              <span set:html={s.icon} />
+            </div>
+            <div class="sf-num">{s.num}</div>
+          </div>
+          <div class="sf-content">
+            <h2 class="sf-title">{s.title}</h2>
+            <p class="sf-body">{s.body}</p>
+            <ul class="sf-list">
+              {s.detail.map(d => <li>{d}</li>)}
+            </ul>
+            <a href="/contact" class="btn-primary sf-btn">Enquire About This Service</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <CTASection />
+
+</Layout>
+
+<style>
+  .page-hero {
+    min-height: 40vh;
+    background: #111;
+    display: flex; align-items: center;
+    padding: 120px 5% 80px;
+    position: relative; overflow: hidden;
+  }
+  .ph-bg {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(204,20,23,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(204,20,23,0.04) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+  .ph-orb {
+    position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none;
+  }
+  .ph-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(204,20,23,0.1) 0%, transparent 70%); top: -100px; right: -50px; }
+  .page-hero .container { position: relative; z-index: 1; }
+  .page-hero h1 { color: #fff; margin: 8px 0 16px; }
+  .ph-sub { font-size: 1.05rem; color: rgba(255,255,255,0.5); max-width: 560px; line-height: 1.75; }
+
+  .sf-item {
+    display: grid; grid-template-columns: 160px 1fr;
+    gap: 4rem; align-items: start;
+    padding: 4rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .sf-item:last-child { border-bottom: none; }
+
+  .sf-icon-col { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+  .sf-icon-wrap {
+    width: 80px; height: 80px;
+    background: rgba(204,20,23,0.1);
+    border: 1px solid rgba(204,20,23,0.25);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    color: #CC1417;
+  }
+  .sf-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 4rem; font-weight: 900;
+    color: rgba(255,255,255,0.04); line-height: 1;
+  }
+
+  .sf-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 900; text-transform: uppercase;
+    color: #fff; margin-bottom: 1rem;
+  }
+  .sf-body { color: rgba(255,255,255,0.6); margin-bottom: 1.5rem; line-height: 1.8; }
+  .sf-list {
+    list-style: none; display: grid;
+    grid-template-columns: 1fr 1fr; gap: 8px 2rem;
+    margin-bottom: 2rem;
+  }
+  .sf-list li {
+    font-size: 0.88rem; color: rgba(255,255,255,0.55);
+    padding-left: 16px; position: relative; line-height: 1.5;
+  }
+  .sf-list li::before {
+    content: '→'; position: absolute; left: 0;
+    color: #E8601A; font-size: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .sf-item { grid-template-columns: 1fr; gap: 2rem; }
+    .sf-icon-col { flex-direction: row; }
+    .sf-list { grid-template-columns: 1fr; }
+  }
+</style>
