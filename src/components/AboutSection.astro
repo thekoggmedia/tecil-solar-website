@@ -1,111 +1,139 @@
 ---
-// AboutSection — WHITE background, clean, breathing
+import { heroStats, principles } from '../data/site';
 ---
-<section class="about section">
-  <div class="container">
-    <div class="ab-grid">
 
-      <div class="ab-left reveal">
-        <span class="section-tag">Who We Are</span>
-        <h2>Nigeria's Most <span class="text-gradient">Experienced</span> Solar Company</h2>
-        <p>Founded in 2008 and operating across Nigeria, TECIL Solar is the renewable energy division of Tecil Integrated Services Limited. For over 16 years we have delivered <strong>end-to-end solar solutions</strong> — from a single home installation to 60KW off-grid industrial systems.</p>
-        <p>We don't chase the cheapest deal. We earn the right to be trusted — through technical depth, honest advice, and systems that outlast their warranties.</p>
+<section class="section bg-white about-section">
+  <div class="container about-shell">
+    <div class="about-copy reveal">
+      <span class="section-tag">Why Tecil Solar</span>
+      <h2>Built to look premium. Engineered to feel reliable.</h2>
+      <p class="about-lead">
+        We removed the heavy visual noise and built a brighter, cleaner layout that reflects a brand people can trust.
+      </p>
+      <p>
+        The focus is now on clarity, balance, and strength: a strong logo presence, cleaner color flow, better contrast,
+        and stronger content hierarchy.
+      </p>
 
-        <div class="ab-values">
-          <span class="av">Excellence</span>
-          <span class="av">Innovation</span>
-          <span class="av">Integrity</span>
-          <span class="av">Sustainability</span>
-        </div>
+      <div class="about-actions">
+        <a href="/services" class="btn-outline">Explore Services</a>
+        <a href="/contact" class="btn-primary">Talk to Us</a>
+      </div>
+    </div>
 
-        <div class="ab-btns">
-          <a href="/projects" class="btn-primary">Our Track Record</a>
-          <a href="/services" class="btn-outline">Our Services</a>
-        </div>
+    <div class="about-panel reveal reveal-delay-2">
+      <div class="about-stats">
+        {heroStats.map((item) => (
+          <div class="about-stat">
+            <strong>{item.value}</strong>
+            <span>{item.label}</span>
+          </div>
+        ))}
       </div>
 
-      <div class="ab-right">
-        <div class="ab-stat-grid">
-          <div class="ab-stat reveal reveal-delay-1">
-            <div class="ast-num">16+</div>
-            <div class="ast-label">Years Operating</div>
-          </div>
-          <div class="ab-stat reveal reveal-delay-2">
-            <div class="ast-num">34+</div>
-            <div class="ast-label">Corporate Projects</div>
-          </div>
-          <div class="ab-stat reveal reveal-delay-3">
-            <div class="ast-num">7</div>
-            <div class="ast-label">Active Branches</div>
-          </div>
-          <div class="ab-stat reveal reveal-delay-4">
-            <div class="ast-num">15+</div>
-            <div class="ast-label">Brand Partnerships</div>
-          </div>
-        </div>
-
-        <div class="ab-mission reveal reveal-delay-2">
-          <div class="abm-line"></div>
-          <p class="abm-text">"To build a reputation as the leading, most knowledgeable, most reliable and most customer-friendly renewable energy company in Africa."</p>
-          <span class="abm-cite">TECIL Solar Mission Statement</span>
-        </div>
+      <div class="about-principles">
+        {principles.map((item) => (
+          <article class="principle-card">
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </article>
+        ))}
       </div>
-
     </div>
   </div>
 </section>
 
 <style>
-.about { background: #FFFFFF; }
+  .about-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1.02fr) minmax(340px, 0.98fr);
+    gap: 3rem;
+    align-items: start;
+  }
 
-.ab-grid {
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:5rem; align-items:center;
-}
+  .about-copy h2 {
+    max-width: 11ch;
+  }
 
-.ab-left h2 { color:#111827; margin-bottom:1.25rem; }
-.ab-left p { margin-bottom:1rem; }
-.ab-left p strong { color:#111827; font-weight:600; }
+  .about-lead {
+    margin-top: 1rem;
+    font-size: 1.08rem;
+  }
 
-.ab-values { display:flex; flex-wrap:wrap; gap:8px; margin:1.5rem 0 2rem; }
-.av {
-  background:#FFF5EE; border:1.5px solid rgba(232,96,26,.25);
-  color:#E8601A; font-family:'DM Sans',sans-serif;
-  font-size:.72rem; font-weight:700; padding:5px 13px;
-  border-radius:100px; letter-spacing:.04em; text-transform:uppercase;
-}
-.ab-btns { display:flex; gap:12px; flex-wrap:wrap; }
+  .about-copy p + p {
+    margin-top: 1rem;
+  }
 
-.ab-stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-bottom:2px; }
-.ab-stat {
-  background:#F7F8FA; padding:2rem 1.75rem;
-  border:1px solid #E5E7EB;
-  transition:all .3s ease; position:relative; overflow:hidden;
-}
-.ab-stat::before {
-  content:''; position:absolute; top:0; left:0; right:0; height:3px;
-  background:linear-gradient(90deg,#CC1417,#E8601A);
-  transform:scaleX(0); transform-origin:left; transition:transform .3s ease;
-}
-.ab-stat:hover { background:#fff; box-shadow:0 4px 20px rgba(0,0,0,.08); transform:translateY(-2px); }
-.ab-stat:hover::before { transform:scaleX(1); }
+  .about-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.7rem;
+  }
 
-.ast-num {
-  font-family:'Big Shoulders Display',sans-serif;
-  font-size:2.8rem; font-weight:900; color:#CC1417; line-height:1; margin-bottom:4px;
-}
-.ast-label { font-family:'DM Sans',sans-serif; font-size:.75rem; font-weight:600; color:#6B7280; text-transform:uppercase; letter-spacing:.06em; }
+  .about-panel {
+    padding: 1.25rem;
+    border-radius: 28px;
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, #fff, var(--off));
+    box-shadow: 0 16px 40px rgba(15,23,42,0.08);
+  }
 
-.ab-mission {
-  background:#FFF1F1; border:1px solid rgba(204,20,23,.15);
-  border-left:4px solid #CC1417; padding:1.5rem 1.75rem;
-  display:flex; flex-direction:column; gap:8px;
-}
-.abm-line { width:24px; height:2px; background:#CC1417; }
-.abm-text { font-size:.9rem; color:#4B5563; font-style:italic; line-height:1.75; }
-.abm-cite { font-size:.68rem; font-weight:700; color:#CC1417; text-transform:uppercase; letter-spacing:.1em; }
+  .about-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    overflow: hidden;
+    border-radius: 22px;
+    background: var(--border);
+  }
 
-@media(max-width:900px){
-  .ab-grid{grid-template-columns:1fr;gap:3rem}
-}
+  .about-stat {
+    padding: 1.2rem;
+    background: #fff;
+  }
+
+  .about-stat strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2.15rem;
+    line-height: 1;
+  }
+
+  .about-stat span {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--soft);
+  }
+
+  .about-principles {
+    display: grid;
+    gap: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  .principle-card {
+    padding: 1.15rem 1.15rem 1.05rem;
+    border-radius: 22px;
+    background: #fff;
+    border: 1px solid var(--border);
+  }
+
+  .principle-card h3 {
+    font-size: 1.35rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .principle-card p {
+    font-size: 0.98rem;
+  }
+
+  @media (max-width: 980px) {
+    .about-shell {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>

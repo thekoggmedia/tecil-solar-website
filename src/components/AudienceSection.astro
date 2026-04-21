@@ -1,84 +1,108 @@
 ---
-const cards = [
-  { icon:"🏠", type:"For Homeowners", headline:"Stop Paying for Generator Fuel.", body:"TECIL Solar systems are designed for the Nigerian home — built to handle your load, survive our weather, and last for years. Your neighbours will notice.", color:"red", href:"/contact" },
-  { icon:"🏪", type:"For Businesses", headline:"Downtime Costs Money.", body:"A properly specified TECIL Solar system keeps your business running when the grid doesn't — and pays for itself faster than you think. Talk to us about the numbers.", color:"orange", href:"/contact" },
-  { icon:"🏛", type:"For Institutions", headline:"Credentials. Track Record. Depth.", body:"Hospitals, universities, military facilities, consulates — we meet your procurement standards and have the project history to prove it.", color:"teal", href:"/contact" },
-  { icon:"🏗", type:"For Contractors", headline:"We Supply, Install & Document Everything.", body:"Need a reliable solar sub-contractor? Our portfolio and 15+ brand partnerships speak for us. Every job is fully documented at commissioning.", color:"gold", href:"/contact" },
-];
+import { audiences } from '../data/site';
 ---
-<section class="au section">
+
+<section class="section bg-white audience-section">
   <div class="container">
-    <div class="au-head reveal">
-      <span class="section-tag">Who We Serve</span>
-      <h2>One Company. <span class="text-gradient">Every Client Type.</span></h2>
-      <p class="au-sub">Whether you're a homeowner, an SME, a government institution, or a contractor — TECIL Solar has been solving your energy problem since 2008.</p>
+    <div class="section-head reveal">
+      <div>
+        <span class="section-tag">Who We Serve</span>
+        <h2>Clearer audience targeting makes the site feel stronger.</h2>
+      </div>
+      <p>
+        This section helps visitors quickly find themselves in the story and understand whether Tecil Solar is the right fit.
+      </p>
     </div>
-    <div class="au-grid">
-      {cards.map((c,i)=>(
-        <div class={`au-card ac-${c.color} reveal reveal-delay-${i}`}>
-          <div class="ac-top">
-            <span class="ac-icon">{c.icon}</span>
-            <span class={`ac-type at-${c.color}`}>{c.type}</span>
-          </div>
-          <h3 class="ac-headline">{c.headline}</h3>
-          <p class="ac-body">{c.body}</p>
-          <a href={c.href} class={`ac-link al-${c.color}`}>
-            Talk to us
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
+
+    <div class="audience-grid">
+      {audiences.map((item, index) => (
+        <article class:list={['audience-card', 'reveal', `reveal-delay-${(index % 5) + 1}`]}>
+          <span class="audience-kicker">0{index + 1}</span>
+          <h3>{item.title}</h3>
+          <p>{item.body}</p>
+          <ul>
+            {item.points.map((point) => <li>{point}</li>)}
+          </ul>
+        </article>
       ))}
     </div>
   </div>
 </section>
 
 <style>
-.au { background:#FFFFFF; }
+  .audience-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
 
-.au-head { text-align:center; margin-bottom:3rem; }
-.au-head h2 { color:#111827; margin-bottom:.75rem; }
-.au-sub { max-width:520px; margin:0 auto; color:#6B7280; }
+  .audience-card {
+    padding: 1.45rem;
+    border-radius: 28px;
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, #fff, #fcfcfd);
+    box-shadow: 0 12px 30px rgba(15,23,42,0.05);
+    position: relative;
+    overflow: hidden;
+  }
 
-.au-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.5px; }
+  .audience-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--red), var(--orange));
+  }
 
-.au-card {
-  padding:2.5rem; border:1px solid #E5E7EB;
-  transition:all .3s ease; position:relative;
-  display:flex; flex-direction:column; gap:.85rem;
-  background:#fff;
-}
-.ac-red   { border-top:3px solid #CC1417; }
-.ac-orange{ border-top:3px solid #E8601A; }
-.ac-teal  { border-top:3px solid #006D77; }
-.ac-gold  { border-top:3px solid #C8960C; }
+  .audience-card:nth-child(2)::before {
+    background: linear-gradient(90deg, var(--orange), #C8960C);
+  }
 
-.au-card:hover { box-shadow:0 12px 36px rgba(0,0,0,.09); transform:translateY(-3px); }
+  .audience-card:nth-child(3)::before {
+    background: linear-gradient(90deg, var(--teal), #6AC6D1);
+  }
 
-.ac-top { display:flex; align-items:center; gap:10px; }
-.ac-icon { font-size:1.2rem; }
-.ac-type { font-family:'DM Sans',sans-serif; font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
-.at-red   { color:#CC1417; }
-.at-orange{ color:#E8601A; }
-.at-teal  { color:#006D77; }
-.at-gold  { color:#C8960C; }
+  .audience-card:nth-child(4)::before {
+    background: linear-gradient(90deg, #0F1117, #394150);
+  }
 
-.ac-headline { font-family:'Big Shoulders Display',sans-serif; font-size:clamp(1.3rem,2.5vw,1.7rem); font-weight:900; text-transform:uppercase; color:#111827; line-height:1.1; }
-.ac-body  { font-size:.9rem; color:#6B7280; line-height:1.75; font-style:italic; flex:1; }
+  .audience-kicker {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    line-height: 1;
+    color: rgba(15,17,23,0.12);
+  }
 
-.ac-link {
-  display:inline-flex; align-items:center; gap:5px;
-  font-family:'DM Sans',sans-serif; font-size:.76rem; font-weight:700;
-  text-transform:uppercase; letter-spacing:.08em; text-decoration:none;
-  transition:gap .2s;
-}
-.ac-link:hover { gap:9px; }
-.al-red   { color:#CC1417; }
-.al-orange{ color:#E8601A; }
-.al-teal  { color:#006D77; }
-.al-gold  { color:#C8960C; }
+  .audience-card h3 {
+    font-size: 1.5rem;
+  }
 
-@media(max-width:768px){
-  .au-grid{ grid-template-columns:1fr; }
-  .au-card{ padding:1.75rem; }
-}
+  .audience-card p {
+    margin-top: 0.65rem;
+  }
+
+  .audience-card ul {
+    margin: 1rem 0 0;
+    padding-left: 1.1rem;
+    color: var(--muted);
+  }
+
+  .audience-card li + li {
+    margin-top: 0.42rem;
+  }
+
+  @media (max-width: 1020px) {
+    .audience-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 720px) {
+    .audience-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>

@@ -1,253 +1,226 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import MarqueeStrip from '../components/MarqueeStrip.astro';
+import { contactChannels } from '../data/site';
 ---
 
-<Layout title="Contact & Get a Quote — TECIL Solar" description="Contact TECIL Solar for a free quote, load assessment, or product enquiry. 7 branches across Nigeria." page="contact">
-
+<Layout
+  title="Contact — TECIL Solar"
+  description="Contact TECIL Solar for a quote, support, or product enquiry."
+  page="contact"
+>
   <section class="page-hero">
-    <div class="ph-bg"></div>
-    <div class="ph-orb ph-orb-1"></div>
-    <div class="ph-orb ph-orb-2"></div>
+    <div class="page-hero-grid"></div>
+    <div class="page-hero-orb a"></div>
+    <div class="page-hero-orb b"></div>
     <div class="container">
-      <span class="section-tag">Get in Touch</span>
-      <h1>Let's Talk <span class="text-red-gradient">Solar Energy.</span></h1>
-      <p class="ph-sub">Get a free load assessment and honest quote. No pressure. No sales tactics. Just straight technical advice from people who've been doing this since 2008.</p>
+      <span class="section-tag">Contact</span>
+      <h1>Get a quote without the clutter.</h1>
+      <p class="page-hero-sub">
+        A cleaner contact experience helps the user act faster and helps the business look more organized.
+      </p>
     </div>
   </section>
 
   <MarqueeStrip variant="red" />
 
-  <section class="contact-section section" style="background:#F7F8FA">
-    <div class="container">
-      <div class="contact-grid">
+  <section class="section bg-off">
+    <div class="container contact-shell">
+      <div class="contact-cards">
+        {contactChannels.map((item) => (
+          <a class="contact-card card reveal" href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+            <span>{item.label}</span>
+            <strong>{item.value}</strong>
+          </a>
+        ))}
 
-        <!-- Left: Info -->
-        <div class="contact-info">
-
-          <div class="ci-block reveal">
-            <div class="ci-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            </div>
-            <div>
-              <div class="ci-label">Headquarters</div>
-              <div class="ci-val">Macson Plaza, 89 Ndidem Usang Iso Road, Calabar, Cross River State</div>
-            </div>
-          </div>
-
-          <div class="ci-block reveal reveal-delay-1">
-            <div class="ci-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38a2 2 0 0 1 1.99-1.8h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
-            </div>
-            <div>
-              <div class="ci-label">HQ Phone</div>
-              <div class="ci-val"><a href="tel:+2348037135545">0803 713 5545</a> · <a href="tel:+2348035601371">0803 560 1371</a></div>
-            </div>
-          </div>
-
-          <div class="ci-block reveal reveal-delay-2">
-            <div class="ci-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            </div>
-            <div>
-              <div class="ci-label">Email</div>
-              <div class="ci-val"><a href="mailto:info.tecilservices@gmail.com">info.tecilservices@gmail.com</a></div>
-            </div>
-          </div>
-
-          <div class="ci-block reveal reveal-delay-3">
-            <div class="ci-icon" style="color:#25D366">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-            </div>
-            <div>
-              <div class="ci-label">WhatsApp</div>
-              <div class="ci-val"><a href="https://wa.me/2348037135545" target="_blank">Chat with us on WhatsApp</a></div>
-            </div>
-          </div>
-
-          <div class="ci-block reveal reveal-delay-4">
-            <div class="ci-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-            </div>
-            <div>
-              <div class="ci-label">Other Branches</div>
-              <div class="ci-val">Port Harcourt · Uyo · Lagos · Ikom &nbsp;—&nbsp; <a href="/branches">View All 7 Branches →</a></div>
-            </div>
-          </div>
-
-          <div class="promise-box reveal">
-            <div class="pb-title">Our Promise to You</div>
-            <ul class="pb-list">
-              <li>Honest, no-pressure advice</li>
-              <li>Right-sized system — not oversold</li>
-              <li>Clear BOQ & itemised quote</li>
-              <li>Certified installation technicians</li>
-              <li>Post-installation commissioning report</li>
-              <li>SLA-backed maintenance available</li>
-            </ul>
-          </div>
-
+        <div class="contact-card card reveal reveal-delay-2">
+          <span>What happens next</span>
+          <strong>We review your needs, then respond with the right solution.</strong>
         </div>
-
-        <!-- Right: Form -->
-        <div class="contact-form-area reveal reveal-delay-1">
-          <h3 class="form-title">Request a Free Quote</h3>
-          <form class="contact-form" id="contact-form">
-            <div class="form-row">
-              <div class="form-group">
-                <label>Full Name *</label>
-                <input type="text" name="name" placeholder="Your full name" required />
-              </div>
-              <div class="form-group">
-                <label>Phone Number *</label>
-                <input type="tel" name="phone" placeholder="08XX XXX XXXX" required />
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Email Address</label>
-              <input type="email" name="email" placeholder="you@example.com" />
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Client Type *</label>
-                <select name="client_type" required>
-                  <option value="">Select...</option>
-                  <option>Residential / Homeowner</option>
-                  <option>SME / Business</option>
-                  <option>Institution / Government</option>
-                  <option>Contractor / Developer</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Nearest Branch</label>
-                <select name="branch">
-                  <option value="">Select...</option>
-                  <option>Calabar HQ</option>
-                  <option>Calabar South</option>
-                  <option>Ikom</option>
-                  <option>Port Harcourt</option>
-                  <option>Uyo</option>
-                  <option>Lagos</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>What Do You Need?</label>
-              <select name="service">
-                <option value="">Select a service...</option>
-                <option>New Solar/Inverter System</option>
-                <option>System Maintenance/Repair</option>
-                <option>Load Assessment</option>
-                <option>Technical Training</option>
-                <option>Large-Scale Project (EPC)</option>
-                <option>Energy-as-a-Service (EaaS)</option>
-                <option>Product Purchase</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Tell Us About Your Energy Needs</label>
-              <textarea name="message" placeholder="Describe your energy situation: current power source, key appliances, location, project size, or any specific requirements..." rows="5"></textarea>
-            </div>
-            <button type="submit" class="btn-primary form-submit" id="submit-btn">
-              Send Enquiry
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-            <p class="form-note" id="form-msg"></p>
-          </form>
-        </div>
-
       </div>
+
+      <form class="contact-form card reveal reveal-delay-2" id="contact-form">
+        <span class="section-tag">Request a Quote</span>
+        <h2>Send a clear enquiry.</h2>
+
+        <div class="form-grid">
+          <label>
+            <span>Your Name</span>
+            <input name="name" type="text" placeholder="Enter your name" required />
+          </label>
+
+          <label>
+            <span>Phone Number</span>
+            <input name="phone" type="tel" placeholder="0803 000 0000" required />
+          </label>
+
+          <label>
+            <span>Email Address</span>
+            <input name="email" type="email" placeholder="name@example.com" />
+          </label>
+
+          <label>
+            <span>City / Location</span>
+            <input name="location" type="text" placeholder="Lagos, Port Harcourt..." required />
+          </label>
+        </div>
+
+        <label class="full">
+          <span>What do you need?</span>
+          <textarea name="message" rows="6" placeholder="Tell us about your solar or inverter need" required></textarea>
+        </label>
+
+        <button class="btn-primary" id="submit-btn" type="submit">Send via WhatsApp</button>
+        <p class="form-note" id="form-note">We will open WhatsApp with a pre-filled message so you can send it instantly.</p>
+      </form>
     </div>
   </section>
-
 </Layout>
 
 <style>
-  .page-hero { min-height: 42vh; background: #111; display: flex; align-items: center; padding: 120px 5% 80px; position: relative; overflow: hidden; }
-  .ph-bg { position: absolute; inset: 0; background-image: linear-gradient(rgba(204,20,23,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(204,20,23,0.04) 1px, transparent 1px); background-size: 64px 64px; }
-  .ph-orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
-  .ph-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(204,20,23,0.12) 0%, transparent 70%); top: -100px; right: -50px; }
-  .ph-orb-2 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(232,96,26,0.08) 0%, transparent 70%); bottom: -50px; left: 20%; }
-  .page-hero .container { position: relative; z-index: 1; }
-  .page-hero h1 { color: #111827; margin: 8px 0 16px; }
-  .ph-sub { font-size: 1.05rem; color: rgba(255,255,255,0.5); max-width: 560px; line-height: 1.75; }
-
-  .contact-section { background: #1A1A1A; }
-  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
-
-  .ci-block {
-    display: flex; gap: 1rem; align-items: flex-start;
-    padding-bottom: 1.75rem; margin-bottom: 1.75rem;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+  .contact-shell {
+    display: grid;
+    grid-template-columns: minmax(320px, 0.85fr) minmax(0, 1.15fr);
+    gap: 1.2rem;
+    align-items: start;
   }
-  .ci-block:last-of-type { border-bottom: none; }
-  .ci-icon {
-    width: 42px; height: 42px; flex-shrink: 0;
-    background: rgba(204,20,23,0.1); border: 1px solid rgba(204,20,23,0.2);
-    border-radius: 3px; display: flex; align-items: center; justify-content: center;
-    color: #CC1417;
-  }
-  .ci-label { font-family: 'Inter', sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #9CA3AF; margin-bottom: 4px; }
-  .ci-val { font-size: 0.92rem; color: #374151; line-height: 1.55; }
-  .ci-val a { color: #E8601A; text-decoration: none; }
-  .ci-val a:hover { color: #CC1417; }
 
-  .promise-box {
-    background: #FFF1F1;
-    border: 1px solid rgba(204,20,23,0.18);
-    border-left: 4px solid #CC1417;
-    padding: 1.5rem 1.75rem;
+  .contact-cards {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .contact-card {
+    padding: 1.35rem;
+    border-radius: 28px;
+  }
+
+  .contact-card span {
+    display: inline-flex;
+    margin-bottom: 0.55rem;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--orange);
+  }
+
+  .contact-card strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    line-height: 1.02;
+    color: var(--text);
+  }
+
+  .contact-form {
+    padding: 1.5rem;
+  }
+
+  .contact-form h2 {
+    margin-top: 0.5rem;
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1.2rem;
+  }
+
+  label {
+    display: block;
+  }
+
+  label span {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--soft);
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 0.95rem 1rem;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--text);
+    outline: none;
+    transition: var(--ease);
+  }
+
+  input:focus,
+  textarea:focus {
+    border-color: rgba(204,20,23,0.35);
+    box-shadow: 0 0 0 4px rgba(204,20,23,0.08);
+  }
+
+  .full {
+    display: block;
     margin-top: 1rem;
   }
-  .pb-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 800; text-transform: uppercase; color: #111827; margin-bottom: 1rem; letter-spacing: 0.04em; }
-  .pb-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-  .pb-list li { font-size: 0.85rem; color: #6B7280; padding-left: 16px; position: relative; }
-  .pb-list li::before { content: '✓'; position: absolute; left: 0; color: #E8601A; font-size: 0.75rem; }
 
-  .contact-form-area {
-    background: #fff;
-    border: 1px solid #E5E7EB;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-    padding: 2.5rem;
-    border-radius: 3px;
+  .btn-primary {
+    margin-top: 1rem;
   }
-  .form-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1.6rem; font-weight: 900; text-transform: uppercase; color: #111827; margin-bottom: 2rem; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .form-group { margin-bottom: 16px; display: flex; flex-direction: column; gap: 6px; }
-  .form-group label { font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
-  .form-group input, .form-group select, .form-group textarea {
-    background: #fff;
-    border: 1px solid #E5E7EB;
-    color: #111827; padding: 12px 14px; border-radius: 3px;
-    font-family: 'Inter', sans-serif; font-size: 0.9rem;
-    outline: none; transition: border-color 0.2s; width: 100%;
-    appearance: none;
-  }
-  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #E8601A; }
-  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.2); }
-  .form-group select option { background: #1A1A1A; color: #111827; }
-  .form-submit { width: 100%; justify-content: center; cursor: pointer; border: none; font-size: 0.9rem; padding: 16px; margin-top: 8px; }
-  .form-note { margin-top: 10px; font-size: 0.82rem; text-align: center; color: #E8601A; min-height: 1.2rem; }
 
-  @media (max-width: 900px) {
-    .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
-    .form-row { grid-template-columns: 1fr; }
+  .form-note {
+    margin-top: 0.8rem;
+    font-size: 0.92rem;
+  }
+
+  @media (max-width: 980px) {
+    .contact-shell {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-card strong {
+      font-size: 1.45rem;
+    }
   }
 </style>
 
-<script>
-  const form = document.getElementById('contact-form') as HTMLFormElement;
-  const btn = document.getElementById('submit-btn') as HTMLButtonElement;
-  const msg = document.getElementById('form-msg') as HTMLElement;
+<script is:inline>
+  const form = document.getElementById('contact-form');
+  const note = document.getElementById('form-note');
+  const button = document.getElementById('submit-btn');
 
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    btn.textContent = 'Sending...';
-    btn.disabled = true;
-    setTimeout(() => {
-      btn.innerHTML = '✓ Enquiry Sent';
-      btn.style.background = '#006D77';
-      msg.textContent = "We'll get back to you within 24 hours. You can also WhatsApp us for a faster response.";
-    }, 1400);
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const fd = new FormData(form);
+    const name = String(fd.get('name') || '').trim();
+    const phone = String(fd.get('phone') || '').trim();
+    const email = String(fd.get('email') || '').trim();
+    const location = String(fd.get('location') || '').trim();
+    const message = String(fd.get('message') || '').trim();
+
+    const whatsappText = [
+      `Hello TECIL Solar, my name is ${name}.`,
+      `Phone: ${phone}`,
+      email ? `Email: ${email}` : null,
+      `Location: ${location}`,
+      '',
+      message,
+    ].filter(Boolean).join('\n');
+
+    const url = `https://wa.me/2348037135545?text=${encodeURIComponent(whatsappText)}`;
+
+    note.textContent = 'Opening WhatsApp with your enquiry...';
+    button.textContent = 'Opening...';
+    window.open(url, '_blank', 'noopener,noreferrer');
   });
 </script>

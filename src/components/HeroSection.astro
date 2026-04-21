@@ -1,171 +1,384 @@
 ---
-// HeroSection — dark, dramatic, with animated orbital
+import { heroStats, heroTrust } from '../data/site';
 ---
-<section class="hero">
+
+<section class="hero-section">
   <div class="hero-grid"></div>
-  <div class="orb o1"></div>
-  <div class="orb o2"></div>
+  <div class="hero-orb orb-a"></div>
+  <div class="hero-orb orb-b"></div>
 
-  <div class="hero-orbital" aria-hidden="true">
-    <svg viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="og" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#CC1417"/><stop offset="100%" stop-color="#E8601A"/>
-        </linearGradient>
-      </defs>
-      <g><animateTransform attributeName="transform" type="rotate" from="0 350 350" to="360 350 350" dur="60s" repeatCount="indefinite"/>
-        <circle cx="350" cy="350" r="290" fill="none" stroke="url(#og)" stroke-width="1" stroke-dasharray="14 20"/>
-      </g>
-      <g><animateTransform attributeName="transform" type="rotate" from="0 350 350" to="-360 350 350" dur="40s" repeatCount="indefinite"/>
-        <circle cx="350" cy="350" r="210" fill="none" stroke="#E8601A" stroke-width="1" stroke-dasharray="6 22" opacity=".7"/>
-      </g>
-      <g><animateTransform attributeName="transform" type="rotate" from="0 350 350" to="360 350 350" dur="25s" repeatCount="indefinite"/>
-        <circle cx="350" cy="350" r="135" fill="none" stroke="#CC1417" stroke-width="1" stroke-dasharray="4 16" opacity=".5"/>
-      </g>
-      <circle cx="350" cy="350" r="50" fill="none" stroke="rgba(232,96,26,.5)" stroke-width="1.5"/>
-      <circle cx="350" cy="350" r="26" fill="rgba(232,96,26,.12)"/>
-      <g opacity=".4">
-        <line x1="350" y1="290" x2="350" y2="265" stroke="#E8601A" stroke-width="2"/>
-        <line x1="350" y1="410" x2="350" y2="435" stroke="#E8601A" stroke-width="2"/>
-        <line x1="290" y1="350" x2="265" y2="350" stroke="#E8601A" stroke-width="2"/>
-        <line x1="410" y1="350" x2="435" y2="350" stroke="#E8601A" stroke-width="2"/>
-      </g>
-      <circle cx="640" cy="350" r="10" fill="#E8601A" opacity=".9">
-        <animateTransform attributeName="transform" type="rotate" from="0 350 350" to="360 350 350" dur="60s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="560" cy="350" r="6" fill="#CC1417" opacity=".75">
-        <animateTransform attributeName="transform" type="rotate" from="100 350 350" to="-260 350 350" dur="40s" repeatCount="indefinite"/>
-      </circle>
-    </svg>
-  </div>
+  <div class="container hero-shell">
+    <div class="hero-copy reveal">
+      <span class="section-tag">Energy That Performs</span>
+      <h1>Powering Homes & Businesses Across Nigeria</h1>
+      <p class="hero-lead">
+        Reliable solar and inverter systems designed to reduce downtime, lower energy costs, and keep your operations moving.
+      </p>
 
-  <div class="hero-content">
-    <div class="hero-badge">
-      <span class="bd"></span>
-      Nigeria's Trusted Solar Authority — Est. 2008
+      <div class="hero-actions">
+        <a href="/contact" class="btn-primary">
+          Get a Free Quote
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </a>
+        <a href="/products" class="btn-outline-white">View Products</a>
+      </div>
+
+      <div class="hero-pill-row">
+        <span>Installation</span>
+        <span>Maintenance</span>
+        <span>Supply</span>
+        <span>Projects</span>
+      </div>
+
+      <div class="hero-trust">
+        {heroTrust.map((item) => <span>{item}</span>)}
+      </div>
     </div>
-    <h1>
-      <span class="line-1">POWER</span>
-      <span class="line-2">WITHOUT</span>
-      <span class="line-3">COMPROMISE.</span>
-    </h1>
-    <p class="hero-sub">End-to-end solar energy solutions across Nigeria. Residential homes, commercial enterprises, institutions, and government projects — delivered with precision since 2008.</p>
-    <div class="hero-btns">
-      <a href="/contact" class="btn-primary">
-        Get a Free Quote
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-      <a href="/projects" class="btn-outline-white">View Our Projects</a>
-      <a href="https://wa.me/2348037135545" target="_blank" class="btn-whatsapp">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-        WhatsApp Us
-      </a>
-    </div>
-    <div class="scroll-hint">
-      <div class="sh-line"></div><span>Scroll</span>
+
+    <div class="hero-visual reveal reveal-delay-2">
+      <div class="hero-panel main">
+        <div class="panel-top">
+          <span>Nationwide reach</span>
+          <strong>Operating since 2008</strong>
+        </div>
+
+        <div class="panel-wave">
+          <div></div><div></div><div></div><div></div>
+        </div>
+
+        <div class="panel-copy">
+          <h3>Structured for performance</h3>
+          <p>
+            Clean design, stronger visual hierarchy, and a premium feel that supports the brand instead of hiding it.
+          </p>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <div class="hero-mini">
+          <span>Coverage</span>
+          <strong>Lagos • Port Harcourt • Calabar • Uyo • Ikom</strong>
+        </div>
+        <div class="hero-mini alt">
+          <span>Support</span>
+          <strong>Supply, installation, maintenance, and aftercare</strong>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="hero-stats">
-    <div class="hs"><div class="hs-row"><span class="hs-n" data-target="16">0</span><span class="hs-s">+</span></div><span class="hs-l">Years Operating</span></div>
-    <div class="hs-div"></div>
-    <div class="hs"><div class="hs-row"><span class="hs-n" data-target="7">0</span></div><span class="hs-l">Active Branches</span></div>
-    <div class="hs-div"></div>
-    <div class="hs"><div class="hs-row"><span class="hs-n" data-target="34">0</span><span class="hs-s">+</span></div><span class="hs-l">Corporate Projects</span></div>
-    <div class="hs-div"></div>
-    <div class="hs"><div class="hs-row"><span class="hs-n" data-target="15">0</span><span class="hs-s">+</span></div><span class="hs-l">Brand Partnerships</span></div>
+    {heroStats.map((item) => (
+      <div class="stat-card">
+        <strong>{item.value}</strong>
+        <span>{item.label}</span>
+      </div>
+    ))}
   </div>
 </section>
 
 <style>
-.hero {
-  min-height:100vh; background:#0F1117;
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  padding:72px 5% 0; position:relative; overflow:hidden;
-}
-.hero-grid {
-  position:absolute; inset:0; pointer-events:none;
-  background-image:
-    linear-gradient(rgba(204,20,23,.05) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(204,20,23,.05) 1px,transparent 1px);
-  background-size:60px 60px;
-}
-.orb { position:absolute; border-radius:50%; pointer-events:none; filter:blur(90px); }
-.o1 { width:600px;height:600px; background:radial-gradient(circle,rgba(204,20,23,.12) 0%,transparent 70%); top:-120px;right:-60px; animation:orbFloat 9s ease-in-out infinite; }
-.o2 { width:380px;height:380px; background:radial-gradient(circle,rgba(232,96,26,.09) 0%,transparent 70%); bottom:100px;left:-40px; animation:orbFloat 12s ease-in-out infinite reverse; }
+  .hero-section {
+    position: relative;
+    min-height: calc(100vh - 84px);
+    overflow: hidden;
+    background:
+      radial-gradient(circle at top right, rgba(204,20,23,0.22), transparent 28%),
+      radial-gradient(circle at bottom left, rgba(232,96,26,0.10), transparent 24%),
+      #0F1117;
+  }
 
-.hero-orbital { position:absolute; right:-3%;top:50%;transform:translateY(-50%); width:min(50vw,620px);height:min(50vw,620px); opacity:.22; pointer-events:none; }
-.hero-orbital svg { width:100%;height:100%; }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 72px 72px;
+    opacity: 0.4;
+    pointer-events: none;
+  }
 
-.hero-content { text-align:left; max-width:680px; width:100%; position:relative; z-index:2; padding-bottom:5rem; }
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    animation: drift 10s ease-in-out infinite;
+  }
 
-.hero-badge {
-  display:inline-flex; align-items:center; gap:8px;
-  font-family:'DM Sans',sans-serif; font-size:.72rem; font-weight:700;
-  color:#E8601A; letter-spacing:.14em; text-transform:uppercase;
-  border:1px solid rgba(232,96,26,.28); border-radius:100px;
-  padding:6px 14px; margin-bottom:1.75rem;
-  background:rgba(232,96,26,.07);
-  animation:fadeUp .8s ease forwards;
-}
-.bd { width:6px;height:6px;background:#E8601A;border-radius:50%;animation:pulse-dot 2s infinite; }
+  .orb-a {
+    width: 520px;
+    height: 520px;
+    top: -120px;
+    right: -120px;
+    background: radial-gradient(circle, rgba(204,20,23,0.22) 0%, transparent 72%);
+  }
 
-h1 { display:flex; flex-direction:column; margin-bottom:1.5rem; animation:fadeUp .8s .15s ease both; }
-.line-1,.line-2 { color:#fff; }
-.line-2 { color:transparent; -webkit-text-stroke:2px #CC1417; }
-.line-3 { color:#E8601A; }
+  .orb-b {
+    width: 320px;
+    height: 320px;
+    bottom: 80px;
+    left: -90px;
+    background: radial-gradient(circle, rgba(232,96,26,0.14) 0%, transparent 72%);
+    animation-direction: reverse;
+  }
 
-.hero-sub { font-size:1.05rem; color:rgba(255,255,255,.55); max-width:500px; line-height:1.8; margin-bottom:2rem; animation:fadeUp .8s .3s ease both; }
+  .hero-shell {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+    gap: 4rem;
+    align-items: center;
+    padding-top: 5.5rem;
+    padding-bottom: 7.5rem;
+  }
 
-.hero-btns { display:flex; gap:.75rem; flex-wrap:wrap; animation:fadeUp .8s .45s ease both; }
+  .hero-copy h1 {
+    max-width: 9ch;
+    color: #fff;
+    margin-top: 0.6rem;
+  }
 
-.scroll-hint { position:absolute; bottom:6.5rem; left:0; display:flex; flex-direction:column; align-items:flex-start; gap:6px; animation:fadeIn 1s 1.1s ease both; }
-.sh-line { width:1px;height:48px; background:linear-gradient(to bottom,transparent,#E8601A); animation:scrollPulse 2s ease-in-out infinite; }
-.scroll-hint span { font-family:'DM Sans',sans-serif; font-size:.6rem; color:rgba(255,255,255,.25); letter-spacing:.2em; text-transform:uppercase; }
+  .hero-lead {
+    max-width: 60ch;
+    margin-top: 1.2rem;
+    font-size: 1.08rem;
+    color: rgba(255,255,255,0.68);
+  }
 
-/* Stats strip */
-.hero-stats {
-  position:absolute; bottom:0; left:0; right:0;
-  display:flex; align-items:center; justify-content:center;
-  background:rgba(255,255,255,.04); border-top:1px solid rgba(232,96,26,.15);
-  backdrop-filter:blur(10px); padding:1.4rem 5%; z-index:2;
-  animation:fadeIn .8s .9s ease both;
-}
-.hs { display:flex; flex-direction:column; align-items:center; gap:4px; padding:0 2.5rem; }
-.hs-row { display:flex; align-items:baseline; }
-.hs-n { font-family:'Big Shoulders Display',sans-serif; font-size:2.2rem; font-weight:900; color:#fff; line-height:1; }
-.hs-s { font-family:'Big Shoulders Display',sans-serif; font-size:1.5rem; font-weight:900; color:#E8601A; margin-left:2px; }
-.hs-l { font-family:'DM Sans',sans-serif; font-size:.65rem; font-weight:500; color:rgba(255,255,255,.35); letter-spacing:.08em; text-transform:uppercase; text-align:center; }
-.hs-div { width:1px; height:38px; background:rgba(204,20,23,.22); }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 1.8rem;
+  }
 
-@media(max-width:900px){
-  .hero-orbital{display:none}
-  .line-2{-webkit-text-stroke:1px #CC1417}
-  .hero-stats{flex-wrap:wrap;gap:.5rem;padding:1rem}
-  .hs{padding:.5rem 1.2rem}
-  .hs-div{display:none}
-  .scroll-hint{display:none}
-}
-@media(max-width:480px){
-  .hero-btns{flex-direction:column}
-}
+  .hero-pill-row,
+  .hero-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .hero-pill-row {
+    margin-top: 1.5rem;
+  }
+
+  .hero-pill-row span,
+  .hero-trust span {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.65rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .hero-pill-row span {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.80);
+  }
+
+  .hero-trust {
+    margin-top: 1rem;
+  }
+
+  .hero-trust span {
+    background: rgba(232,96,26,0.10);
+    border: 1px solid rgba(232,96,26,0.24);
+    color: #FFBA84;
+  }
+
+  .hero-visual {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .hero-panel,
+  .hero-mini {
+    border-radius: 28px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.22);
+  }
+
+  .hero-panel.main {
+    padding: 1.35rem;
+    min-height: 400px;
+  }
+
+  .panel-top {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .panel-top span {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.48);
+  }
+
+  .panel-top strong {
+    font-family: var(--font-display);
+    font-size: 2.1rem;
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+  .panel-wave {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.8rem;
+    margin-top: 1.4rem;
+  }
+
+  .panel-wave div {
+    height: 160px;
+    border-radius: 20px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.10)),
+      linear-gradient(180deg, rgba(232,96,26,0.18), rgba(204,20,23,0.32));
+    border: 1px solid rgba(255,255,255,0.10);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .panel-wave div::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 40%;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.2));
+  }
+
+  .panel-wave div:nth-child(2) { height: 210px; }
+  .panel-wave div:nth-child(3) { height: 120px; }
+  .panel-wave div:nth-child(4) { height: 180px; }
+
+  .panel-copy {
+    margin-top: 1.2rem;
+  }
+
+  .panel-copy h3 {
+    color: #fff;
+    font-size: 1.6rem;
+  }
+
+  .panel-copy p {
+    margin-top: 0.55rem;
+    color: rgba(255,255,255,0.68);
+  }
+
+  .hero-side {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .hero-mini {
+    padding: 1.2rem 1.2rem 1.15rem;
+  }
+
+  .hero-mini span {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.46);
+  }
+
+  .hero-mini strong {
+    display: block;
+    margin-top: 0.45rem;
+    font-size: 1.2rem;
+    line-height: 1.35;
+    color: #fff;
+  }
+
+  .hero-mini.alt {
+    background: rgba(255,255,255,0.10);
+  }
+
+  .hero-stats {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.08);
+    border-top: 1px solid rgba(255,255,255,0.10);
+  }
+
+  .stat-card {
+    padding: 1.4rem 1rem;
+    background: rgba(255,255,255,0.04);
+    text-align: center;
+  }
+
+  .stat-card strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2.55rem;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .stat-card span {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.48);
+  }
+
+  @keyframes drift {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-18px) scale(1.02); }
+  }
+
+  @media (max-width: 980px) {
+    .hero-shell {
+      grid-template-columns: 1fr;
+      gap: 2.3rem;
+    }
+
+    .hero-copy h1 {
+      max-width: 12ch;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .hero-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero-panel.main {
+      min-height: 360px;
+    }
+
+    .panel-wave {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 500px) {
+    .hero-stats {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-panel.main {
+      padding: 1rem;
+    }
+  }
 </style>
-<script>
-function runCount(){
-  document.querySelectorAll('.hs-n').forEach(el=>{
-    const t=parseInt(el.getAttribute('data-target')||'0');
-    if((el as HTMLElement).dataset.done) return;
-    (el as HTMLElement).dataset.done='1';
-    let c=0; const step=Math.max(t/50,.2);
-    const timer=setInterval(()=>{ c+=step; if(c>=t){c=t;clearInterval(timer);} el.textContent=Math.floor(c).toString(); },22);
-  });
-}
-document.addEventListener('DOMContentLoaded',()=>{
-  const el=document.querySelector('.hero-stats');
-  if(!el) return;
-  const io=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){runCount();io.disconnect();} }); },{threshold:.1});
-  io.observe(el);
-  setTimeout(()=>{ const r=el.getBoundingClientRect(); if(r.top<window.innerHeight) runCount(); },600);
-});
-</script>
