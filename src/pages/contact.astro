@@ -18,7 +18,7 @@ import MarqueeStrip from '../components/MarqueeStrip.astro';
 
   <MarqueeStrip variant="red" />
 
-  <section class="contact-section dark-2-section section">
+  <section class="contact-section section" style="background:#F7F8FA">
     <div class="container">
       <div class="contact-grid">
 
@@ -169,7 +169,7 @@ import MarqueeStrip from '../components/MarqueeStrip.astro';
   .ph-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(204,20,23,0.12) 0%, transparent 70%); top: -100px; right: -50px; }
   .ph-orb-2 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(232,96,26,0.08) 0%, transparent 70%); bottom: -50px; left: 20%; }
   .page-hero .container { position: relative; z-index: 1; }
-  .page-hero h1 { color: #fff; margin: 8px 0 16px; }
+  .page-hero h1 { color: #111827; margin: 8px 0 16px; }
   .ph-sub { font-size: 1.05rem; color: rgba(255,255,255,0.5); max-width: 560px; line-height: 1.75; }
 
   .contact-section { background: #1A1A1A; }
@@ -187,44 +187,45 @@ import MarqueeStrip from '../components/MarqueeStrip.astro';
     border-radius: 3px; display: flex; align-items: center; justify-content: center;
     color: #CC1417;
   }
-  .ci-label { font-family: 'Inter', sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 4px; }
-  .ci-val { font-size: 0.92rem; color: rgba(255,255,255,0.75); line-height: 1.55; }
+  .ci-label { font-family: 'Inter', sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #9CA3AF; margin-bottom: 4px; }
+  .ci-val { font-size: 0.92rem; color: #374151; line-height: 1.55; }
   .ci-val a { color: #E8601A; text-decoration: none; }
   .ci-val a:hover { color: #CC1417; }
 
   .promise-box {
-    background: rgba(204,20,23,0.06);
+    background: #FFF1F1;
     border: 1px solid rgba(204,20,23,0.18);
     border-left: 4px solid #CC1417;
     padding: 1.5rem 1.75rem;
     margin-top: 1rem;
   }
-  .pb-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 800; text-transform: uppercase; color: #fff; margin-bottom: 1rem; letter-spacing: 0.04em; }
+  .pb-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 800; text-transform: uppercase; color: #111827; margin-bottom: 1rem; letter-spacing: 0.04em; }
   .pb-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-  .pb-list li { font-size: 0.85rem; color: rgba(255,255,255,0.55); padding-left: 16px; position: relative; }
+  .pb-list li { font-size: 0.85rem; color: #6B7280; padding-left: 16px; position: relative; }
   .pb-list li::before { content: '✓'; position: absolute; left: 0; color: #E8601A; font-size: 0.75rem; }
 
   .contact-form-area {
-    background: rgba(255,255,255,0.025);
-    border: 1px solid rgba(255,255,255,0.07);
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
     padding: 2.5rem;
     border-radius: 3px;
   }
-  .form-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1.6rem; font-weight: 900; text-transform: uppercase; color: #fff; margin-bottom: 2rem; }
+  .form-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1.6rem; font-weight: 900; text-transform: uppercase; color: #111827; margin-bottom: 2rem; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .form-group { margin-bottom: 16px; display: flex; flex-direction: column; gap: 6px; }
   .form-group label { font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
   .form-group input, .form-group select, .form-group textarea {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: #fff; padding: 12px 14px; border-radius: 3px;
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    color: #111827; padding: 12px 14px; border-radius: 3px;
     font-family: 'Inter', sans-serif; font-size: 0.9rem;
     outline: none; transition: border-color 0.2s; width: 100%;
     appearance: none;
   }
   .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #E8601A; }
   .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.2); }
-  .form-group select option { background: #1A1A1A; color: #fff; }
+  .form-group select option { background: #1A1A1A; color: #111827; }
   .form-submit { width: 100%; justify-content: center; cursor: pointer; border: none; font-size: 0.9rem; padding: 16px; margin-top: 8px; }
   .form-note { margin-top: 10px; font-size: 0.82rem; text-align: center; color: #E8601A; min-height: 1.2rem; }
 

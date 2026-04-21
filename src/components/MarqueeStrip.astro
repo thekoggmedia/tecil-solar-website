@@ -1,77 +1,42 @@
 ---
-// MarqueeStrip.astro — scrolling brand ticker
-interface Props { variant?: 'red' | 'dark' }
+interface Props { variant?: 'red' | 'dark' | 'light' }
 const { variant = 'red' } = Astro.props;
 ---
-
-<div class={`marquee-section marquee-${variant}`}>
-  <div class="marquee-track">
-    <div class="marquee-content">
-      {Array(3).fill(null).map(() => (
-        <span class="marquee-group">
-          <span class="marquee-item">Solar Panels</span>
-          <span class="marquee-dot">◆</span>
-          <span class="marquee-item">Hybrid Inverters</span>
-          <span class="marquee-dot">◆</span>
-          <span class="marquee-item">LiFePO4 Batteries</span>
-          <span class="marquee-dot">◆</span>
-          <span class="marquee-item">System Installation</span>
-          <span class="marquee-dot">◆</span>
-          <span class="marquee-item">Maintenance & Repair</span>
-          <span class="marquee-dot">◆</span>
-          <span class="marquee-item">Load Assessment</span>
-          <span class="marquee-dot">◆</span>
-          <span class="marquee-item">Technical Training</span>
-          <span class="marquee-dot">◆</span>
-          <span class="marquee-item">Energy-as-a-Service</span>
-          <span class="marquee-dot">◆</span>
-          <span class="marquee-item">Calabar · PH · Lagos · Uyo · Ikom</span>
-          <span class="marquee-dot">◆</span>
-          <span class="marquee-item">...the inverter place</span>
-          <span class="marquee-dot">◆</span>
+<div class={`marquee-wrap mq-${variant}`}>
+  <div class="mq-track">
+    <div class="mq-inner">
+      {Array(3).fill(null).map(()=>(
+        <span class="mq-group">
+          <span class="mq-item">Solar Panels</span><span class="mq-dot">◆</span>
+          <span class="mq-item">Hybrid Inverters</span><span class="mq-dot">◆</span>
+          <span class="mq-item">LiFePO4 Batteries</span><span class="mq-dot">◆</span>
+          <span class="mq-item">System Installation</span><span class="mq-dot">◆</span>
+          <span class="mq-item">Maintenance & Repair</span><span class="mq-dot">◆</span>
+          <span class="mq-item">Load Assessment</span><span class="mq-dot">◆</span>
+          <span class="mq-item">Technical Training</span><span class="mq-dot">◆</span>
+          <span class="mq-item">Energy-as-a-Service</span><span class="mq-dot">◆</span>
+          <span class="mq-item">Lagos · Port Harcourt · Calabar · Uyo · Ikom</span><span class="mq-dot">◆</span>
+          <span class="mq-item">...the inverter place</span><span class="mq-dot">◆</span>
         </span>
       ))}
     </div>
   </div>
 </div>
-
 <style>
-  .marquee-section {
-    padding: 0.9rem 0;
-    overflow: hidden;
-  }
-  .marquee-red {
-    background: #CC1417;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
-  .marquee-dark {
-    background: rgba(232,96,26,0.08);
-    border-top: 1px solid rgba(232,96,26,0.15);
-    border-bottom: 1px solid rgba(232,96,26,0.15);
-  }
-  .marquee-track { overflow: hidden; white-space: nowrap; }
-  .marquee-content {
-    display: inline-flex;
-    animation: marquee 38s linear infinite;
-    white-space: nowrap;
-  }
-  .marquee-content:hover { animation-play-state: paused; }
-  .marquee-group { display: inline-flex; align-items: center; }
-  .marquee-item {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0 1.1rem;
-    white-space: nowrap;
-  }
-  .marquee-red .marquee-item { color: rgba(255,255,255,0.92); }
-  .marquee-dark .marquee-item { color: rgba(232,96,26,0.85); }
-  .marquee-dot {
-    font-size: 0.45rem;
-  }
-  .marquee-red .marquee-dot { color: rgba(255,255,255,0.3); }
-  .marquee-dark .marquee-dot { color: rgba(232,96,26,0.3); }
+.marquee-wrap { padding:.85rem 0; overflow:hidden; }
+.mq-red  { background:#CC1417; }
+.mq-dark { background:#0F1117; border-top:1px solid rgba(232,96,26,.15); border-bottom:1px solid rgba(232,96,26,.15); }
+.mq-light{ background:#FFF5EE; border-top:1px solid rgba(232,96,26,.15); border-bottom:1px solid rgba(232,96,26,.15); }
+.mq-track { overflow:hidden; white-space:nowrap; }
+.mq-inner { display:inline-flex; animation:marquee 36s linear infinite; white-space:nowrap; }
+.mq-inner:hover { animation-play-state:paused; }
+.mq-group { display:inline-flex; align-items:center; }
+.mq-item { font-family:'DM Sans',sans-serif; font-size:.76rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:0 1rem; white-space:nowrap; }
+.mq-red  .mq-item  { color:rgba(255,255,255,.92); }
+.mq-dark .mq-item  { color:rgba(232,96,26,.8); }
+.mq-light .mq-item { color:#CC1417; }
+.mq-dot { font-size:.42rem; }
+.mq-red  .mq-dot  { color:rgba(255,255,255,.3); }
+.mq-dark .mq-dot  { color:rgba(232,96,26,.3); }
+.mq-light .mq-dot { color:rgba(204,20,23,.3); }
 </style>

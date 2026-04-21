@@ -1,475 +1,252 @@
 ---
 import '../styles/global.css';
-
-interface Props {
-  title?: string;
-  description?: string;
-  page?: string;
-}
-
+interface Props { title?: string; description?: string; page?: string; }
 const {
   title = 'TECIL Solar — The Inverter Place',
-  description = 'Nigeria\'s leading solar and inverter specialists. End-to-end renewable energy solutions for homes, businesses, and institutions. Operating across Lagos, Port Harcourt, Calabar, Uyo, and beyond.',
+  description = "Nigeria's leading solar and inverter specialists. End-to-end renewable energy solutions for homes, businesses, and institutions. Operating across Lagos, Port Harcourt, Calabar, Uyo and beyond.",
   page = '',
 } = Astro.props;
 ---
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
-    <meta name="theme-color" content="#CC1417" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <title>{title}</title>
-  </head>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content={description}/>
+  <meta name="theme-color" content="#CC1417"/>
+  <meta property="og:title" content={title}/>
+  <meta property="og:description" content={description}/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <title>{title}</title>
+</head>
+<body>
 
-  <body>
-
-    <!-- ── NAVBAR ── -->
-    <nav id="navbar" class="nav-transparent">
-      <div class="nav-container">
-
-        <a href="/" class="nav-logo">
-          <div class="logo-wordmark">
-            <span class="logo-tecil">TECIL</span><span class="logo-solar">Solar</span>
-          </div>
-          <div class="logo-tagline-pill">...the inverter place</div>
-        </a>
-
-        <ul class="nav-links">
-          <li><a href="/" class={`nav-link ${page === 'home' ? 'active' : ''}`}>Home</a></li>
-          <li><a href="/services" class={`nav-link ${page === 'services' ? 'active' : ''}`}>Services</a></li>
-          <li><a href="/products" class={`nav-link ${page === 'products' ? 'active' : ''}`}>Products</a></li>
-          <li><a href="/projects" class={`nav-link ${page === 'projects' ? 'active' : ''}`}>Projects</a></li>
-          <li><a href="/branches" class={`nav-link ${page === 'branches' ? 'active' : ''}`}>Find Us</a></li>
-          <li><a href="/contact" class="nav-link nav-cta">Get a Quote</a></li>
-        </ul>
-
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-
-      <div class="mobile-menu" id="mobile-menu">
-        <ul class="mobile-links">
-          <li><a href="/" class="mobile-link">Home</a></li>
-          <li><a href="/services" class="mobile-link">Services</a></li>
-          <li><a href="/products" class="mobile-link">Products</a></li>
-          <li><a href="/projects" class="mobile-link">Projects</a></li>
-          <li><a href="/branches" class="mobile-link">Find Us</a></li>
-          <li><a href="/contact" class="mobile-link mobile-cta">Get a Quote →</a></li>
-        </ul>
-      </div>
-    </nav>
-
-    <main>
-      <slot />
-    </main>
-
-    <!-- ── FOOTER ── -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-top">
-
-          <div class="footer-brand">
-            <div class="footer-wordmark">
-              <span class="fw-red">TECIL</span><span class="fw-orange">Solar</span>
-            </div>
-            <div class="footer-tag-pill">...the inverter place</div>
-            <p class="footer-desc">
-              Nigeria's leading solar and inverter specialists — delivering
-              end-to-end renewable energy solutions across Lagos, Port Harcourt,
-              Calabar, Uyo, Ikom and beyond since 2008.
-            </p>
-            <p class="footer-parent">A division of TECIL INTEGRATED SERVICES LIMITED</p>
-            <div class="social-links">
-              <a href="https://instagram.com/tecilsolar" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
-              </a>
-              <a href="https://facebook.com/tecilsolar" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-              </a>
-              <a href="https://linkedin.com/company/tecil-solar" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-              </a>
-              <a href="https://wa.me/2348037135545" target="_blank" rel="noopener" class="social-link social-wa" aria-label="WhatsApp">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-              </a>
-            </div>
-          </div>
-
-          <div class="footer-col">
-            <h4 class="footer-col-title">Services</h4>
-            <ul class="footer-links">
-              <li><a href="/services#installation">System Installation</a></li>
-              <li><a href="/services#maintenance">Maintenance & Repair</a></li>
-              <li><a href="/services#assessment">Load Assessment</a></li>
-              <li><a href="/services#training">Technical Training</a></li>
-              <li><a href="/services#projects">EPC Projects</a></li>
-              <li><a href="/services#eaas">Energy-as-a-Service</a></li>
-            </ul>
-          </div>
-
-          <div class="footer-col">
-            <h4 class="footer-col-title">Products</h4>
-            <ul class="footer-links">
-              <li><a href="/products#panels">Solar Panels</a></li>
-              <li><a href="/products#inverters">Hybrid Inverters</a></li>
-              <li><a href="/products#batteries">LiFePO4 Batteries</a></li>
-              <li><a href="/products#controllers">Charge Controllers</a></li>
-              <li><a href="/products#lights">Solar Lights</a></li>
-              <li><a href="/products#stabilisers">Voltage Stabilisers</a></li>
-            </ul>
-          </div>
-
-          <div class="footer-col">
-            <h4 class="footer-col-title">Contact</h4>
-            <ul class="footer-links">
-              <li><a href="/contact">Get a Free Quote</a></li>
-              <li><a href="mailto:info.tecilservices@gmail.com">info.tecilservices@gmail.com</a></li>
-              <li><a href="tel:+2348037135545">0803 713 5545</a></li>
-              <li><a href="https://wa.me/2348037135545" target="_blank">WhatsApp Us</a></li>
-              <li><a href="/branches">Our Locations</a></li>
-              <li><a href="/projects">Project Portfolio</a></li>
-            </ul>
-            <div class="footer-quote-box">
-              <p class="fq-text">"Reliable power. Expert hands. Products that last."</p>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="footer-bottom">
-          <p class="footer-copy">
-            &copy; {new Date().getFullYear()} Tecil Integrated Services Limited · All rights reserved ·
-            <a href="https://www.tecilsolar.com">www.tecilsolar.com</a>
-          </p>
-          <p class="footer-est">Operating across Nigeria since 2008</p>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Floating WhatsApp -->
-    <a href="https://wa.me/2348037135545" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="logo-mark"><span class="lt">TECIL</span><span class="lo">Solar</span></div>
+      <span class="logo-pill">...the inverter place</span>
     </a>
+    <ul class="nav-links">
+      <li><a href="/" class={`nl ${page==='home'?'active':''}`}>Home</a></li>
+      <li><a href="/services" class={`nl ${page==='services'?'active':''}`}>Services</a></li>
+      <li><a href="/products" class={`nl ${page==='products'?'active':''}`}>Products</a></li>
+      <li><a href="/projects" class={`nl ${page==='projects'?'active':''}`}>Projects</a></li>
+      <li><a href="/branches" class={`nl ${page==='branches'?'active':''}`}>Find Us</a></li>
+      <li><a href="/contact" class="nl nl-cta">Get a Quote</a></li>
+    </ul>
+    <button class="hbg" id="hbg" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mob-menu" id="mob-menu">
+    <a href="/" class="ml">Home</a>
+    <a href="/services" class="ml">Services</a>
+    <a href="/products" class="ml">Products</a>
+    <a href="/projects" class="ml">Projects</a>
+    <a href="/branches" class="ml">Find Us</a>
+    <a href="/contact" class="ml ml-cta">Get a Quote →</a>
+  </div>
+</nav>
 
-  </body>
+<main><slot /></main>
+
+<footer>
+  <div class="container">
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <div class="ft-logo"><span class="fl-r">TECIL</span><span class="fl-o">Solar</span></div>
+        <span class="ft-pill">...the inverter place</span>
+        <p>Nigeria's leading solar and inverter specialists — delivering end-to-end renewable energy solutions across Lagos, Port Harcourt, Calabar, Uyo, Ikom and beyond since 2008.</p>
+        <p class="ft-parent">A division of TECIL INTEGRATED SERVICES LIMITED</p>
+        <div class="socials">
+          <a href="https://instagram.com/tecilsolar" target="_blank" rel="noopener" class="soc" aria-label="Instagram">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+          </a>
+          <a href="https://facebook.com/tecilsolar" target="_blank" rel="noopener" class="soc" aria-label="Facebook">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://linkedin.com/company/tecil-solar" target="_blank" rel="noopener" class="soc" aria-label="LinkedIn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://wa.me/2348037135545" target="_blank" rel="noopener" class="soc soc-wa" aria-label="WhatsApp">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="ft-col">
+        <h5>Services</h5>
+        <a href="/services#installation">System Installation</a>
+        <a href="/services#maintenance">Maintenance & Repair</a>
+        <a href="/services#assessment">Load Assessment</a>
+        <a href="/services#training">Technical Training</a>
+        <a href="/services#projects">EPC Projects</a>
+        <a href="/services#eaas">Energy-as-a-Service</a>
+      </div>
+      <div class="ft-col">
+        <h5>Products</h5>
+        <a href="/products#panels">Solar Panels</a>
+        <a href="/products#inverters">Hybrid Inverters</a>
+        <a href="/products#batteries">LiFePO4 Batteries</a>
+        <a href="/products#controllers">Charge Controllers</a>
+        <a href="/products#lights">Solar Lights</a>
+        <a href="/products#stabilisers">Voltage Stabilisers</a>
+      </div>
+      <div class="ft-col">
+        <h5>Contact</h5>
+        <a href="/contact">Get a Free Quote</a>
+        <a href="mailto:info.tecilservices@gmail.com">info.tecilservices@gmail.com</a>
+        <a href="tel:+2348037135545">0803 713 5545</a>
+        <a href="https://wa.me/2348037135545" target="_blank">WhatsApp Us</a>
+        <a href="/branches">Our Locations</a>
+        <div class="ft-quote">"Reliable power. Expert hands. Products that last."</div>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <p>&copy; {new Date().getFullYear()} Tecil Integrated Services Limited · <a href="https://www.tecilsolar.com">www.tecilsolar.com</a></p>
+      <p>Operating across Nigeria since 2008</p>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/2348037135545" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+</a>
+
+</body>
 </html>
 
 <style>
-  /* ═══════════════════════════════════
-     NAVBAR
-  ═══════════════════════════════════ */
-  #navbar {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 1000;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  }
+/* NAV */
+#navbar {
+  position: fixed; top:0; left:0; right:0; z-index:1000;
+  transition: all .35s cubic-bezier(.4,0,.2,1);
+}
+#navbar.on-dark {
+  background: rgba(15,17,23,0.80);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+#navbar.on-dark .nl { color: rgba(255,255,255,0.80); }
+#navbar.on-dark .nl:hover, #navbar.on-dark .nl.active { color: #E8601A; background: rgba(232,96,26,0.08); }
+#navbar.on-dark .hbg span { background: #fff; }
 
-  /* Transparent state — over dark hero */
-  #navbar.nav-transparent {
-    background: rgba(17,17,17,0.75);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-  #navbar.nav-transparent .nav-link { color: rgba(255,255,255,0.80); }
-  #navbar.nav-transparent .nav-link:hover { color: #E8601A; background: rgba(232,96,26,0.08); }
-  #navbar.nav-transparent .nav-link.active { color: #E8601A; }
-  #navbar.nav-transparent .hamburger span { background: #fff; }
+#navbar.on-light {
+  background: #ffffff;
+  border-bottom: 1px solid #E5E7EB;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+}
+#navbar.on-light .nl { color: #374151; }
+#navbar.on-light .nl:hover, #navbar.on-light .nl.active { color: #CC1417; background: rgba(204,20,23,0.05); }
+#navbar.on-light .logo-mark .lt { color: #CC1417; }
+#navbar.on-light .logo-mark .lo { color: #E8601A; }
+#navbar.on-light .hbg span { background: #1a1a1a; }
 
-  /* Solid white state — scrolled past hero */
-  #navbar.nav-solid {
-    background: #ffffff;
-    border-bottom: 1px solid #E4E8ED;
-    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
-  }
-  #navbar.nav-solid .nav-link { color: #333333; }
-  #navbar.nav-solid .nav-link:hover { color: #CC1417; background: rgba(204,20,23,0.05); }
-  #navbar.nav-solid .nav-link.active { color: #CC1417; }
-  #navbar.nav-solid .logo-tecil { color: #CC1417; }
-  #navbar.nav-solid .logo-solar { color: #E8601A; }
-  #navbar.nav-solid .hamburger span { background: #111; }
+.nav-inner {
+  max-width: 1240px; margin: 0 auto; padding: 0 5%;
+  height: 68px; display:flex; align-items:center; justify-content:space-between;
+}
+.nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+.logo-mark { font-family:'Big Shoulders Display',sans-serif; font-weight:900; font-size:1.6rem; letter-spacing:.04em; text-transform:uppercase; line-height:1; }
+.lt { color: #CC1417; }
+.lo { color: #E8601A; }
+.logo-pill { background:#CC1417; color:#fff; font-family:'DM Sans',sans-serif; font-size:.57rem; font-weight:700; letter-spacing:.06em; padding:3px 9px; border-radius:20px; white-space:nowrap; }
 
-  .nav-container {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 5%;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+.nav-links { display:flex; align-items:center; gap:.1rem; list-style:none; }
+.nl {
+  font-family:'DM Sans',sans-serif; font-size:.85rem; font-weight:500;
+  text-decoration:none; padding:.45rem .85rem; border-radius:4px;
+  transition:all .25s ease; letter-spacing:.02em;
+}
+.nl-cta {
+  background:#CC1417 !important; color:#fff !important;
+  padding:.5rem 1.2rem !important; font-weight:700 !important;
+  margin-left:.5rem; text-transform:uppercase; font-size:.76rem !important;
+  border-radius:4px; letter-spacing:.06em;
+}
+.nl-cta:hover { background:#A30F11 !important; color:#fff !important; transform:translateY(-1px); box-shadow:0 4px 16px rgba(204,20,23,.3) !important; }
 
-  .nav-logo {
-    display: flex; align-items: center; gap: 10px;
-    text-decoration: none;
-  }
-  .logo-wordmark {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900; font-size: 1.55rem;
-    letter-spacing: 0.04em; text-transform: uppercase; line-height: 1;
-  }
-  .logo-tecil { color: #CC1417; }
-  .logo-solar { color: #E8601A; }
-  .logo-tagline-pill {
-    background: #CC1417; color: #fff;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.57rem; font-weight: 700;
-    letter-spacing: 0.06em; padding: 3px 9px;
-    border-radius: 20px; white-space: nowrap;
-  }
+.hbg { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; }
+.hbg span { display:block; width:24px; height:2px; border-radius:2px; transition:all .3s ease; }
+.hbg.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hbg.open span:nth-child(2){opacity:0}
+.hbg.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
 
-  .nav-links {
-    display: flex; align-items: center; gap: 0.1rem; list-style: none;
-  }
-  .nav-link {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.84rem; font-weight: 500;
-    text-decoration: none;
-    padding: 0.45rem 0.85rem; border-radius: 3px;
-    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-    letter-spacing: 0.02em;
-  }
-  .nav-cta {
-    background: #CC1417 !important;
-    color: #ffffff !important;
-    padding: 0.5rem 1.2rem !important;
-    font-weight: 700 !important;
-    margin-left: 0.5rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-size: 0.76rem !important;
-    border-radius: 3px;
-  }
-  .nav-cta:hover {
-    background: #A30F11 !important;
-    color: #fff !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(204,20,23,0.3) !important;
-  }
+.mob-menu {
+  display:none; flex-direction:column; gap:0;
+  background:#fff; border-top:3px solid #CC1417;
+  padding:.75rem 5% 1.5rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,.1);
+}
+.mob-menu.open { display:flex; }
+.ml { font-family:'DM Sans',sans-serif; font-size:1rem; font-weight:500; color:#222; text-decoration:none; padding:.8rem .5rem; border-bottom:1px solid #F0F0F0; transition:color .2s; }
+.ml:hover { color:#CC1417; }
+.ml-cta { color:#CC1417 !important; font-weight:700 !important; border-bottom:none !important; margin-top:.5rem; }
 
-  /* Hamburger */
-  .hamburger {
-    display: none; flex-direction: column; gap: 5px;
-    background: none; border: none; cursor: pointer; padding: 4px;
-  }
-  .hamburger span {
-    display: block; width: 24px; height: 2px;
-    border-radius: 2px; transition: all 0.3s ease;
-  }
-  .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
-  .hamburger.active span:nth-child(2) { opacity: 0; }
-  .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+/* FOOTER */
+footer { background:#0F1117; padding:5rem 0 0; border-top:3px solid #CC1417; }
+.ft-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1.4fr; gap:3rem; margin-bottom:3.5rem; }
+.ft-logo { font-family:'Big Shoulders Display',sans-serif; font-weight:900; font-size:1.9rem; text-transform:uppercase; letter-spacing:.04em; line-height:1; margin-bottom:8px; }
+.fl-r { color:#CC1417; }
+.fl-o { color:#E8601A; }
+.ft-pill { display:inline-block; background:#CC1417; color:#fff; font-size:.58rem; font-weight:700; letter-spacing:.08em; padding:3px 10px; border-radius:20px; margin-bottom:14px; }
+.ft-brand p { font-size:.86rem; color:rgba(255,255,255,.42); line-height:1.75; margin-bottom:8px; }
+.ft-parent { font-size:.65rem !important; font-weight:600 !important; color:rgba(255,255,255,.18) !important; letter-spacing:.05em; text-transform:uppercase; margin-bottom:18px !important; }
+.socials { display:flex; gap:8px; flex-wrap:wrap; }
+.soc { width:34px; height:34px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.10); border-radius:4px; color:rgba(255,255,255,.5); text-decoration:none; transition:all .25s ease; }
+.soc:hover { background:#CC1417; border-color:#CC1417; color:#fff; transform:translateY(-3px); }
+.soc-wa:hover { background:#25D366 !important; border-color:#25D366 !important; }
 
-  /* Mobile menu */
-  .mobile-menu {
-    display: none;
-    background: #fff;
-    border-top: 2px solid #CC1417;
-    padding: 1rem 5% 1.5rem;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-  }
-  .mobile-menu.open { display: block; }
-  .mobile-links { list-style: none; display: flex; flex-direction: column; gap: 0; }
-  .mobile-link {
-    display: block;
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem; font-weight: 500;
-    color: #222;
-    text-decoration: none;
-    padding: 0.85rem 0.5rem;
-    border-bottom: 1px solid #F0F0F0;
-    transition: color 0.2s ease;
-  }
-  .mobile-link:hover { color: #CC1417; }
-  .mobile-cta {
-    color: #CC1417 !important;
-    font-weight: 700 !important;
-    border-bottom: none !important;
-    margin-top: 0.5rem;
-    letter-spacing: 0.04em;
-  }
+.ft-col { display:flex; flex-direction:column; gap:0; }
+.ft-col h5 { font-family:'DM Sans',sans-serif; font-size:.68rem; font-weight:700; color:#fff; letter-spacing:.14em; text-transform:uppercase; margin-bottom:1rem; }
+.ft-col a { font-size:.85rem; color:rgba(255,255,255,.40); text-decoration:none; transition:color .2s; padding:.3rem 0; }
+.ft-col a:hover { color:#E8601A; }
+.ft-quote { margin-top:1.2rem; padding:.9rem 1.1rem; border-left:3px solid #CC1417; background:rgba(204,20,23,.06); font-size:.8rem; color:rgba(255,255,255,.38); font-style:italic; line-height:1.7; }
+.ft-bottom { border-top:1px solid rgba(255,255,255,.07); padding:1.5rem 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.5rem; }
+.ft-bottom p { font-size:.78rem; color:rgba(255,255,255,.25); }
+.ft-bottom a { color:#E8601A; }
 
-  /* ═══════════════════════════════════
-     FOOTER
-  ═══════════════════════════════════ */
-  .footer {
-    background: #0F0F0F;
-    padding: 5rem 0 0;
-    border-top: 3px solid #CC1417;
-  }
-  .footer-top {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1.4fr;
-    gap: 3.5rem;
-    margin-bottom: 3.5rem;
-  }
-  .footer-wordmark {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900; font-size: 2rem;
-    text-transform: uppercase; letter-spacing: 0.04em;
-    line-height: 1; margin-bottom: 10px;
-  }
-  .fw-red   { color: #CC1417; }
-  .fw-orange{ color: #E8601A; }
-  .footer-tag-pill {
-    display: inline-block;
-    background: #CC1417; color: #fff;
-    font-size: 0.6rem; font-weight: 700;
-    letter-spacing: 0.08em; padding: 3px 10px;
-    border-radius: 20px; margin-bottom: 16px;
-  }
-  .footer-desc {
-    font-size: 0.87rem; color: rgba(255,255,255,0.45);
-    line-height: 1.75; margin-bottom: 8px;
-  }
-  .footer-parent {
-    font-size: 0.68rem; font-weight: 600;
-    color: rgba(255,255,255,0.20);
-    letter-spacing: 0.05em; text-transform: uppercase;
-    margin-bottom: 20px;
-  }
-  .social-links { display: flex; gap: 8px; flex-wrap: wrap; }
-  .social-link {
-    width: 34px; height: 34px;
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.10);
-    border-radius: 3px; color: rgba(255,255,255,0.55);
-    text-decoration: none; transition: all 0.3s ease;
-  }
-  .social-link:hover {
-    background: #CC1417; border-color: #CC1417;
-    color: #fff; transform: translateY(-3px);
-  }
-  .social-wa:hover { background: #25D366 !important; border-color: #25D366 !important; }
+/* WA FLOAT */
+.wa-float { position:fixed; bottom:26px; right:26px; width:52px; height:52px; background:#25D366; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none; box-shadow:0 4px 20px rgba(37,211,102,.4); z-index:999; transition:all .3s ease; }
+.wa-float:hover { background:#1ebe5d; color:#fff; transform:translateY(-3px) scale(1.06); box-shadow:0 8px 30px rgba(37,211,102,.5); }
 
-  .footer-col-title {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.7rem; font-weight: 700;
-    color: #fff; letter-spacing: 0.14em;
-    text-transform: uppercase; margin-bottom: 1.1rem;
-  }
-  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-  .footer-links a {
-    font-size: 0.86rem; color: rgba(255,255,255,0.42);
-    text-decoration: none; transition: color 0.25s ease;
-  }
-  .footer-links a:hover { color: #E8601A; }
-
-  .footer-quote-box {
-    margin-top: 1.5rem;
-    padding: 1rem 1.25rem;
-    border-left: 3px solid #CC1417;
-    background: rgba(204,20,23,0.05);
-  }
-  .fq-text {
-    font-size: 0.82rem; color: rgba(255,255,255,0.40);
-    font-style: italic; line-height: 1.7;
-  }
-
-  .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.07);
-    padding: 1.5rem 0;
-    display: flex; justify-content: space-between;
-    align-items: center; flex-wrap: wrap; gap: 0.5rem;
-  }
-  .footer-copy { font-size: 0.8rem; color: rgba(255,255,255,0.25); }
-  .footer-copy a { color: #E8601A; }
-  .footer-est {
-    font-size: 0.75rem; font-weight: 600;
-    color: rgba(255,255,255,0.18); letter-spacing: 0.06em;
-  }
-
-  /* ═══════════════════════════════════
-     WHATSAPP FLOAT
-  ═══════════════════════════════════ */
-  .whatsapp-float {
-    position: fixed; bottom: 28px; right: 28px;
-    width: 54px; height: 54px;
-    background: #25D366; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; text-decoration: none;
-    box-shadow: 0 4px 20px rgba(37,211,102,0.40);
-    z-index: 999; transition: all 0.3s ease;
-  }
-  .whatsapp-float:hover {
-    background: #1ebe5d; color: #fff;
-    transform: translateY(-3px) scale(1.06);
-    box-shadow: 0 8px 30px rgba(37,211,102,0.50);
-  }
-
-  /* ═══════════════════════════════════
-     RESPONSIVE
-  ═══════════════════════════════════ */
-  @media (max-width: 768px) {
-    .nav-links { display: none; }
-    .hamburger { display: flex; }
-    .logo-tagline-pill { display: none; }
-    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
-    .footer-bottom { flex-direction: column; text-align: center; }
-    .whatsapp-float { bottom: 20px; right: 16px; width: 48px; height: 48px; }
-  }
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hbg{display:flex}
+  .logo-pill{display:none}
+  .ft-grid{grid-template-columns:1fr;gap:2rem}
+  .ft-bottom{flex-direction:column;text-align:center}
+  .wa-float{bottom:18px;right:14px;width:48px;height:48px}
+}
 </style>
-
 <script>
-  // ── SMART NAV — transparent over hero, white when scrolled ──
-  const navbar = document.getElementById('navbar');
-  const heroHeight = window.innerHeight * 0.6;
-
-  function updateNav() {
-    if (!navbar) return;
-    if (window.scrollY > heroHeight) {
-      navbar.classList.remove('nav-transparent');
-      navbar.classList.add('nav-solid');
-    } else {
-      navbar.classList.remove('nav-solid');
-      navbar.classList.add('nav-transparent');
-    }
+const nav = document.getElementById('navbar');
+function updateNav(){
+  if(!nav) return;
+  if(window.scrollY > window.innerHeight * .55){
+    nav.className = 'on-light';
+  } else {
+    nav.className = 'on-dark';
   }
-  window.addEventListener('scroll', updateNav, { passive: true });
-  updateNav();
+}
+window.addEventListener('scroll', updateNav, {passive:true});
+updateNav();
 
-  // ── HAMBURGER ──
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobile-menu');
-  hamburger?.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    mobileMenu?.classList.toggle('open');
-  });
-  document.querySelectorAll('.mobile-link').forEach(l => {
-    l.addEventListener('click', () => {
-      hamburger?.classList.remove('active');
-      mobileMenu?.classList.remove('open');
-    });
-  });
+const hbg = document.getElementById('hbg');
+const mm = document.getElementById('mob-menu');
+hbg?.addEventListener('click',()=>{ hbg.classList.toggle('open'); mm?.classList.toggle('open'); });
+document.querySelectorAll('.ml').forEach(l=>l.addEventListener('click',()=>{ hbg?.classList.remove('open'); mm?.classList.remove('open'); }));
 
-  // ── SCROLL REVEAL ──
-  function initReveal() {
-    const reveals = document.querySelectorAll('.reveal');
-    if (!reveals.length) return;
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-    reveals.forEach(el => {
-      const r = el.getBoundingClientRect();
-      if (r.top < window.innerHeight - 40) {
-        el.classList.add('visible');
-      } else {
-        io.observe(el);
-      }
-    });
-  }
-  document.addEventListener('DOMContentLoaded', initReveal);
+function initReveal(){
+  const els = document.querySelectorAll('.reveal');
+  if(!els.length) return;
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);} });
+  },{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(el=>{ const r=el.getBoundingClientRect(); if(r.top<window.innerHeight-40){el.classList.add('visible');}else{io.observe(el);} });
+}
+document.addEventListener('DOMContentLoaded',initReveal);
 </script>

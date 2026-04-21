@@ -1,141 +1,91 @@
 ---
 const projects = [
-  { year: "2018", client: "Biase Plantations Ltd (Wilmar)", desc: "60KW Solar + 72KVA Hybrid Inverters — fully off-grid industrial plantation system", value: "₦48M", type: "Off-Grid Industrial" },
-  { year: "2016", client: "Cross River Basin Dev. Authority", desc: "Solar Street Light Network across Cross River State — public infrastructure", value: "₦27.5M", type: "Street Lighting" },
-  { year: "2022", client: "Uddyking Oil Ltd", desc: "3 projects — 20–30KVA Hybrid Systems with Lithium Battery Banks", value: "₦40M+", type: "Commercial/Oil" },
-  { year: "2022", client: "Unical Microfinance Bank HQ", desc: "15KVA Hybrid Inverter + 18KW Solar for institutional banking operations", value: "₦12M", type: "Institutional" },
-  { year: "2020", client: "Mater Elizabeth High School", desc: "All-in-One Solar Street & Floodlights — full campus lighting infrastructure", value: "₦13M", type: "Education" },
-  { year: "2015", client: "ASUU Unical Chapter", desc: "80KVA Combined Inverter + 100 Batteries — 30 residential units powered", value: "₦9.5M", type: "Residential Estate" },
+  { year:"2018", client:"Biase Plantations (Wilmar)", desc:"60KW Solar + 72KVA Hybrid Inverters — fully off-grid industrial plantation", value:"₦48M", tag:"Industrial" },
+  { year:"2016", client:"Cross River Basin Dev. Authority", desc:"Solar Street Light Network across Cross River State", value:"₦27.5M", tag:"Infrastructure" },
+  { year:"2022", client:"Uddyking Oil Ltd", desc:"3 projects — 20–30KVA Hybrid Systems with Lithium Battery Banks", value:"₦40M+", tag:"Commercial" },
+  { year:"2022", client:"Unical Microfinance Bank HQ", desc:"15KVA Hybrid Inverter + 18KW Solar for institutional banking", value:"₦12M", tag:"Institutional" },
+  { year:"2020", client:"Mater Elizabeth High School", desc:"All-in-One Solar Street & Floodlights — full campus lighting", value:"₦13M", tag:"Education" },
+  { year:"2015", client:"ASUU Unical Chapter", desc:"80KVA Combined Inverter + 100 Batteries — 30 residential units powered", value:"₦9.5M", tag:"Residential" },
 ];
 ---
-
-<section class="projects-section dark-section section" id="projects">
+<section class="pj section">
   <div class="container">
-
-    <div class="projects-header">
+    <div class="pj-head">
       <div>
         <span class="section-tag">Track Record</span>
-        <h2>34+ Corporate Projects <span class="text-red-gradient">2014–Present</span></h2>
+        <h2>34+ Corporate Projects <span class="text-gradient">Since 2014</span></h2>
       </div>
-      <a href="/projects" class="btn-outline">
+      <a href="/projects" class="btn-outline-white">
         Full Portfolio
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
 
-    <div class="projects-grid">
-      {projects.map((p, i) => (
-        <div class={`project-card reveal reveal-delay-${i % 3}`}>
-          <div class="p-top">
-            <span class="p-year">{p.year}</span>
-            <span class="p-type">{p.type}</span>
+    <div class="pj-grid">
+      {projects.map((p,i)=>(
+        <div class={`pj-card reveal reveal-delay-${i%3}`}>
+          <div class="pjc-top">
+            <span class="pjc-year">{p.year}</span>
+            <span class="pjc-tag">{p.tag}</span>
           </div>
-          <h3 class="p-client">{p.client}</h3>
-          <p class="p-desc">{p.desc}</p>
-          <div class="p-value">{p.value}</div>
+          <h3 class="pjc-client">{p.client}</h3>
+          <p class="pjc-desc">{p.desc}</p>
+          <div class="pjc-value">{p.value}</div>
         </div>
       ))}
     </div>
 
-    <!-- CTA bar -->
-    <div class="projects-cta-bar reveal">
-      <div class="pcb-text">
+    <div class="pj-cta reveal">
+      <div>
         <h3>Your Project Could Be Next.</h3>
-        <p>Hospitals, universities, government agencies, industrial estates — we have the track record.</p>
+        <p>Universities, hospitals, military, government — we have the track record and credentials to match.</p>
       </div>
       <a href="/contact" class="btn-primary">Discuss Your Project</a>
     </div>
-
   </div>
 </section>
 
 <style>
-  .projects-section { background: #111111; }
+.pj { background:#0F1117; }
 
-  .projects-header {
-    display: flex; justify-content: space-between; align-items: flex-end;
-    margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem;
-  }
-  .projects-header h2 { color: #fff; }
+.pj-head {
+  display:flex; justify-content:space-between; align-items:flex-end;
+  margin-bottom:3rem; flex-wrap:wrap; gap:1.5rem;
+}
+.pj-head h2 { color:#fff; }
+.section-tag { color:#E8601A; }
+.section-tag::before { background:#E8601A; }
 
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    margin-bottom: 3rem;
-  }
+.pj-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-bottom:2px; }
 
-  .project-card {
-    background: rgba(255,255,255,0.025);
-    border: 1px solid rgba(255,255,255,0.06);
-    padding: 2rem 1.75rem;
-    position: relative; overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-  }
-  .project-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, #CC1417, #E8601A);
-    transform: scaleX(0); transform-origin: left;
-    transition: transform 0.3s ease;
-  }
-  .project-card:hover {
-    background: rgba(204,20,23,0.05);
-    border-color: rgba(204,20,23,0.2);
-    transform: translateY(-3px);
-  }
-  .project-card:hover::before { transform: scaleX(1); }
+.pj-card {
+  background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07);
+  padding:2rem 1.75rem; transition:all .3s ease; position:relative; overflow:hidden;
+}
+.pj-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,#CC1417,#E8601A);
+  transform:scaleX(0); transform-origin:left; transition:transform .3s ease;
+}
+.pj-card:hover { background:rgba(204,20,23,.06); border-color:rgba(204,20,23,.22); transform:translateY(-3px); }
+.pj-card:hover::before { transform:scaleX(1); }
 
-  .p-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-  .p-year {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.8rem; font-weight: 800;
-    color: #E8601A; letter-spacing: 0.1em;
-  }
-  .p-type {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.65rem; font-weight: 700;
-    color: rgba(255,255,255,0.3); letter-spacing: 0.08em;
-    text-transform: uppercase;
-    background: rgba(255,255,255,0.04);
-    padding: 3px 8px; border-radius: 2px;
-  }
-  .p-client {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.15rem; font-weight: 800;
-    text-transform: uppercase; color: #fff;
-    line-height: 1.15; margin-bottom: 10px;
-  }
-  .p-desc {
-    font-size: 0.82rem; color: rgba(255,255,255,0.45);
-    line-height: 1.65; margin-bottom: 16px;
-  }
-  .p-value {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.6rem; font-weight: 900;
-    color: #CC1417; line-height: 1;
-  }
+.pjc-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.pjc-year { font-family:'Big Shoulders Display',sans-serif; font-size:.85rem; font-weight:800; color:#E8601A; letter-spacing:.1em; }
+.pjc-tag { font-family:'DM Sans',sans-serif; font-size:.62rem; font-weight:700; color:rgba(255,255,255,.3); background:rgba(255,255,255,.05); padding:3px 8px; border-radius:3px; text-transform:uppercase; letter-spacing:.06em; }
+.pjc-client { font-family:'Big Shoulders Display',sans-serif; font-size:1.1rem; font-weight:800; text-transform:uppercase; color:#fff; line-height:1.15; margin-bottom:8px; }
+.pjc-desc { font-size:.82rem; color:rgba(255,255,255,.45); line-height:1.65; margin-bottom:14px; }
+.pjc-value { font-family:'Big Shoulders Display',sans-serif; font-size:1.7rem; font-weight:900; color:#CC1417; line-height:1; }
 
-  .projects-cta-bar {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 2rem; flex-wrap: wrap;
-    background: rgba(204,20,23,0.07);
-    border: 1px solid rgba(204,20,23,0.2);
-    padding: 2.5rem 3rem;
-    border-radius: 3px;
-  }
-  .pcb-text h3 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.7rem; font-weight: 900;
-    text-transform: uppercase; color: #fff; margin-bottom: 6px;
-  }
-  .pcb-text p { font-size: 0.88rem; color: rgba(255,255,255,0.45); }
+.pj-cta {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:2rem; flex-wrap:wrap;
+  background:rgba(204,20,23,.08); border:1px solid rgba(204,20,23,.22);
+  padding:2.5rem 3rem; margin-top:2px;
+}
+.pj-cta h3 { font-family:'Big Shoulders Display',sans-serif; font-size:1.7rem; font-weight:900; text-transform:uppercase; color:#fff; margin-bottom:6px; }
+.pj-cta p { font-size:.88rem; color:rgba(255,255,255,.45); }
 
-  @media (max-width: 900px) {
-    .projects-grid { grid-template-columns: 1fr 1fr; }
-  }
-  @media (max-width: 600px) {
-    .projects-grid { grid-template-columns: 1fr; }
-    .projects-cta-bar { flex-direction: column; padding: 2rem; }
-  }
+@media(max-width:900px){ .pj-grid{grid-template-columns:1fr 1fr;} }
+@media(max-width:600px){ .pj-grid{grid-template-columns:1fr;} .pj-cta{flex-direction:column;padding:2rem;} }
 </style>

@@ -1,204 +1,111 @@
 ---
-// AboutSection.astro
+// AboutSection — WHITE background, clean, breathing
 ---
-<section class="about-section dark-2-section section" id="about">
+<section class="about section">
   <div class="container">
+    <div class="ab-grid">
 
-    <div class="about-grid">
-
-      <!-- LEFT: Text -->
-      <div class="about-text">
+      <div class="ab-left reveal">
         <span class="section-tag">Who We Are</span>
-        <h2>Built on <span class="text-red-gradient">16 Years</span> of Proven Delivery</h2>
-        <p>
-          <strong>TECIL Solar</strong> is the renewable energy division of Tecil Integrated Services Limited —
-          one of Nigeria's most experienced indigenous solar power companies, founded in 2008 and
-          headquartered in Calabar, Cross River State.
-        </p>
-        <p>
-          From residential homes seeking relief from epileptic grid power to commercial enterprises
-          demanding uninterrupted operations, we deliver <strong>end-to-end energy solutions</strong> —
-          supply, installation, maintenance, training, and advisory services.
-        </p>
-        <p>
-          Our position: not the cheapest, not the most expensive — but <strong>definitively the most
-          knowledgeable and dependable</strong> local provider in South-South and South-East Nigeria.
-        </p>
+        <h2>Nigeria's Most <span class="text-gradient">Experienced</span> Solar Company</h2>
+        <p>Founded in 2008 and operating across Nigeria, TECIL Solar is the renewable energy division of Tecil Integrated Services Limited. For over 16 years we have delivered <strong>end-to-end solar solutions</strong> — from a single home installation to 60KW off-grid industrial systems.</p>
+        <p>We don't chase the cheapest deal. We earn the right to be trusted — through technical depth, honest advice, and systems that outlast their warranties.</p>
 
-        <div class="about-values">
-          <span class="value-badge">Excellence</span>
-          <span class="value-badge">Innovation</span>
-          <span class="value-badge">Customer Satisfaction</span>
-          <span class="value-badge">Integrity</span>
-          <span class="value-badge">Sustainability</span>
+        <div class="ab-values">
+          <span class="av">Excellence</span>
+          <span class="av">Innovation</span>
+          <span class="av">Integrity</span>
+          <span class="av">Sustainability</span>
         </div>
 
-        <div class="about-btns">
+        <div class="ab-btns">
           <a href="/projects" class="btn-primary">Our Track Record</a>
           <a href="/services" class="btn-outline">Our Services</a>
         </div>
       </div>
 
-      <!-- RIGHT: Stat cards -->
-      <div class="about-cards">
-        <div class="about-card reveal">
-          <div class="ac-num">₦48M</div>
-          <div class="ac-label">Largest Single Project</div>
-          <div class="ac-sub">Biase Plantations — 60KW Off-Grid</div>
+      <div class="ab-right">
+        <div class="ab-stat-grid">
+          <div class="ab-stat reveal reveal-delay-1">
+            <div class="ast-num">16+</div>
+            <div class="ast-label">Years Operating</div>
+          </div>
+          <div class="ab-stat reveal reveal-delay-2">
+            <div class="ast-num">34+</div>
+            <div class="ast-label">Corporate Projects</div>
+          </div>
+          <div class="ab-stat reveal reveal-delay-3">
+            <div class="ast-num">7</div>
+            <div class="ast-label">Active Branches</div>
+          </div>
+          <div class="ab-stat reveal reveal-delay-4">
+            <div class="ast-num">15+</div>
+            <div class="ast-label">Brand Partnerships</div>
+          </div>
         </div>
-        <div class="about-card reveal reveal-delay-1">
-          <div class="ac-num">60KW</div>
-          <div class="ac-label">Largest Off-Grid System</div>
-          <div class="ac-sub">Wilmar / Biase Plantations, 2018</div>
-        </div>
-        <div class="about-card reveal reveal-delay-2">
-          <div class="ac-num">5</div>
-          <div class="ac-label">States Covered</div>
-          <div class="ac-sub">CRS · Rivers · Akwa Ibom · Lagos · + More</div>
-        </div>
-        <div class="about-card reveal reveal-delay-3">
-          <div class="ac-num">2008</div>
-          <div class="ac-label">Year Established</div>
-          <div class="ac-sub">Calabar, Cross River State, Nigeria</div>
+
+        <div class="ab-mission reveal reveal-delay-2">
+          <div class="abm-line"></div>
+          <p class="abm-text">"To build a reputation as the leading, most knowledgeable, most reliable and most customer-friendly renewable energy company in Africa."</p>
+          <span class="abm-cite">TECIL Solar Mission Statement</span>
         </div>
       </div>
 
     </div>
-
-    <!-- Mission quote bar -->
-    <div class="mission-bar reveal">
-      <div class="mission-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-      </div>
-      <blockquote class="mission-text">
-        "To build a reputation as the leading, most knowledgeable, most reliable and most customer-friendly renewable energy company in Africa."
-      </blockquote>
-      <cite class="mission-cite">TECIL Solar — Mission Statement</cite>
-    </div>
-
   </div>
 </section>
 
 <style>
-  .about-section { background: #1A1A1A; }
+.about { background: #FFFFFF; }
 
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
-    align-items: center;
-    margin-bottom: 4rem;
-  }
+.ab-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:5rem; align-items:center;
+}
 
-  .about-text h2 { margin-bottom: 1.5rem; color: #fff; }
-  .about-text p { margin-bottom: 1.1rem; }
-  .about-text p strong { color: #fff; }
+.ab-left h2 { color:#111827; margin-bottom:1.25rem; }
+.ab-left p { margin-bottom:1rem; }
+.ab-left p strong { color:#111827; font-weight:600; }
 
-  .about-values {
-    display: flex; flex-wrap: wrap; gap: 8px; margin: 1.75rem 0 2rem;
-  }
-  .value-badge {
-    background: rgba(232,96,26,0.1);
-    border: 1px solid rgba(232,96,26,0.22);
-    color: #E8601A;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 5px 12px;
-    border-radius: 2px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-  .about-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.ab-values { display:flex; flex-wrap:wrap; gap:8px; margin:1.5rem 0 2rem; }
+.av {
+  background:#FFF5EE; border:1.5px solid rgba(232,96,26,.25);
+  color:#E8601A; font-family:'DM Sans',sans-serif;
+  font-size:.72rem; font-weight:700; padding:5px 13px;
+  border-radius:100px; letter-spacing:.04em; text-transform:uppercase;
+}
+.ab-btns { display:flex; gap:12px; flex-wrap:wrap; }
 
-  .about-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-  }
+.ab-stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-bottom:2px; }
+.ab-stat {
+  background:#F7F8FA; padding:2rem 1.75rem;
+  border:1px solid #E5E7EB;
+  transition:all .3s ease; position:relative; overflow:hidden;
+}
+.ab-stat::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,#CC1417,#E8601A);
+  transform:scaleX(0); transform-origin:left; transition:transform .3s ease;
+}
+.ab-stat:hover { background:#fff; box-shadow:0 4px 20px rgba(0,0,0,.08); transform:translateY(-2px); }
+.ab-stat:hover::before { transform:scaleX(1); }
 
-  .about-card {
-    background: rgba(255,255,255,0.025);
-    border: 1px solid rgba(255,255,255,0.07);
-    padding: 32px 26px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-  }
-  .about-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, #CC1417, #E8601A);
-    transform: scaleX(0); transform-origin: left;
-    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
-  }
-  .about-card:hover {
-    background: rgba(232,96,26,0.05);
-    border-color: rgba(232,96,26,0.2);
-    transform: translateY(-3px);
-  }
-  .about-card:hover::before { transform: scaleX(1); }
+.ast-num {
+  font-family:'Big Shoulders Display',sans-serif;
+  font-size:2.8rem; font-weight:900; color:#CC1417; line-height:1; margin-bottom:4px;
+}
+.ast-label { font-family:'DM Sans',sans-serif; font-size:.75rem; font-weight:600; color:#6B7280; text-transform:uppercase; letter-spacing:.06em; }
 
-  .ac-num {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 2.8rem;
-    font-weight: 900;
-    color: #E8601A;
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-  .ac-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 4px;
-  }
-  .ac-sub {
-    font-size: 0.74rem;
-    color: rgba(255,255,255,0.35);
-    line-height: 1.5;
-  }
+.ab-mission {
+  background:#FFF1F1; border:1px solid rgba(204,20,23,.15);
+  border-left:4px solid #CC1417; padding:1.5rem 1.75rem;
+  display:flex; flex-direction:column; gap:8px;
+}
+.abm-line { width:24px; height:2px; background:#CC1417; }
+.abm-text { font-size:.9rem; color:#4B5563; font-style:italic; line-height:1.75; }
+.abm-cite { font-size:.68rem; font-weight:700; color:#CC1417; text-transform:uppercase; letter-spacing:.1em; }
 
-  .mission-bar {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.5rem;
-    background: rgba(204,20,23,0.07);
-    border: 1px solid rgba(204,20,23,0.2);
-    border-left: 4px solid #CC1417;
-    padding: 2rem 2.5rem;
-    border-radius: 3px;
-  }
-  .mission-icon {
-    color: #CC1417;
-    flex-shrink: 0;
-    margin-top: 4px;
-  }
-  .mission-text {
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    color: rgba(255,255,255,0.75);
-    font-style: italic;
-    line-height: 1.75;
-    flex: 1;
-  }
-  .mission-cite {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: #CC1417;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    align-self: flex-end;
-    white-space: nowrap;
-  }
-
-  @media (max-width: 900px) {
-    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-    .mission-bar { flex-direction: column; gap: 1rem; }
-    .mission-cite { align-self: flex-start; }
-  }
+@media(max-width:900px){
+  .ab-grid{grid-template-columns:1fr;gap:3rem}
+}
 </style>

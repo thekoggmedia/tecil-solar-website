@@ -71,7 +71,7 @@ const services = [
   <MarqueeStrip variant="red" />
 
   <!-- Services List -->
-  <section class="services-full dark-2-section section">
+  <section class="services-full section" style="background:#F7F8FA">
     <div class="container">
       {services.map((s, i) => (
         <div id={s.id} class={`sf-item reveal ${i % 2 === 1 ? 'sf-flip' : ''}`}>
@@ -117,7 +117,7 @@ const services = [
   .ph-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(204,20,23,0.1) 0%, transparent 70%); top: -100px; right: -50px; }
   .page-hero .container { position: relative; z-index: 1; }
   .page-hero h1 { color: #fff; margin: 8px 0 16px; }
-  .ph-sub { font-size: 1.05rem; color: rgba(255,255,255,0.5); max-width: 560px; line-height: 1.75; }
+  .ph-sub { font-size: 1.05rem; color: #6B7280; max-width: 560px; line-height: 1.75; }
 
   .sf-item {
     display: grid; grid-template-columns: 160px 1fr;
@@ -130,8 +130,8 @@ const services = [
   .sf-icon-col { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
   .sf-icon-wrap {
     width: 80px; height: 80px;
-    background: rgba(204,20,23,0.1);
-    border: 1px solid rgba(204,20,23,0.25);
+    background: #FFF1F1;
+    border: 1px solid rgba(204,20,23,0.2);
     border-radius: 4px;
     display: flex; align-items: center; justify-content: center;
     color: #CC1417;
@@ -148,14 +148,14 @@ const services = [
     font-weight: 900; text-transform: uppercase;
     color: #fff; margin-bottom: 1rem;
   }
-  .sf-body { color: rgba(255,255,255,0.6); margin-bottom: 1.5rem; line-height: 1.8; }
+  .sf-body { color: #4B5563; margin-bottom: 1.5rem; line-height: 1.8; }
   .sf-list {
     list-style: none; display: grid;
     grid-template-columns: 1fr 1fr; gap: 8px 2rem;
     margin-bottom: 2rem;
   }
   .sf-list li {
-    font-size: 0.88rem; color: rgba(255,255,255,0.55);
+    font-size: 0.88rem; color: #6B7280;
     padding-left: 16px; position: relative; line-height: 1.5;
   }
   .sf-list li::before {

@@ -1,140 +1,84 @@
 ---
-const audiences = [
-  {
-    type: "For Homeowners",
-    icon: "🏠",
-    headline: "Stop Paying for Generator Fuel Every Month.",
-    body: "TECIL Solar systems are designed for the Nigerian home — built to handle your load, survive our weather, and last for years. We've been doing this since 2008. Your neighbours will notice.",
-    color: "red",
-  },
-  {
-    type: "For Business Owners",
-    icon: "🏪",
-    headline: "Downtime Costs Money.",
-    body: "A properly specified TECIL Solar system keeps your business running when the grid doesn't — and pays for itself faster than you think. Talk to us about the numbers.",
-    color: "orange",
-  },
-  {
-    type: "For Institutions & Government",
-    icon: "🏛",
-    headline: "Credentials, Track Record, Technical Depth.",
-    body: "We've delivered for universities, hospitals, military facilities, consulates, and microfinance banks across Nigeria. We have the credentials, project history, and technical depth to meet your procurement standards.",
-    color: "teal",
-  },
-  {
-    type: "For Contractors & Developers",
-    icon: "🏗",
-    headline: "We Supply, Install, Commission — and Document Everything.",
-    body: "Need a reliable solar sub-contractor? Our project portfolio and 15+ brand partnerships speak for us. We document every job. Let's discuss your spec.",
-    color: "gold",
-  },
+const cards = [
+  { icon:"🏠", type:"For Homeowners", headline:"Stop Paying for Generator Fuel.", body:"TECIL Solar systems are designed for the Nigerian home — built to handle your load, survive our weather, and last for years. Your neighbours will notice.", color:"red", href:"/contact" },
+  { icon:"🏪", type:"For Businesses", headline:"Downtime Costs Money.", body:"A properly specified TECIL Solar system keeps your business running when the grid doesn't — and pays for itself faster than you think. Talk to us about the numbers.", color:"orange", href:"/contact" },
+  { icon:"🏛", type:"For Institutions", headline:"Credentials. Track Record. Depth.", body:"Hospitals, universities, military facilities, consulates — we meet your procurement standards and have the project history to prove it.", color:"teal", href:"/contact" },
+  { icon:"🏗", type:"For Contractors", headline:"We Supply, Install & Document Everything.", body:"Need a reliable solar sub-contractor? Our portfolio and 15+ brand partnerships speak for us. Every job is fully documented at commissioning.", color:"gold", href:"/contact" },
 ];
 ---
-
-<section class="audience-section dark-2-section section" id="audience">
+<section class="au section">
   <div class="container">
-
-    <div class="audience-header">
+    <div class="au-head reveal">
       <span class="section-tag">Who We Serve</span>
-      <h2>A Solution for <span class="text-red-gradient">Every Client</span></h2>
-      <p class="audience-intro">
-        Whether you're a frustrated homeowner, an SME, a government institution, or a contractor —
-        TECIL Solar has been solving your energy problem since 2008.
-      </p>
+      <h2>One Company. <span class="text-gradient">Every Client Type.</span></h2>
+      <p class="au-sub">Whether you're a homeowner, an SME, a government institution, or a contractor — TECIL Solar has been solving your energy problem since 2008.</p>
     </div>
-
-    <div class="audience-grid">
-      {audiences.map((a, i) => (
-        <div class={`audience-card aud-${a.color} reveal reveal-delay-${i}`}>
-          <div class="aud-type">
-            <span class="aud-icon">{a.icon}</span>
-            {a.type}
+    <div class="au-grid">
+      {cards.map((c,i)=>(
+        <div class={`au-card ac-${c.color} reveal reveal-delay-${i}`}>
+          <div class="ac-top">
+            <span class="ac-icon">{c.icon}</span>
+            <span class={`ac-type at-${c.color}`}>{c.type}</span>
           </div>
-          <h3 class="aud-headline">{a.headline}</h3>
-          <p class="aud-body">{a.body}</p>
-          <a href="/contact" class="aud-link">
+          <h3 class="ac-headline">{c.headline}</h3>
+          <p class="ac-body">{c.body}</p>
+          <a href={c.href} class={`ac-link al-${c.color}`}>
             Talk to us
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
       ))}
     </div>
-
   </div>
 </section>
 
 <style>
-  .audience-section { background: #1A1A1A; }
+.au { background:#FFFFFF; }
 
-  .audience-header { text-align: center; margin-bottom: 4rem; }
-  .audience-header h2 { color: #fff; margin-bottom: 1rem; }
-  .audience-intro { max-width: 540px; margin: 0 auto; color: rgba(255,255,255,0.5); }
+.au-head { text-align:center; margin-bottom:3rem; }
+.au-head h2 { color:#111827; margin-bottom:.75rem; }
+.au-sub { max-width:520px; margin:0 auto; color:#6B7280; }
 
-  .audience-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2px;
-  }
+.au-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.5px; }
 
-  .audience-card {
-    padding: 3rem;
-    border: 1px solid rgba(255,255,255,0.05);
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-    display: flex; flex-direction: column; gap: 1rem;
-  }
-  .audience-card:hover { transform: translateY(-3px); filter: brightness(1.08); }
+.au-card {
+  padding:2.5rem; border:1px solid #E5E7EB;
+  transition:all .3s ease; position:relative;
+  display:flex; flex-direction:column; gap:.85rem;
+  background:#fff;
+}
+.ac-red   { border-top:3px solid #CC1417; }
+.ac-orange{ border-top:3px solid #E8601A; }
+.ac-teal  { border-top:3px solid #006D77; }
+.ac-gold  { border-top:3px solid #C8960C; }
 
-  .aud-red   { background: rgba(204,20,23,0.07); }
-  .aud-orange{ background: rgba(232,96,26,0.07); }
-  .aud-teal  { background: rgba(0,109,119,0.07); }
-  .aud-gold  { background: rgba(200,150,12,0.07); }
+.au-card:hover { box-shadow:0 12px 36px rgba(0,0,0,.09); transform:translateY(-3px); }
 
-  .aud-type {
-    display: flex; align-items: center; gap: 8px;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.72rem; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase;
-  }
-  .aud-red .aud-type   { color: #CC1417; }
-  .aud-orange .aud-type{ color: #E8601A; }
-  .aud-teal .aud-type  { color: #006D77; }
-  .aud-gold .aud-type  { color: #C8960C; }
+.ac-top { display:flex; align-items:center; gap:10px; }
+.ac-icon { font-size:1.2rem; }
+.ac-type { font-family:'DM Sans',sans-serif; font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+.at-red   { color:#CC1417; }
+.at-orange{ color:#E8601A; }
+.at-teal  { color:#006D77; }
+.at-gold  { color:#C8960C; }
 
-  .aud-icon { font-size: 1rem; }
+.ac-headline { font-family:'Big Shoulders Display',sans-serif; font-size:clamp(1.3rem,2.5vw,1.7rem); font-weight:900; text-transform:uppercase; color:#111827; line-height:1.1; }
+.ac-body  { font-size:.9rem; color:#6B7280; line-height:1.75; font-style:italic; flex:1; }
 
-  .aud-headline {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
-    font-weight: 900; text-transform: uppercase;
-    color: #ffffff; line-height: 1.05;
-  }
+.ac-link {
+  display:inline-flex; align-items:center; gap:5px;
+  font-family:'DM Sans',sans-serif; font-size:.76rem; font-weight:700;
+  text-transform:uppercase; letter-spacing:.08em; text-decoration:none;
+  transition:gap .2s;
+}
+.ac-link:hover { gap:9px; }
+.al-red   { color:#CC1417; }
+.al-orange{ color:#E8601A; }
+.al-teal  { color:#006D77; }
+.al-gold  { color:#C8960C; }
 
-  .aud-body {
-    font-size: 0.9rem;
-    color: rgba(255,255,255,0.55);
-    line-height: 1.75;
-    font-style: italic;
-    flex: 1;
-  }
-
-  .aud-link {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.78rem; font-weight: 700;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    text-decoration: none;
-    transition: gap 0.2s ease;
-  }
-  .aud-link:hover { gap: 10px; }
-  .aud-red .aud-link   { color: #CC1417; }
-  .aud-orange .aud-link{ color: #E8601A; }
-  .aud-teal .aud-link  { color: #006D77; }
-  .aud-gold .aud-link  { color: #C8960C; }
-
-  @media (max-width: 768px) {
-    .audience-grid { grid-template-columns: 1fr; }
-    .audience-card { padding: 2rem; }
-  }
+@media(max-width:768px){
+  .au-grid{ grid-template-columns:1fr; }
+  .au-card{ padding:1.75rem; }
+}
 </style>

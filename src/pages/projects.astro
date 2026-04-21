@@ -48,7 +48,7 @@ const projects = [
   <MarqueeStrip variant="red" />
 
   <!-- Projects Table -->
-  <section class="projects-table-section dark-2-section section">
+  <section class="projects-table-section section" style="background:#fff">
     <div class="container">
       <span class="section-tag">Corporate Portfolio</span>
       <h2 style="color:#fff; margin-bottom: 3rem;">Selected Project <span class="text-red-gradient">Portfolio</span></h2>
@@ -81,7 +81,7 @@ const projects = [
   </section>
 
   <!-- Timeline -->
-  <section class="timeline-section dark-section section">
+  <section class="timeline-section section" style="background:#F7F8FA">
     <div class="container">
       <span class="section-tag">Company History</span>
       <h2 style="color:#fff; margin-bottom: 3.5rem;">16+ Years of <span class="text-red-gradient">Milestones</span></h2>
@@ -111,17 +111,17 @@ const projects = [
   .ph-bg { position: absolute; inset: 0; background-image: linear-gradient(rgba(204,20,23,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(204,20,23,0.04) 1px, transparent 1px); background-size: 64px 64px; }
   .ph-orb { position: absolute; border-radius: 50%; filter: blur(80px); width: 500px; height: 500px; background: radial-gradient(circle, rgba(204,20,23,0.1) 0%, transparent 70%); top: -100px; right: -50px; }
   .page-hero .container { position: relative; z-index: 1; }
-  .page-hero h1 { color: #fff; margin: 8px 0 16px; }
-  .ph-sub { font-size: 1.05rem; color: rgba(255,255,255,0.5); max-width: 560px; line-height: 1.75; }
+  .page-hero h1 { color: #111827; margin: 8px 0 16px; }
+  .ph-sub { font-size: 1.05rem; color: #6B7280; max-width: 560px; line-height: 1.75; }
 
   .projects-table-section { background: #1A1A1A; }
   .table-wrap { overflow-x: auto; }
   .proj-table { width: 100%; border-collapse: collapse; }
-  .proj-table thead tr { background: #CC1417; }
-  .proj-table th { padding: 14px 18px; text-align: left; font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; }
-  .proj-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.2s; }
+  .proj-table thead tr { background: #CC1417; color:#fff !important; }
+  .proj-table th { padding: 14px 18px; text-align: left; font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #111827; }
+  .proj-table tbody tr { border-bottom: 1px solid #E5E7EB; transition: background 0.2s; }
   .proj-table tbody tr:hover { background: rgba(232,96,26,0.05); }
-  .proj-table td { padding: 16px 18px; font-size: 0.86rem; color: rgba(255,255,255,0.65); vertical-align: middle; }
+  .proj-table td { padding: 16px 18px; font-size: 0.86rem; color: #374151; vertical-align: middle; }
   .td-client { color: #fff !important; font-weight: 600; }
   .td-type { color: rgba(255,255,255,0.5) !important; }
   .td-tag { background: rgba(232,96,26,0.1); border: 1px solid rgba(232,96,26,0.2); color: #E8601A; font-size: 0.68rem; font-weight: 700; padding: 3px 8px; border-radius: 2px; white-space: nowrap; letter-spacing: 0.04em; text-transform: uppercase; }
@@ -135,9 +135,9 @@ const projects = [
     display: grid; grid-template-columns: 80px 32px 1fr;
     gap: 0 1.5rem; align-items: center;
     padding: 1.25rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid #E5E7EB;
   }
   .tl-year { font-family: 'Barlow Condensed', sans-serif; font-size: 1.2rem; font-weight: 900; color: #E8601A; }
-  .tl-dot { width: 10px; height: 10px; background: #CC1417; border-radius: 50%; justify-self: center; flex-shrink: 0; box-shadow: 0 0 12px rgba(204,20,23,0.5); }
-  .tl-event { font-size: 0.92rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
+  .tl-dot { width: 10px; height: 10px; background: #CC1417; color:#fff !important; border-radius: 50%; justify-self: center; flex-shrink: 0; box-shadow: 0 0 12px rgba(204,20,23,0.5); }
+  .tl-event { font-size: 0.92rem; color: #4B5563; line-height: 1.6; }
 </style>
