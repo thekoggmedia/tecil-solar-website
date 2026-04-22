@@ -1,75 +1,12 @@
 ---
+interface Props { variant?: 'red' | 'dark' | 'light' }
 const { variant = 'red' } = Astro.props;
-
-const items = [
-  'Solar Panels',
-  'Hybrid Inverters',
-  'Lithium Batteries',
-  'Load Assessment',
-  'Maintenance',
-  'EPC Projects',
-  'Nationwide Support',
-  'Product Supply',
-];
+const items = ['Solar Panels','Hybrid Inverters','LiFePO4 Batteries','System Installation','Maintenance & Repair','Load Assessment','Technical Training','Energy-as-a-Service','Lagos · Port Harcourt · Calabar · Uyo · Ikom','...the inverter place'];
 ---
-
-<section class:list={['marquee', variant === 'dark' && 'is-dark', variant === 'red' && 'is-red']}>
+<div class={`marquee is-${variant}`} aria-hidden="true">
   <div class="marquee-track">
-    <div class="marquee-group">
-      {items.map((item) => <span>{item}</span>)}
-    </div>
-    <div class="marquee-group" aria-hidden="true">
-      {items.map((item) => <span>{item}</span>)}
-    </div>
+    {[...items,...items,...items].map(item=>(
+      <span class="marquee-item">{item}</span>
+    ))}
   </div>
-</section>
-
-<style>
-  .marquee {
-    overflow: hidden;
-  }
-
-  .marquee.is-red {
-    background: linear-gradient(90deg, #CC1417, #A30F11);
-    color: #fff;
-  }
-
-  .marquee.is-dark {
-    background: #0F1117;
-    color: rgba(255,255,255,0.85);
-  }
-
-  .marquee-track {
-    display: flex;
-    width: max-content;
-    animation: move 28s linear infinite;
-  }
-
-  .marquee-group {
-    display: inline-flex;
-    align-items: center;
-    gap: 2rem;
-    padding: 0.9rem 0;
-    white-space: nowrap;
-  }
-
-  .marquee-group span {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
-    font-size: 0.74rem;
-    font-weight: 700;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-  }
-
-  .marquee-group span::before {
-    content: '•';
-    opacity: 0.7;
-  }
-
-  @keyframes move {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-</style>
+</div>

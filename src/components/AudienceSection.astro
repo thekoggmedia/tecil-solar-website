@@ -1,108 +1,62 @@
 ---
 import { audiences } from '../data/site';
 ---
-
-<section class="section bg-white audience-section">
+<section class="section bg-white au">
   <div class="container">
-    <div class="section-head reveal">
-      <div>
-        <span class="section-tag">Who We Serve</span>
-        <h2>Clearer audience targeting makes the site feel stronger.</h2>
-      </div>
-      <p>
-        This section helps visitors quickly find themselves in the story and understand whether Tecil Solar is the right fit.
-      </p>
+    <div class="au-head reveal">
+      <span class="section-tag">Who We Serve</span>
+      <h2>One Company. <span class="text-gradient">Every Energy Need.</span></h2>
+      <p class="au-sub">Whether you're a homeowner, an SME, a government institution, or a developer — TECIL Solar has been solving your energy problem since 2008.</p>
     </div>
-
-    <div class="audience-grid">
-      {audiences.map((item, index) => (
-        <article class:list={['audience-card', 'reveal', `reveal-delay-${(index % 5) + 1}`]}>
-          <span class="audience-kicker">0{index + 1}</span>
-          <h3>{item.title}</h3>
-          <p>{item.body}</p>
-          <ul>
-            {item.points.map((point) => <li>{point}</li>)}
+    <div class="au-grid">
+      {audiences.map((a,i)=>(
+        <div class={`au-card ac-${a.color} reveal reveal-delay-${i}`}>
+          <div class="ac-top">
+            <span class="ac-icon">{a.icon}</span>
+            <span class={`ac-label al-${a.color}`}>{a.title}</span>
+          </div>
+          <h3 class="ac-title">{a.body.split('.')[0]}.</h3>
+          <p class="ac-body">{a.body}</p>
+          <ul class="ac-points">
+            {a.points.map(p=><li>{p}</li>)}
           </ul>
-        </article>
+          <a href="/contact" class={`ac-link al-${a.color}`}>
+            Talk to us
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
       ))}
     </div>
   </div>
 </section>
-
 <style>
-  .audience-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-  }
-
-  .audience-card {
-    padding: 1.45rem;
-    border-radius: 28px;
-    border: 1px solid var(--border);
-    background: linear-gradient(180deg, #fff, #fcfcfd);
-    box-shadow: 0 12px 30px rgba(15,23,42,0.05);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .audience-card::before {
-    content: '';
-    position: absolute;
-    inset: 0 0 auto 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--red), var(--orange));
-  }
-
-  .audience-card:nth-child(2)::before {
-    background: linear-gradient(90deg, var(--orange), #C8960C);
-  }
-
-  .audience-card:nth-child(3)::before {
-    background: linear-gradient(90deg, var(--teal), #6AC6D1);
-  }
-
-  .audience-card:nth-child(4)::before {
-    background: linear-gradient(90deg, #0F1117, #394150);
-  }
-
-  .audience-kicker {
-    display: inline-flex;
-    align-items: center;
-    margin-bottom: 1rem;
-    font-family: var(--font-display);
-    font-size: 2rem;
-    line-height: 1;
-    color: rgba(15,17,23,0.12);
-  }
-
-  .audience-card h3 {
-    font-size: 1.5rem;
-  }
-
-  .audience-card p {
-    margin-top: 0.65rem;
-  }
-
-  .audience-card ul {
-    margin: 1rem 0 0;
-    padding-left: 1.1rem;
-    color: var(--muted);
-  }
-
-  .audience-card li + li {
-    margin-top: 0.42rem;
-  }
-
-  @media (max-width: 1020px) {
-    .audience-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 720px) {
-    .audience-grid {
-      grid-template-columns: 1fr;
-    }
-  }
+.au-head { text-align:center;margin-bottom:3rem; }
+.au-head h2 { color:#111827;margin-bottom:.75rem; }
+.au-sub { max-width:52ch;margin:0 auto;color:#6B7280; }
+.au-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:1.5px; }
+.au-card { padding:2.5rem;border:1px solid #E5E7EB;background:#fff;transition:all .3s ease;display:flex;flex-direction:column;gap:.85rem;position:relative; }
+.ac-red   { border-top:3px solid #CC1417; }
+.ac-orange{ border-top:3px solid #E8601A; }
+.ac-teal  { border-top:3px solid #006D77; }
+.ac-gold  { border-top:3px solid #C8960C; }
+.au-card:hover { box-shadow:0 12px 36px rgba(0,0,0,.08);transform:translateY(-3px); }
+.ac-top { display:flex;align-items:center;gap:10px; }
+.ac-icon { font-size:1.2rem; }
+.ac-label { font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-variation-settings:'wdth' 100,'wght' 700; }
+.al-red   { color:#CC1417; }
+.al-orange{ color:#E8601A; }
+.al-teal  { color:#006D77; }
+.al-gold  { color:#C8960C; }
+.ac-title { font-family:'Nunito Sans',sans-serif;font-size:clamp(1.2rem,2.5vw,1.6rem);font-weight:800;text-transform:uppercase;color:#111827;line-height:1.1;font-variation-settings:'wdth' 125,'wght' 800; }
+.ac-body  { font-size:.9rem;color:#6B7280;line-height:1.75;font-style:italic;flex:1; }
+.ac-points { list-style:none;display:flex;flex-direction:column;gap:5px; }
+.ac-points li { font-size:.82rem;color:#4B5563;padding-left:16px;position:relative;line-height:1.5; }
+.ac-points li::before { content:'✓';position:absolute;left:0;font-size:.7rem; }
+.ac-red    .ac-points li::before { color:#CC1417; }
+.ac-orange .ac-points li::before { color:#E8601A; }
+.ac-teal   .ac-points li::before { color:#006D77; }
+.ac-gold   .ac-points li::before { color:#C8960C; }
+.ac-link { display:inline-flex;align-items:center;gap:5px;font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;transition:gap .2s;font-variation-settings:'wdth' 100,'wght' 700; }
+.ac-link:hover { gap:9px; }
+@media(max-width:768px){ .au-grid{grid-template-columns:1fr} .au-card{padding:1.75rem} }
 </style>

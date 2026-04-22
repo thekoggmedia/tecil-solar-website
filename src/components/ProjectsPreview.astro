@@ -1,156 +1,57 @@
 ---
 import { projects } from '../data/site';
+const featured = projects.slice(0,6);
 ---
-
-<section class="section bg-dark projects-preview">
-  <div class="container project-shell">
-    <div class="project-copy reveal">
-      <span class="section-tag">Selected Work</span>
-      <h2>One contrast break keeps the page interesting.</h2>
-      <p class="project-lead">
-        A dark section here makes the flow feel premium and gives the portfolio more visual importance.
-      </p>
-
-      <div class="project-metrics">
-        <div><strong>34+</strong><span>Projects</span></div>
-        <div><strong>7</strong><span>Locations</span></div>
-        <div><strong>18+</strong><span>Years</span></div>
+<section class="section bg-dark pj">
+  <div class="container">
+    <div class="pj-head">
+      <div>
+        <span class="section-tag">Track Record</span>
+        <h2 style="color:#fff">34+ Corporate Projects <span class="text-gradient">Since 2014</span></h2>
       </div>
-
-      <a href="/projects" class="btn-outline-white">View Case Studies</a>
+      <a href="/projects" class="btn-outline-white" style="flex-shrink:0">
+        Full Portfolio
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
     </div>
-
-    <div class="project-grid">
-      {projects.map((item, index) => (
-        <article class:list={['project-card', 'reveal', `reveal-delay-${index + 1}`]}>
-          <div class="project-top">
-            <span>{item.tag}</span>
-            <strong>{item.location}</strong>
+    <div class="pj-grid">
+      {featured.map((p,i)=>(
+        <div class={`pj-card reveal reveal-delay-${i%3}`}>
+          <div class="pjc-top">
+            <span class="pjc-date">{p.date}</span>
+            <span class="pjc-tag">{p.tag}</span>
           </div>
-          <h3>{item.title}</h3>
-          <p>{item.summary}</p>
-          <div class="project-result">{item.result}</div>
-        </article>
+          <h3 class="pjc-title">{p.title}</h3>
+          <p class="pjc-summary">{p.summary}</p>
+          <div class="pjc-value">{p.value}</div>
+        </div>
       ))}
+    </div>
+    <div class="pj-cta reveal">
+      <div>
+        <h3>Your Project Could Be Next.</h3>
+        <p>Universities, hospitals, government agencies, industrial estates — we have the track record and credentials to match your brief.</p>
+      </div>
+      <a href="/contact" class="btn-primary">Discuss Your Project</a>
     </div>
   </div>
 </section>
-
 <style>
-  .projects-preview {
-    position: relative;
-    overflow: hidden;
-    background:
-      radial-gradient(circle at top right, rgba(204,20,23,0.20), transparent 25%),
-      radial-gradient(circle at bottom left, rgba(232,96,26,0.12), transparent 22%),
-      #0F1117;
-  }
-
-  .project-shell {
-    display: grid;
-    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
-    gap: 2rem;
-    align-items: start;
-  }
-
-  .project-copy h2 {
-    color: #fff;
-    max-width: 10ch;
-    margin-top: 0.6rem;
-  }
-
-  .project-lead {
-    margin-top: 1rem;
-    color: rgba(255,255,255,0.68);
-    max-width: 48ch;
-  }
-
-  .project-metrics {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem;
-    margin: 1.4rem 0 1.55rem;
-  }
-
-  .project-metrics div {
-    padding: 1rem;
-    border-radius: 22px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.05);
-  }
-
-  .project-metrics strong {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 2.25rem;
-    color: #fff;
-    line-height: 1;
-  }
-
-  .project-metrics span {
-    display: block;
-    margin-top: 0.3rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.44);
-  }
-
-  .project-grid {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .project-card {
-    padding: 1.35rem;
-    border-radius: 28px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.06);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 22px 54px rgba(0,0,0,0.20);
-  }
-
-  .project-top {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.54);
-  }
-
-  .project-card h3 {
-    color: #fff;
-    font-size: 1.7rem;
-  }
-
-  .project-card p {
-    margin-top: 0.65rem;
-    color: rgba(255,255,255,0.68);
-  }
-
-  .project-result {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    color: #FFBE8A;
-    font-size: 0.92rem;
-    font-weight: 600;
-  }
-
-  @media (max-width: 980px) {
-    .project-shell {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  @media (max-width: 720px) {
-    .project-metrics {
-      grid-template-columns: 1fr;
-    }
-  }
+.pj-head { display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;flex-wrap:wrap;gap:1.5rem; }
+.pj-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:2px; }
+.pj-card { background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);padding:2rem 1.75rem;transition:all .3s ease;position:relative;overflow:hidden; }
+.pj-card::before { content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#CC1417,#E8601A);transform:scaleX(0);transform-origin:left;transition:transform .3s ease; }
+.pj-card:hover { background:rgba(204,20,23,.06);border-color:rgba(204,20,23,.22);transform:translateY(-3px); }
+.pj-card:hover::before { transform:scaleX(1); }
+.pjc-top { display:flex;justify-content:space-between;align-items:center;margin-bottom:10px; }
+.pjc-date { font-family:'Nunito Sans',sans-serif;font-size:.78rem;font-weight:800;color:#E8601A;letter-spacing:.08em;font-variation-settings:'wdth' 100,'wght' 800; }
+.pjc-tag  { font-size:.62rem;font-weight:700;color:rgba(255,255,255,.3);background:rgba(255,255,255,.05);padding:3px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.06em;font-variation-settings:'wdth' 100,'wght' 700; }
+.pjc-title { font-family:'Nunito Sans',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;color:#fff;line-height:1.2;margin-bottom:8px;font-variation-settings:'wdth' 125,'wght' 800; }
+.pjc-summary { font-size:.82rem;color:rgba(255,255,255,.45);line-height:1.65;margin-bottom:14px; }
+.pjc-value { font-family:'Nunito Sans',sans-serif;font-size:1.65rem;font-weight:900;color:#CC1417;line-height:1;font-variation-settings:'wdth' 125,'wght' 900; }
+.pj-cta { display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;background:rgba(204,20,23,.08);border:1px solid rgba(204,20,23,.22);padding:2.5rem 3rem;margin-top:2px; }
+.pj-cta h3 { font-family:'Nunito Sans',sans-serif;font-size:1.5rem;font-weight:900;text-transform:uppercase;color:#fff;margin-bottom:5px;font-variation-settings:'wdth' 125,'wght' 900; }
+.pj-cta p  { font-size:.86rem;color:rgba(255,255,255,.45); }
+@media(max-width:900px){ .pj-grid{grid-template-columns:1fr 1fr} }
+@media(max-width:600px){ .pj-grid{grid-template-columns:1fr} .pj-cta{flex-direction:column;padding:2rem} }
 </style>
