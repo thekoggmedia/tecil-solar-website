@@ -3,51 +3,173 @@ import Layout from '../layouts/Layout.astro';
 import MarqueeStrip from '../components/MarqueeStrip.astro';
 import CTASection from '../components/CTASection.astro';
 import { projects } from '../data/site';
+
+const tagColors: Record<string, string> = {
+  Industrial:    'red',
+  Infrastructure:'orange',
+  Commercial:    'teal',
+  Institutional: 'gold',
+  Education:     'teal',
+  Hospitality:   'orange',
+  Diplomatic:    'gold',
+  Military:      'red',
+  Residential:   'orange',
+};
+
+const milestones = [
+  { year: '2008', event: 'TECIL Integrated Services Limited founded' },
+  { year: '2014', event: 'First documented institutional projects completed' },
+  { year: '2016', event: '₦27.5M solar street light project for Cross River Basin Authority' },
+  { year: '2018', event: '₦48M off-grid solar system — Biase Plantations (Wilmar)' },
+  { year: '2019', event: 'Expanded to Uyo; delivered for Nigerian Navy & HIIT PLC' },
+  { year: '2020', event: 'Projects for UCTH, Eastern Naval Command, two universities' },
+  { year: '2022', event: '₦40M+ Uddyking Oil projects; Unical Microfinance Bank HQ' },
+  { year: '2024', event: 'Reached 7 operational branches across 5 states' },
+  { year: '2026', event: 'EaaS and Training Institute development underway' },
+];
 ---
 
 <Layout
   title="Projects — TECIL Solar"
-  description="TECIL Solar project work across residential, commercial, and institutional deployments."
+  description="TECIL Solar's 34+ delivered projects across residential, commercial, institutional, and industrial sectors since 2014."
   page="projects"
 >
+
+  <!-- PAGE HERO -->
   <section class="page-hero">
     <div class="page-hero-grid"></div>
     <div class="page-hero-orb a"></div>
     <div class="page-hero-orb b"></div>
     <div class="container">
-      <span class="section-tag">Projects</span>
-      <h1>Proof that the brand can deliver.</h1>
+      <span class="section-tag">Track Record</span>
+      <h1>34+ Projects.<br/><span class="text-gradient">Real Results.</span></h1>
       <p class="page-hero-sub">
-        Project pages help the site feel credible by showing that the company does real work for real clients.
+        From hospitals and universities to military facilities, oil companies, and foreign
+        consulates — TECIL Solar has a documented delivery history that speaks for itself.
+        Every project is commissioned, tested, and handed over with full documentation.
       </p>
     </div>
   </section>
 
   <MarqueeStrip variant="red" />
 
-  <section class="section bg-dark">
-    <div class="container project-grid">
-      {projects.map((item, index) => (
-        <article class:list={['project-card', 'reveal', `reveal-delay-${index + 1}`]}>
-          <span class="project-tag">{item.tag}</span>
-          <h2>{item.title}</h2>
-          <p class="project-location">{item.location}</p>
-          <p>{item.summary}</p>
-          <div class="project-result">{item.result}</div>
-        </article>
+  <!-- STATS BAR -->
+  <section class="proj-stats-bar">
+    <div class="container pstat-inner">
+      {[
+        { val: '34+',    label: 'Corporate Projects' },
+        { val: '₦250M+', label: 'Total Project Value' },
+        { val: '10+',    label: 'Sectors Served' },
+        { val: '2014',   label: 'First Corporate Project' },
+        { val: '5',      label: 'States Covered' },
+      ].map(s => (
+        <div class="pstat">
+          <strong>{s.val}</strong>
+          <span>{s.label}</span>
+        </div>
       ))}
     </div>
   </section>
 
-  <section class="section bg-white">
-    <div class="container project-strip reveal">
-      <div>
-        <span class="section-tag">What The Page Now Does</span>
-        <h2>More emphasis on results. Less repetition.</h2>
+  <!-- PROJECT GRID -->
+  <section class="section bg-dark">
+    <div class="container">
+      <div class="pg-head reveal">
+        <div>
+          <span class="section-tag">Project Portfolio</span>
+          <h2 style="color:#fff">Selected Corporate <span class="text-gradient">Engagements</span></h2>
+        </div>
+        <p class="pg-head-note">
+          Documented projects from 2014 to present. Residential and SME installations
+          not listed for client privacy.
+        </p>
       </div>
-      <p>
-        A project page should show outcomes, not just a list of services copied again.
-      </p>
+
+      <div class="project-grid">
+        {projects.map((item, index) => {
+          const col = tagColors[item.tag] || 'red';
+          return (
+            <article class={`project-card reveal reveal-delay-${(index % 3) + 1}`}>
+              <div class="pjc-top">
+                <span class={`pjc-date`}>{item.date}</span>
+                <span class={`pjc-tag ptag-${col}`}>{item.tag}</span>
+              </div>
+              <h2 class="pjc-title">{item.title}</h2>
+              <p class="pjc-location">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                {item.location}
+              </p>
+              <p class="pjc-summary">{item.summary}</p>
+              <div class="pjc-value-row">
+                <div class="pjc-value">{item.value}</div>
+                <span class="pjc-value-label">Project Value</span>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="section bg-white">
+    <div class="container">
+      <div class="tl-head reveal">
+        <span class="section-tag">Company History</span>
+        <h2>16 Years of <span class="text-gradient">Consistent Delivery</span></h2>
+        <p class="tl-desc">
+          TECIL Solar didn't build its reputation in a day. Here's the journey from
+          a single operation in Calabar to a 7-branch national solar authority.
+        </p>
+      </div>
+      <div class="timeline">
+        {milestones.map((m, i) => (
+          <div class={`tl-item reveal reveal-delay-${(i % 4) + 1}`}>
+            <div class="tl-year">{m.year}</div>
+            <div class="tl-dot"></div>
+            <div class="tl-event">{m.event}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDENTIALS STRIP -->
+  <section class="section bg-off">
+    <div class="container">
+      <div class="cred-grid reveal">
+        <div class="cred-copy">
+          <span class="section-tag">Credentials</span>
+          <h2>Procurement-Ready. <span class="text-gradient">Fully Documented.</span></h2>
+          <p>
+            For institutions, government agencies, and corporate clients, TECIL Solar
+            provides complete project documentation — from site assessment and BOQ
+            through commissioning reports and handover certificates.
+          </p>
+          <a href="/contact" class="btn-primary" style="margin-top:1.5rem">
+            Request Our Company Profile
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+        <div class="cred-list">
+          {[
+            'Nigerian Navy — Eastern Naval Command HQ',
+            'Cameroun Consulate, Calabar',
+            'University of Calabar',
+            'Biase Plantations Ltd (Wilmar Group)',
+            'Cross River Basin Development Authority',
+            'Havilla University, Nde-Ikom',
+            'Renaissance University, Enugu',
+            'Uddyking Oil Ltd',
+            'Unical Microfinance Bank',
+          ].map(client => (
+            <div class="cred-client">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#CC1417" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>{client}</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   </section>
 
@@ -55,85 +177,122 @@ import { projects } from '../data/site';
 </Layout>
 
 <style>
-  .project-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
+/* STATS BAR */
+.proj-stats-bar { background:#fff;border-bottom:1px solid #E5E7EB; }
+.pstat-inner { display:flex;flex-wrap:wrap;justify-content:center; }
+.pstat {
+  display:flex;flex-direction:column;align-items:center;padding:1.4rem 2.5rem;
+  border-right:1px solid #E5E7EB;gap:3px;
+}
+.pstat:last-child { border-right:none; }
+.pstat strong {
+  font-family:var(--font);font-size:2rem;font-weight:900;color:#CC1417;line-height:1;
+  font-variation-settings:'wdth' 125,'wght' 900;
+}
+.pstat span { font-size:.64rem;font-weight:600;color:#6B7280;text-transform:uppercase;letter-spacing:.06em; }
 
-  .project-card {
-    padding: 1.45rem;
-    border-radius: 28px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.06);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 22px 52px rgba(0,0,0,0.18);
-  }
+/* PROJECT GRID */
+.pg-head { display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;flex-wrap:wrap;gap:1.5rem; }
+.pg-head-note { max-width:36ch;font-size:.84rem;color:rgba(255,255,255,.4);line-height:1.6;align-self:flex-end; }
 
-  .project-card h2 {
-    color: #fff;
-    font-size: 1.95rem;
-    margin-top: 0.8rem;
-  }
+.project-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:2px; }
 
-  .project-tag {
-    display: inline-flex;
-    padding: 0.5rem 0.72rem;
-    border-radius: 999px;
-    background: rgba(232,96,26,0.12);
-    color: #FFBE8A;
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
+.project-card {
+  padding:1.75rem;
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.07);
+  transition:all .3s ease;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;gap:10px;
+}
+.project-card::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,#CC1417,#E8601A);
+  transform:scaleX(0);transform-origin:left;transition:transform .3s ease;
+}
+.project-card:hover { background:rgba(204,20,23,.06);border-color:rgba(204,20,23,.22);transform:translateY(-3px); }
+.project-card:hover::before { transform:scaleX(1); }
 
-  .project-location {
-    margin-top: 0.55rem;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.48);
-  }
+.pjc-top { display:flex;justify-content:space-between;align-items:center; }
+.pjc-date { font-size:.78rem;font-weight:800;color:#E8601A;letter-spacing:.08em;font-variation-settings:'wdth' 100,'wght' 800; }
+.pjc-tag  {
+  font-size:.6rem;font-weight:700;padding:3px 8px;border-radius:4px;
+  text-transform:uppercase;letter-spacing:.06em;
+}
+.ptag-red   { background:rgba(204,20,23,.12);color:#FF9090; }
+.ptag-orange{ background:rgba(232,96,26,.12);color:#FFBE8A; }
+.ptag-teal  { background:rgba(0,109,119,.12);color:#80D8E0; }
+.ptag-gold  { background:rgba(200,150,12,.12);color:#FFD966; }
 
-  .project-card p:last-of-type {
-    margin-top: 0.75rem;
-    color: rgba(255,255,255,0.70);
-  }
+.pjc-title {
+  font-family:var(--font);font-size:1rem;font-weight:800;
+  text-transform:uppercase;color:#fff;line-height:1.2;
+  font-variation-settings:'wdth' 125,'wght' 800;
+}
+.pjc-location {
+  display:flex;align-items:center;gap:5px;
+  font-size:.72rem;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(255,255,255,.4);
+}
+.pjc-summary { font-size:.82rem;color:rgba(255,255,255,.55);line-height:1.65;flex:1; }
 
-  .project-result {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    color: #FFBE8A;
-    font-weight: 600;
-  }
+.pjc-value-row {
+  display:flex;align-items:baseline;gap:8px;
+  padding-top:12px;border-top:1px solid rgba(255,255,255,.07);
+}
+.pjc-value {
+  font-family:var(--font);font-size:1.75rem;font-weight:900;color:#CC1417;line-height:1;
+  font-variation-settings:'wdth' 125,'wght' 900;
+}
+.pjc-value-label { font-size:.64rem;font-weight:600;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.06em; }
 
-  .project-strip {
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-    align-items: end;
-  }
+/* TIMELINE */
+.tl-head { text-align:center;margin-bottom:3rem; }
+.tl-head h2 { color:#111827;margin-bottom:.75rem; }
+.tl-desc { max-width:52ch;margin:0 auto;color:#6B7280; }
 
-  .project-strip h2 {
-    max-width: 10ch;
-  }
+.timeline { position:relative;display:flex;flex-direction:column;gap:0; }
+.timeline::before {
+  content:'';position:absolute;left:120px;top:0;bottom:0;
+  width:2px;background:linear-gradient(to bottom,#CC1417,#E8601A,rgba(232,96,26,.1));
+}
 
-  .project-strip p {
-    max-width: 50ch;
-    font-size: 1.02rem;
-  }
+.tl-item { display:grid;grid-template-columns:120px 20px 1fr;gap:20px;align-items:flex-start;padding:20px 0; }
+.tl-year {
+  font-family:var(--font);font-size:1rem;font-weight:900;color:#CC1417;
+  text-align:right;padding-top:2px;
+  font-variation-settings:'wdth' 125,'wght' 900;
+}
+.tl-dot {
+  width:10px;height:10px;border-radius:50%;background:#CC1417;
+  margin-top:6px;position:relative;z-index:1;
+  box-shadow:0 0 0 3px rgba(204,20,23,.15);
+}
+.tl-event { font-size:.92rem;color:#4B5563;line-height:1.65;padding-top:2px; }
 
-  @media (max-width: 980px) {
-    .project-grid {
-      grid-template-columns: 1fr;
-    }
+/* CREDENTIALS */
+.cred-grid { display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center; }
+.cred-copy h2 { color:#111827;margin-bottom:1rem; }
+.cred-copy p  { color:#6B7280;line-height:1.85; }
+.cred-list { display:flex;flex-direction:column;gap:10px; }
+.cred-client {
+  display:flex;align-items:center;gap:10px;
+  padding:.75rem 1rem;background:#fff;
+  border:1px solid #E5E7EB;border-radius:8px;
+  font-size:.88rem;color:#4B5563;transition:all .2s ease;
+}
+.cred-client:hover { border-color:rgba(204,20,23,.25);background:#FFF1F1; }
 
-    .project-strip {
-      flex-direction: column;
-      align-items: start;
-    }
-  }
+/* RESPONSIVE */
+@media(max-width:900px){
+  .project-grid{grid-template-columns:1fr 1fr}
+  .pstat{padding:1rem 1.5rem}
+  .cred-grid{grid-template-columns:1fr;gap:3rem}
+  .pg-head{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:600px){
+  .project-grid{grid-template-columns:1fr}
+  .timeline::before{left:80px}
+  .tl-item{grid-template-columns:80px 20px 1fr;gap:12px}
+  .tl-year{font-size:.82rem}
+}
 </style>

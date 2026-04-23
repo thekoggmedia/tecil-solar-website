@@ -72,29 +72,49 @@ export const audiences = [
   {
     title: 'Homeowners',
     icon:  '🏠',
-    body:  'Stop paying generator bills every month. TECIL Solar systems are built for the Nigerian home — designed for your load, our weather, and years of reliable service. Your neighbours will notice.',
-    points: ['Quiet, clean power 24/7', 'Lower long-term running cost', 'Systems that outlast their warranties'],
+    intro: 'Stop paying generator bills every month.',
+    body:  'TECIL Solar systems are built for the Nigerian home — designed for your load, our weather, and years of reliable service. Your neighbours will notice.',
+    points: [
+      'Quiet, clean power 24/7',
+      'Lower long-term running cost',
+      'Systems that outlast their warranties'
+    ],
     color: 'red',
   },
   {
     title: 'Businesses',
     icon:  '🏪',
-    body:  'Downtime costs money. A properly specified TECIL Solar system keeps your business running when the grid fails — and pays for itself faster than you think. Talk to us about the numbers.',
-    points: ['Zero-downtime operations', 'Predictable energy cost', 'Better productivity and customer experience'],
+    intro: 'Downtime costs money.',
+    body:  'A properly specified TECIL Solar system keeps your business running when the grid fails — and pays for itself faster than you think.',
+    points: [
+      'Zero-downtime operations',
+      'Predictable energy cost',
+      'Better productivity and customer experience'
+    ],
     color: 'orange',
   },
   {
     title: 'Institutions',
     icon:  '🏛',
-    body:  'We\'ve delivered for universities, hospitals, military facilities, consulates, and microfinance banks across Nigeria. We have the project history and credentials to meet your procurement standards.',
-    points: ['Procurement-ready documentation', 'Proven institutional track record', 'Commissioning reports and SLA handover'],
+    intro: 'We’ve delivered for serious institutions across Nigeria.',
+    body:  'From universities and hospitals to military facilities and consulates, we have the project history and credentials to meet your procurement standards.',
+    points: [
+      'Procurement-ready documentation',
+      'Proven institutional track record',
+      'Commissioning reports and SLA handover'
+    ],
     color: 'teal',
   },
   {
     title: 'Contractors & Developers',
     icon:  '🏗',
-    body:  'Need a reliable solar sub-contractor with a verified delivery history? We supply, install, commission — and document everything. Our 15+ brand partnerships and 34+ projects speak for us.',
-    points: ['Verified delivery history', 'Full project documentation', 'Multi-site and phased rollout capability'],
+    intro: 'A reliable solar partner with proven delivery.',
+    body:  'We supply, install, commission — and document everything. Our 15+ brand partnerships and 34+ projects speak for us.',
+    points: [
+      'Verified delivery history',
+      'Full project documentation',
+      'Multi-site and phased rollout capability'
+    ],
     color: 'gold',
   },
 ];
@@ -191,4 +211,27 @@ export const contactChannels = [
   { label:'Phone',    value:'0803 713 5545',             href:'tel:+2348037135545' },
   { label:'WhatsApp', value:'Chat with the team',        href:'https://wa.me/2348037135545' },
   { label:'Email',    value:'info.tecilservices@gmail.com', href:'mailto:info.tecilservices@gmail.com' },
+];
+
+export const processSteps = [
+  {
+    step: '01',
+    title: 'Consultation',
+    body: 'We start with a proper conversation about your energy needs, usage pattern, and expectations.'
+  },
+  {
+    step: '02',
+    title: 'Assessment & Design',
+    body: 'We carry out load analysis and design a system that matches your real demand — not guesswork.'
+  },
+  {
+    step: '03',
+    title: 'Installation',
+    body: 'Our team installs and commissions your system safely with proper documentation.'
+  },
+  {
+    step: '04',
+    title: 'Support',
+    body: 'We stay with you after delivery — maintenance, upgrades, and technical support when needed.'
+  }
 ];

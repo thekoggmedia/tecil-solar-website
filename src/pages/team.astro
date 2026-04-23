@@ -1,0 +1,489 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MarqueeStrip from '../components/MarqueeStrip.astro';
+import CTASection from '../components/CTASection.astro';
+import { teamMembers, colorMap } from '../data/team';
+const md = teamMembers.find(m => m.featured)!;
+const rest = teamMembers.filter(m => !m.featured);
+---
+
+<Layout
+  title="Our Team — TECIL Solar"
+  description="Meet the experienced leadership team behind TECIL Solar — Nigeria's most trusted solar and inverter specialists since 2008."
+  page="team"
+>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-grid"></div>
+    <div class="page-hero-orb a"></div>
+    <div class="page-hero-orb b"></div>
+    <div class="container">
+      <span class="section-tag">Our People</span>
+      <h1>Expert Hands.<br/><span class="text-gradient">Trusted Minds.</span></h1>
+      <p class="page-hero-sub">
+        Founded in 2008, TECIL Solar is built on people — engineers, project managers, and
+        business professionals with combined decades of renewable energy experience across Nigeria, Africa, and beyond.
+      </p>
+    </div>
+  </section>
+
+  <MarqueeStrip variant="red" />
+
+  <!-- MD FEATURED SECTION -->
+  <section class="section bg-white">
+    <div class="container">
+      <div class="md-grid reveal">
+
+        <div class="md-avatar-col">
+          <div class="md-avatar">
+            <div class="md-initials">{md.initials}</div>
+            <div class="md-orbit a"></div>
+            <div class="md-orbit b"></div>
+          </div>
+          <div class="md-certs">
+            {md.qualifications.map(q => (
+              <div class="cert-item">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#CC1417" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>{q}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="md-content">
+          <span class="section-tag">Leadership</span>
+          <div class="md-role">{md.title}</div>
+          <h2>{md.name}</h2>
+          <p class="md-tagline">"{md.tagline}"</p>
+          <p class="md-bio">{md.bio}</p>
+          <div class="md-stats">
+            <div class="md-stat">
+              <strong>16+</strong>
+              <span>Years in Solar</span>
+            </div>
+            <div class="md-stat">
+              <strong>34+</strong>
+              <span>Projects Led</span>
+            </div>
+            <div class="md-stat">
+              <strong>7</strong>
+              <span>Branches Built</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <MarqueeStrip variant="light" />
+
+  <!-- LEADERSHIP TEAM GRID -->
+  <section class="section bg-off">
+    <div class="container">
+      <div class="tm-head reveal">
+        <div>
+          <span class="section-tag">Management Team</span>
+          <h2>The People <span class="text-gradient">Running the Show</span></h2>
+          <p class="tm-sub">
+            Every TECIL Solar project, installation, and client relationship is backed by
+            experienced professionals who take their craft seriously.
+          </p>
+        </div>
+      </div>
+
+      <div class="tm-grid">
+        {rest.map((member, i) => {
+          const col = colorMap[member.color] || colorMap.red;
+          return (
+            <div class={`tm-card reveal reveal-delay-${(i % 4) + 1}`}>
+              <div class="tmc-top">
+                <div class="tmc-avatar" style={`background:${col.bg};border:1.5px solid ${col.border}`}>
+                  <span style={`color:${col.text}`}>{member.initials}</span>
+                </div>
+                <div>
+                  <div class="tmc-role" style={`color:${col.text}`}>{member.title}</div>
+                  <h3 class="tmc-name">{member.name}</h3>
+                </div>
+              </div>
+
+              {member.qualifications.length > 0 && (
+                <div class="tmc-quals">
+                  {member.qualifications.map(q => (
+                    <span class="tmc-qual">{q}</span>
+                  ))}
+                </div>
+              )}
+
+              <p class="tmc-bio">{member.bio}</p>
+
+              <div class="tmc-footer">
+                <span class="tmc-exp" style={`background:${col.bg};color:${col.text};border:1px solid ${col.border}`}>
+                  {member.experience}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES STRIP -->
+  <section class="section bg-dark">
+    <div class="container">
+      <div class="val-grid reveal">
+        <div class="val-copy">
+          <span class="section-tag">Why It Matters</span>
+          <h2>Our People Are Our <span class="text-gradient">Competitive Edge</span></h2>
+          <p>
+            In a market full of product resellers and one-man installations,
+            TECIL Solar's depth of qualified, experienced engineers and project
+            managers is what separates us. Our team has delivered for the Nigerian Navy,
+            foreign consulates, universities, hospitals, and oil companies.
+          </p>
+          <a href="/contact" class="btn-primary" style="margin-top:1.5rem">
+            Talk to Our Team
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+        <div class="val-cards">
+          {[
+            { icon: '🎓', label: 'Certified Engineers', desc: 'IEA, African Energy, and ICAN-certified professionals' },
+            { icon: '🌍', label: 'Multi-Regional Experience', desc: 'Nigeria, Africa, and Asia project delivery track record' },
+            { icon: '🏗', label: '34+ Delivered Projects', desc: 'From hospitals to military facilities to oil companies' },
+            { icon: '🔧', label: 'End-to-End In-House', desc: 'Design, install, manage, train — no sub-contracting' },
+          ].map(v => (
+            <div class="val-item">
+              <span class="vi-icon">{v.icon}</span>
+              <div>
+                <strong class="vi-label">{v.label}</strong>
+                <span class="vi-desc">{v.desc}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTASection />
+
+</Layout>
+
+<style>
+/* ── MD FEATURED ── */
+.md-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+.md-avatar-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: sticky;
+  top: 90px;
+}
+
+.md-avatar {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  margin: 0 auto;
+}
+
+.md-initials {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0F1117, #181C24);
+  border-radius: 50%;
+  font-family: var(--font);
+  font-size: 5rem;
+  font-weight: 900;
+  color: #CC1417;
+  letter-spacing: -0.02em;
+  border: 2px solid rgba(204,20,23,0.25);
+  font-variation-settings: 'wdth' 125, 'wght' 900;
+  z-index: 1;
+}
+
+.md-orbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed;
+}
+.md-orbit.a {
+  inset: -20px;
+  border-color: rgba(204,20,23,0.15);
+  animation: orbFloat 8s ease-in-out infinite;
+}
+.md-orbit.b {
+  inset: -40px;
+  border-color: rgba(232,96,26,0.08);
+  animation: orbFloat 12s ease-in-out infinite reverse;
+}
+
+.md-certs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 1.25rem;
+  background: #F7F8FA;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+}
+
+.cert-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: #4B5563;
+  line-height: 1.4;
+}
+.cert-item svg { flex-shrink: 0; margin-top: 2px; }
+
+/* MD Copy */
+.md-role {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #CC1417;
+  margin-bottom: 0.4rem;
+  font-variation-settings: 'wdth' 100, 'wght' 700;
+}
+.md-grid h2 { color: #111827; margin-bottom: 0.5rem; }
+.md-tagline {
+  font-size: 1.02rem;
+  color: #E8601A;
+  font-style: italic;
+  line-height: 1.65;
+  margin-bottom: 1.2rem;
+  border-left: 3px solid #CC1417;
+  padding-left: 1rem;
+  font-variation-settings: 'wdth' 100, 'wght' 400;
+}
+.md-bio {
+  font-size: 1rem;
+  color: #4B5563;
+  line-height: 1.85;
+  margin-bottom: 2rem;
+}
+.md-stats {
+  display: flex;
+  gap: 0;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.md-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem;
+  border-right: 1px solid #E5E7EB;
+  gap: 4px;
+}
+.md-stat:last-child { border-right: none; }
+.md-stat strong {
+  font-family: var(--font);
+  font-size: 2rem;
+  font-weight: 900;
+  color: #CC1417;
+  line-height: 1;
+  font-variation-settings: 'wdth' 125, 'wght' 900;
+}
+.md-stat span {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+/* ── TEAM GRID ── */
+.tm-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.tm-head h2 { color: #111827; margin-bottom: 0.5rem; }
+.tm-sub { color: #6B7280; max-width: 50ch; }
+
+.tm-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5px;
+}
+
+.tm-card {
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.tm-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #CC1417, #E8601A);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.tm-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.09);
+  border-color: transparent;
+}
+.tm-card:hover::before { transform: scaleX(1); }
+
+.tmc-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.tmc-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.tmc-avatar span {
+  font-size: 1rem;
+  font-weight: 900;
+  font-variation-settings: 'wdth' 125, 'wght' 900;
+}
+.tmc-role {
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+  line-height: 1.3;
+  font-variation-settings: 'wdth' 100, 'wght' 700;
+}
+.tmc-name {
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #111827;
+  letter-spacing: 0.02em;
+  font-variation-settings: 'wdth' 125, 'wght' 800;
+}
+
+.tmc-quals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.tmc-qual {
+  font-size: 0.64rem;
+  font-weight: 600;
+  color: #6B7280;
+  background: #F7F8FA;
+  border: 1px solid #E5E7EB;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+}
+
+.tmc-bio {
+  font-size: 0.84rem;
+  color: #6B7280;
+  line-height: 1.75;
+  flex: 1;
+}
+
+.tmc-footer {
+  display: flex;
+  align-items: center;
+}
+.tmc-exp {
+  font-size: 0.67rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── VALUES ── */
+.val-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+.val-copy h2 { color: #fff; margin-bottom: 1rem; }
+.val-copy p { color: rgba(255,255,255,0.6); line-height: 1.85; }
+
+.val-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5px;
+}
+.val-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  padding: 1.25rem;
+  transition: all 0.3s ease;
+}
+.val-item:hover { background: rgba(204,20,23,0.08); border-color: rgba(204,20,23,0.2); }
+.vi-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+.vi-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-variation-settings: 'wdth' 100, 'wght' 700;
+}
+.vi-desc { font-size: 0.78rem; color: rgba(255,255,255,0.48); line-height: 1.5; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .md-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .md-avatar-col { position: static; flex-direction: row; flex-wrap: wrap; align-items: flex-start; }
+  .md-avatar { width: 180px; height: 180px; flex-shrink: 0; }
+  .md-initials { font-size: 3rem; }
+  .md-certs { flex: 1; min-width: 220px; }
+}
+@media (max-width: 900px) {
+  .tm-grid { grid-template-columns: 1fr 1fr; }
+  .val-grid { grid-template-columns: 1fr; gap: 3rem; }
+}
+@media (max-width: 600px) {
+  .tm-grid { grid-template-columns: 1fr; }
+  .val-cards { grid-template-columns: 1fr; }
+  .md-avatar-col { flex-direction: column; align-items: center; }
+}
+</style>

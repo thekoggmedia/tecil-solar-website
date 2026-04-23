@@ -1,0 +1,252 @@
+---
+// VideoSection.astro
+// Homepage video + social proof section
+// Replace YOUTUBE_VIDEO_ID with your actual YouTube video ID when ready
+// e.g. if your video URL is https://youtube.com/watch?v=dQw4w9WgXcQ
+//      then YOUTUBE_VIDEO_ID = 'dQw4w9WgXcQ'
+
+const YOUTUBE_VIDEO_ID = ''; // ← Paste your YouTube video ID here
+
+const proofStats = [
+  { val: '16+',  label: 'Years in Business',    icon: 'calendar' },
+  { val: '34+',  label: 'Corporate Projects',   icon: 'briefcase' },
+  { val: '7',    label: 'Active Branches',       icon: 'map-pin' },
+  { val: '15+',  label: 'Brand Partnerships',    icon: 'award' },
+];
+
+const svgIcons: Record<string,string> = {
+  calendar:  `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+  briefcase: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
+  'map-pin': `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+  award:     `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>`,
+};
+---
+
+<section class="video-section section bg-dark">
+  <div class="container">
+
+    <div class="vs-head reveal">
+      <span class="section-tag">Who We Are</span>
+      <h2>16 Years of Solar Expertise. <span class="text-gradient">One Standard.</span></h2>
+      <p class="vs-sub">
+        Watch how TECIL Solar has been solving Nigeria's power problem —
+        one system at a time, for homes, businesses, and institutions across 5 states.
+      </p>
+    </div>
+
+    <div class="vs-grid">
+
+      <!-- VIDEO EMBED -->
+      <div class="vs-video-wrap reveal">
+        {YOUTUBE_VIDEO_ID ? (
+          <div class="yt-embed">
+            <iframe
+              src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?rel=0&modestbranding=1`}
+              title="TECIL Solar — Nigeria's Trusted Solar Authority"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        ) : (
+          /* Placeholder shown until a video is added */
+          <div class="vs-placeholder">
+            <div class="vsp-bg">
+              <img
+                src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=900&q=80"
+                alt="TECIL Solar installation"
+                class="vsp-img"
+                loading="lazy"
+              />
+              <div class="vsp-overlay"></div>
+            </div>
+            <div class="vsp-content">
+              <div class="vsp-play">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <div class="vsp-label">
+                <strong>Our Story Video</strong>
+                <span>Coming soon — follow us on YouTube</span>
+              </div>
+              <a href="https://wa.me/2348037135545" target="_blank" class="vsp-cta">
+                Talk to Our Team Instead
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <!-- STATS + PROOF -->
+      <div class="vs-proof">
+        <div class="vs-stats">
+          {proofStats.map((s, i) => (
+            <div class={`vs-stat reveal reveal-delay-${i + 1}`}>
+              <div class="vs-stat-icon" set:html={svgIcons[s.icon]}></div>
+              <div>
+                <strong class="vs-stat-val">{s.val}</strong>
+                <span class="vs-stat-label">{s.label}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="vs-quote reveal reveal-delay-3">
+          <div class="vsq-bar"></div>
+          <blockquote>
+            "To build a reputation as the leading, most knowledgeable, most reliable and most
+            customer-friendly renewable energy company in Africa."
+          </blockquote>
+          <cite>James O. Oba — MD / CEO, TECIL Solar</cite>
+        </div>
+
+        <div class="vs-action-row reveal reveal-delay-4">
+          <a href="/team" class="btn-outline-white">
+            Meet Our Team
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="/projects" class="btn-outline-white">
+            View Projects
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+.vs-head { margin-bottom:3rem; }
+.vs-head h2 { color:#fff; margin-bottom:.75rem; }
+.vs-sub { color:rgba(255,255,255,0.55); max-width:58ch; font-size:1rem; line-height:1.8; }
+
+.vs-grid {
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:4rem;
+  align-items:start;
+}
+
+/* VIDEO */
+.vs-video-wrap { position:relative; }
+
+.yt-embed {
+  position:relative; width:100%; padding-bottom:56.25%; /* 16:9 */
+  border-radius:16px; overflow:hidden;
+  border:1px solid rgba(255,255,255,0.08);
+}
+.yt-embed iframe {
+  position:absolute; inset:0;
+  width:100%; height:100%; border:none;
+}
+
+/* PLACEHOLDER */
+.vs-placeholder {
+  position:relative; aspect-ratio:16/9;
+  border-radius:16px; overflow:hidden;
+  border:1px solid rgba(255,255,255,0.10);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+}
+.vsp-bg { position:absolute; inset:0; }
+.vsp-img { width:100%; height:100%; object-fit:cover; display:block; }
+.vsp-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(135deg, rgba(15,17,23,0.75) 0%, rgba(204,20,23,0.35) 100%);
+}
+.vsp-content {
+  position:relative; z-index:1;
+  display:flex; flex-direction:column;
+  align-items:center; gap:1rem; text-align:center;
+  padding:2rem;
+}
+.vsp-play {
+  width:68px; height:68px; border-radius:50%;
+  background:rgba(204,20,23,0.9); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  transition:all 0.3s ease; flex-shrink:0;
+}
+.vs-placeholder:hover .vsp-play {
+  background:#CC1417;
+  transform:scale(1.1);
+  box-shadow:0 0 0 12px rgba(204,20,23,0.2);
+}
+.vsp-label strong {
+  display:block; font-size:1rem; font-weight:800;
+  color:#fff; text-transform:uppercase; letter-spacing:0.04em;
+  font-variation-settings:'wdth' 125,'wght' 800;
+}
+.vsp-label span { display:block; font-size:0.78rem; color:rgba(255,255,255,0.55); margin-top:3px; }
+.vsp-cta {
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:0.78rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:0.08em; color:rgba(255,255,255,0.75);
+  border:1.5px solid rgba(255,255,255,0.25); border-radius:6px;
+  padding:0.55rem 1.1rem; text-decoration:none; transition:all 0.25s ease;
+  font-variation-settings:'wdth' 100,'wght' 700;
+}
+.vsp-cta:hover { background:rgba(255,255,255,0.1); color:#fff; border-color:rgba(255,255,255,0.5); }
+
+/* STATS */
+.vs-proof { display:flex; flex-direction:column; gap:1.5rem; }
+
+.vs-stats {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2px;
+}
+.vs-stat {
+  display:flex; align-items:center; gap:12px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.07);
+  padding:1.1rem; transition:all 0.3s ease;
+}
+.vs-stat:hover { background:rgba(204,20,23,0.08); border-color:rgba(204,20,23,0.25); }
+.vs-stat-icon {
+  width:40px; height:40px; border-radius:10px; flex-shrink:0;
+  background:rgba(204,20,23,0.12); color:#CC1417;
+  display:flex; align-items:center; justify-content:center;
+}
+.vs-stat-val {
+  display:block;
+  font-family:'Nunito Sans',sans-serif;
+  font-size:1.6rem; font-weight:900; color:#fff; line-height:1;
+  font-variation-settings:'wdth' 125,'wght' 900;
+}
+.vs-stat-label {
+  display:block; font-size:0.68rem; font-weight:600;
+  color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.06em;
+  margin-top:2px;
+}
+
+/* QUOTE */
+.vs-quote {
+  background:rgba(204,20,23,0.08);
+  border:1px solid rgba(204,20,23,0.2);
+  padding:1.5rem 1.75rem;
+  border-radius:10px;
+}
+.vsq-bar { width:24px; height:2px; background:#CC1417; margin-bottom:1rem; }
+.vs-quote blockquote {
+  font-size:0.9rem; color:rgba(255,255,255,0.68);
+  font-style:italic; line-height:1.8;
+  margin-bottom:0.75rem;
+  font-variation-settings:'wdth' 100,'wght' 400;
+}
+.vs-quote cite {
+  font-size:0.68rem; font-weight:700; color:#E8601A;
+  text-transform:uppercase; letter-spacing:0.1em;
+  font-style:normal;
+  font-variation-settings:'wdth' 100,'wght' 700;
+}
+
+/* ACTION ROW */
+.vs-action-row { display:flex; gap:10px; flex-wrap:wrap; }
+
+@media(max-width:1024px){ .vs-grid{ grid-template-columns:1fr; gap:3rem; } }
+@media(max-width:600px){
+  .vs-stats{ grid-template-columns:1fr; }
+  .vs-action-row{ flex-direction:column; }
+}
+</style>

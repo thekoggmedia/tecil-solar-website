@@ -3,63 +3,110 @@ import Layout from '../layouts/Layout.astro';
 import MarqueeStrip from '../components/MarqueeStrip.astro';
 import CTASection from '../components/CTASection.astro';
 import { services, processSteps } from '../data/site';
+
+const iconMap: Record<string, string> = {
+  installation: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  maintenance:  `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+  assessment:   `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
+  supply:       `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>`,
+  projects:     `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`,
+  training:     `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`,
+};
+const colorMap: Record<string,string> = { installation:'red', maintenance:'orange', assessment:'teal', supply:'gold', projects:'red', training:'teal' };
 ---
 
 <Layout
   title="Services — TECIL Solar"
-  description="Solar installation, maintenance, assessment, supply, projects, and training from TECIL Solar."
+  description="End-to-end solar energy services from TECIL Solar — installation, maintenance, load assessment, product supply, EPC projects, and technical training."
   page="services"
 >
+
+  <!-- PAGE HERO -->
   <section class="page-hero">
     <div class="page-hero-grid"></div>
     <div class="page-hero-orb a"></div>
     <div class="page-hero-orb b"></div>
     <div class="container">
       <span class="section-tag">What We Do</span>
-      <h1>Services built for clarity and trust.</h1>
+      <h1>End-to-End.<br/><span class="text-gradient">Start to Finish.</span></h1>
       <p class="page-hero-sub">
-        The content now reads less like repetition and more like a real service catalog with a business-first layout.
+        From a single home system to a 60KW off-grid industrial project — we handle
+        every stage: supply, design, install, commission, maintain, and train.
+        No subcontracting. No shortcuts.
       </p>
     </div>
   </section>
 
   <MarqueeStrip variant="red" />
 
+  <!-- SERVICES LIST -->
   <section class="section bg-off">
     <div class="container">
+      <div class="sv-intro reveal">
+        <div>
+          <span class="section-tag">Our Services</span>
+          <h2>Six Ways We <span class="text-gradient">Serve You</span></h2>
+        </div>
+        <p class="sv-intro-desc">
+          Whether you need a home backup system or a full EPC project for an institution,
+          every engagement is backed by our 16-year track record and technical depth.
+        </p>
+      </div>
+
       <div class="services-list">
-        {services.map((item) => (
-          <article class="service-detail card" id={item.id}>
-            <div class="service-detail-top">
-              <span>{item.eyebrow}</span>
-              <strong>{item.id.toUpperCase()}</strong>
-            </div>
-            <h2>{item.title}</h2>
-            <p>{item.summary}</p>
-            <ul>
-              {item.bullets.map((bullet) => <li>{bullet}</li>)}
-            </ul>
-            <a href="/contact" class="btn-primary">Request this service</a>
-          </article>
-        ))}
+        {services?.map((item, i) => {
+          const col = colorMap[item.id] || 'red';
+          const icon = iconMap[item.id] || iconMap.supply;
+          return (
+            <article class={`service-detail card reveal reveal-delay-${(i % 3) + 1}`} id={item.id}>
+              <div class="sd-left">
+                <div class={`sd-num sn-${col}`}>0{i+1}</div>
+                <div class={`sd-icon si-${col}`} set:html={icon}></div>
+              </div>
+              <div class="sd-body">
+                <div class="sd-header">
+                  <span class={`sd-chip chip-${col}`}>{item.eyebrow}</span>
+                  <h2>{item.title}</h2>
+                </div>
+                <p>{item.summary}</p>
+                <ul class="sd-bullets">
+                  {item.bullets.map((bullet) => (
+                    <li>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
+                <a href="/contact" class="btn-primary sd-cta">
+                  Request this service
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </div>
   </section>
 
+  <!-- HOW WE WORK -->
   <section class="section bg-white">
     <div class="container">
       <div class="process-head reveal">
         <div>
           <span class="section-tag">How We Work</span>
-          <h2>Simple process. Better presentation.</h2>
+          <h2>Simple Process. <span class="text-gradient">Zero Surprises.</span></h2>
         </div>
-        <p>Four steps is enough here. It keeps the page cleaner and easier to scan.</p>
+        <p class="ph-desc">
+          Every TECIL Solar engagement follows four clear steps.
+          You always know where your project stands — and what comes next.
+        </p>
       </div>
 
       <div class="process-grid">
-        {processSteps.map((step, index) => (
-          <article class:list={['process-card', 'reveal', `reveal-delay-${index + 1}`]}>
-            <span>{step.step}</span>
+        {processSteps?.map((step, index) => (
+          <article class={`process-card reveal reveal-delay-${index + 1}`}>
+            <span class="step-num">{step.step}</span>
             <h3>{step.title}</h3>
             <p>{step.body}</p>
           </article>
@@ -68,109 +115,168 @@ import { services, processSteps } from '../data/site';
     </div>
   </section>
 
+  <!-- WHY TECIL SERVICES -->
+  <section class="section bg-dark">
+    <div class="container">
+      <div class="why-grid reveal">
+        <div class="why-copy">
+          <span class="section-tag">Why TECIL</span>
+          <h2>Not Just Sellers. <span class="text-gradient">Specialists.</span></h2>
+          <p>
+            Many companies sell solar equipment. Few can design, install, commission, and maintain
+            a complete system — and stand behind it for years. TECIL Solar does all of this,
+            with certified engineers, documented delivery, and a team on the ground across Nigeria.
+          </p>
+          <div class="why-proof">
+            <div class="wp">
+              <strong>34+</strong><span>Documented Projects</span>
+            </div>
+            <div class="wp">
+              <strong>15+</strong><span>Authorised Brands</span>
+            </div>
+            <div class="wp">
+              <strong>7</strong><span>States Covered</span>
+            </div>
+          </div>
+        </div>
+        <div class="why-right">
+          {[
+            'We survey before we quote — no guesswork on your system size',
+            'All installations documented with commissioning reports',
+            'SLA-based maintenance contracts available for commercial clients',
+            'Training Institute pathway in development for 2026–2027',
+            'Brand-neutral advisory — we recommend what fits, not what costs more',
+            'Warranty honoured in full per manufacturer terms',
+          ].map(p => (
+            <div class="why-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8601A" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>{p}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
   <CTASection />
 </Layout>
 
 <style>
-  .services-list {
-    display: grid;
-    gap: 1rem;
-  }
+/* INTRO */
+.sv-intro { display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;flex-wrap:wrap;gap:2rem; }
+.sv-intro h2 { color:#111827;margin-bottom:.5rem; }
+.sv-intro-desc { max-width:46ch;font-size:1.02rem;color:#6B7280;line-height:1.8; }
 
-  .service-detail {
-    padding: 1.6rem;
-  }
+/* SERVICES LIST */
+.services-list { display:grid;gap:1.5px; }
 
-  .service-detail-top {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-    color: var(--orange);
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
+.service-detail {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 2.5rem;
+  padding: 2.25rem;
+  align-items: start;
+}
 
-  .service-detail h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
-    max-width: 12ch;
-  }
+.sd-left { display:flex;flex-direction:column;align-items:center;gap:12px;padding-top:4px; }
 
-  .service-detail p {
-    margin-top: 0.85rem;
-    max-width: 72ch;
-  }
+.sd-num {
+  font-family: var(--font);
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1;
+  font-variation-settings: 'wdth' 125, 'wght' 900;
+}
+.sn-red    { color: rgba(204,20,23,0.12); }
+.sn-orange { color: rgba(232,96,26,0.12); }
+.sn-teal   { color: rgba(0,109,119,0.12); }
+.sn-gold   { color: rgba(200,150,12,0.12); }
 
-  .service-detail ul {
-    margin: 1rem 0 1.2rem;
-    padding-left: 1.15rem;
-    color: var(--muted);
-  }
+.sd-icon { display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px; }
+.si-red    { background:#FFF1F1;color:#CC1417; }
+.si-orange { background:#FFF5EE;color:#E8601A; }
+.si-teal   { background:#EDF7F8;color:#006D77; }
+.si-gold   { background:#FFFBEA;color:#C8960C; }
 
-  .service-detail li + li {
-    margin-top: 0.42rem;
-  }
+.sd-header { margin-bottom:.75rem; }
+.sd-chip {
+  display:inline-flex;font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:999px;
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:.6rem;
+}
+.chip-red    { background:#FFF1F1;color:#CC1417; }
+.chip-orange { background:#FFF5EE;color:#E8601A; }
+.chip-teal   { background:#EDF7F8;color:#006D77; }
+.chip-gold   { background:#FFFBEA;color:#C8960C; }
 
-  .process-head {
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-    align-items: end;
-    margin-bottom: 1.4rem;
-  }
+.service-detail h2 { font-size:clamp(1.6rem,3vw,2.4rem);color:#111827;max-width:22ch; }
+.service-detail p  { color:#4B5563;max-width:72ch;line-height:1.85;margin-bottom:1.1rem; }
 
-  .process-head p {
-    max-width: 52ch;
-    font-size: 1.02rem;
-  }
+.sd-bullets { list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.5rem; }
+.sd-bullets li { display:flex;align-items:flex-start;gap:8px;font-size:.84rem;color:#4B5563;line-height:1.5; }
+.sd-bullets li svg { flex-shrink:0;margin-top:3px;stroke:#CC1417; }
 
-  .process-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-  }
+.sd-cta { width:fit-content; }
 
-  .process-card {
-    padding: 1.35rem;
-    border-radius: 24px;
-    border: 1px solid var(--border);
-    background: linear-gradient(180deg, #fff, #fafafa);
-  }
+/* PROCESS */
+.process-head {
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-bottom:2.5rem;flex-wrap:wrap;gap:2rem;
+}
+.process-head h2 { color:#111827;margin-bottom:.5rem; }
+.ph-desc { max-width:48ch;font-size:1rem;color:#6B7280;line-height:1.8; }
 
-  .process-card span {
-    display: inline-flex;
-    margin-bottom: 0.8rem;
-    font-family: var(--font-display);
-    font-size: 2rem;
-    line-height: 1;
-    color: rgba(204,20,23,0.16);
-  }
+.process-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:2px; }
 
-  .process-card h3 {
-    font-size: 1.4rem;
-  }
+.process-card {
+  padding:2rem 1.75rem;border-radius:0;
+  border:1px solid #E5E7EB;background:#fff;
+  position:relative;overflow:hidden;transition:all .3s ease;
+}
+.process-card::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#CC1417,#E8601A);
+  transform:scaleX(0);transform-origin:left;transition:transform .3s ease;
+}
+.process-card:hover { box-shadow:0 8px 24px rgba(0,0,0,.07);transform:translateY(-3px); }
+.process-card:hover::before { transform:scaleX(1); }
 
-  .process-card p {
-    margin-top: 0.55rem;
-  }
+.step-num {
+  display:inline-block;font-family:var(--font);font-size:3.2rem;line-height:1;
+  color:rgba(204,20,23,.1);margin-bottom:.75rem;
+  font-variation-settings:'wdth' 125,'wght' 900;
+}
+.process-card h3 { font-size:1.15rem;color:#111827;margin-bottom:.5rem; }
+.process-card p  { font-size:.88rem;color:#6B7280;line-height:1.7; }
 
-  @media (max-width: 980px) {
-    .process-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
+/* WHY TECIL */
+.why-grid { display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center; }
+.why-copy h2 { color:#fff;margin-bottom:1rem; }
+.why-copy p  { color:rgba(255,255,255,.6);line-height:1.85;margin-bottom:1.75rem; }
+.why-proof { display:flex;gap:0;border:1px solid rgba(255,255,255,.08);border-radius:8px;overflow:hidden; }
+.wp { flex:1;display:flex;flex-direction:column;align-items:center;padding:1rem;border-right:1px solid rgba(255,255,255,.08); }
+.wp:last-child { border-right:none; }
+.wp strong { font-family:var(--font);font-size:1.8rem;font-weight:900;color:#CC1417;line-height:1;font-variation-settings:'wdth' 125,'wght' 900; }
+.wp span   { font-size:.64rem;font-weight:600;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.06em;text-align:center; }
+.why-right { display:flex;flex-direction:column;gap:12px; }
+.why-item {
+  display:flex;align-items:flex-start;gap:10px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  padding:.85rem 1rem;border-radius:8px;transition:all .3s ease;
+}
+.why-item:hover { background:rgba(232,96,26,.08);border-color:rgba(232,96,26,.2); }
+.why-item span { font-size:.86rem;color:rgba(255,255,255,.7);line-height:1.5; }
 
-  @media (max-width: 720px) {
-    .process-head {
-      flex-direction: column;
-      align-items: start;
-    }
-
-    .process-grid {
-      grid-template-columns: 1fr;
-    }
-  }
+/* RESPONSIVE */
+@media(max-width:900px){
+  .service-detail{grid-template-columns:1fr}
+  .sd-left{flex-direction:row;justify-content:flex-start}
+  .sd-bullets{grid-template-columns:1fr}
+  .process-grid{grid-template-columns:1fr 1fr}
+  .why-grid{grid-template-columns:1fr;gap:3rem}
+}
+@media(max-width:600px){
+  .process-grid{grid-template-columns:1fr}
+  .sv-intro{flex-direction:column}
+  .process-head{flex-direction:column;align-items:start}
+}
 </style>

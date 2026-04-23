@@ -1,0 +1,212 @@
+---
+// TestimonialsSection.astro
+// Client testimonials and trust signals for the homepage
+// Real testimonials can replace the placeholder quotes below
+
+const testimonials = [
+  {
+    quote: "TECIL Solar installed our 15KVA hybrid system at the bank headquarters. The team was professional, the documentation thorough, and the system has been running without fault since commissioning.",
+    name: "Senior Management",
+    org: "Unical Microfinance Bank, Calabar",
+    tag: "Institutional Client",
+    rating: 5,
+    color: 'red',
+  },
+  {
+    quote: "We needed a reliable solar sub-contractor for a university campus project. TECIL Solar delivered on spec, on time, and gave us full commissioning reports. We've used them twice since.",
+    name: "Project Director",
+    org: "South-East University Campus",
+    tag: "EPC Project Client",
+    rating: 5,
+    color: 'orange',
+  },
+  {
+    quote: "From the load assessment to final handover, the team was knowledgeable and honest. They didn't oversell us a bigger system than we needed. The hotel has had zero downtime since.",
+    name: "Operations Manager",
+    org: "Happkings Hotel, Ikom",
+    tag: "Commercial Client",
+    rating: 5,
+    color: 'teal',
+  },
+  {
+    quote: "Our fuel bills dropped significantly after the TECIL Solar installation. The after-sales support has been excellent — they respond quickly whenever we have a question.",
+    name: "Business Owner",
+    org: "SME Client, Port Harcourt",
+    tag: "Commercial Client",
+    rating: 5,
+    color: 'gold',
+  },
+];
+
+const trustBadges = [
+  { label: 'Est. 2008',          desc: '16+ years operating' },
+  { label: '34+ Projects',       desc: 'Documented corporate delivery' },
+  { label: '15+ Brands',         desc: 'Authorised partnerships' },
+  { label: '7 Branches',         desc: 'Across 5 Nigerian states' },
+  { label: 'IEA Certified',      desc: 'Photovoltaic design & install' },
+];
+---
+
+<section class="section bg-off ts">
+  <div class="container">
+
+    <div class="ts-head reveal">
+      <div>
+        <span class="section-tag">Client Voices</span>
+        <h2>What Our <span class="text-gradient">Clients Say</span></h2>
+        <p class="ts-sub">
+          From military facilities to hotels, universities to oil companies —
+          TECIL Solar's track record speaks through the clients who trust us with their energy.
+        </p>
+      </div>
+      <div class="ts-rating-summary reveal reveal-delay-2">
+        <div class="trs-stars">★★★★★</div>
+        <strong>5.0</strong>
+        <span>Average client rating</span>
+      </div>
+    </div>
+
+    <!-- TESTIMONIALS GRID -->
+    <div class="ts-grid">
+      {testimonials.map((t, i) => (
+        <div class={`ts-card tc-${t.color} reveal reveal-delay-${(i % 4) + 1}`}>
+          <!-- Stars -->
+          <div class="tc-stars">
+            {'★'.repeat(t.rating)}
+          </div>
+          <!-- Quote -->
+          <blockquote class="tc-quote">"{t.quote}"</blockquote>
+          <!-- Client info -->
+          <div class="tc-footer">
+            <div class={`tc-avatar av-${t.color}`}>
+              {t.name.split(' ').map(w => w[0]).join('').slice(0,2)}
+            </div>
+            <div class="tc-who">
+              <strong>{t.name}</strong>
+              <span>{t.org}</span>
+            </div>
+            <span class={`tc-tag tt-${t.color}`}>{t.tag}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- TRUST BADGES -->
+    <div class="trust-bar reveal">
+      <div class="tb-label">Why clients choose TECIL Solar</div>
+      <div class="tb-badges">
+        {trustBadges.map(b => (
+          <div class="tb-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#CC1417" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <div>
+              <strong>{b.label}</strong>
+              <span>{b.desc}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+/* HEAD */
+.ts-head { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2.5rem; flex-wrap:wrap; gap:1.5rem; }
+.ts-head h2 { color:#111827; margin-bottom:.75rem; }
+.ts-sub { color:#6B7280; max-width:48ch; }
+
+.ts-rating-summary { display:flex; flex-direction:column; align-items:flex-end; gap:2px; }
+.trs-stars { font-size:1.4rem; color:#C8960C; letter-spacing:2px; }
+.ts-rating-summary strong { font-family:'Nunito Sans',sans-serif; font-size:2rem; font-weight:900; color:#111827; line-height:1; font-variation-settings:'wdth' 125,'wght' 900; }
+.ts-rating-summary span { font-size:.72rem; font-weight:600; color:#6B7280; text-transform:uppercase; letter-spacing:.06em; }
+
+/* GRID */
+.ts-grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:1.5px;
+  margin-bottom:2rem;
+}
+
+/* CARD */
+.ts-card {
+  background:#fff; border:1px solid #E5E7EB;
+  padding:1.75rem; display:flex; flex-direction:column;
+  gap:1rem; transition:all .3s ease; position:relative; overflow:hidden;
+}
+.ts-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  transform:scaleX(0); transform-origin:left; transition:transform .3s ease;
+}
+.tc-red::before    { background:linear-gradient(90deg,#CC1417,#E8601A); }
+.tc-orange::before { background:linear-gradient(90deg,#E8601A,#f09050); }
+.tc-teal::before   { background:linear-gradient(90deg,#006D77,#0099a8); }
+.tc-gold::before   { background:linear-gradient(90deg,#C8960C,#e0b020); }
+.ts-card:hover { transform:translateY(-4px); box-shadow:0 12px 36px rgba(0,0,0,.08); border-color:transparent; }
+.ts-card:hover::before { transform:scaleX(1); }
+
+/* STARS */
+.tc-stars { font-size:1rem; color:#C8960C; letter-spacing:2px; }
+
+/* QUOTE */
+.tc-quote {
+  font-size:.92rem; color:#4B5563; line-height:1.8;
+  font-style:italic; flex:1;
+  font-variation-settings:'wdth' 100,'wght' 400;
+}
+
+/* FOOTER */
+.tc-footer { display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding-top:1rem; border-top:1px solid #F3F4F6; }
+.tc-avatar {
+  width:40px; height:40px; border-radius:10px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.82rem; font-weight:800; letter-spacing:0.02em;
+  font-variation-settings:'wdth' 125,'wght' 800;
+}
+.av-red    { background:#FFF1F1; color:#CC1417; }
+.av-orange { background:#FFF5EE; color:#E8601A; }
+.av-teal   { background:#EDF7F8; color:#006D77; }
+.av-gold   { background:#FFFBEA; color:#C8960C; }
+
+.tc-who { flex:1; }
+.tc-who strong { display:block; font-size:.84rem; font-weight:700; color:#111827; font-variation-settings:'wdth' 100,'wght' 700; }
+.tc-who span   { font-size:.72rem; color:#6B7280; }
+
+.tc-tag {
+  font-size:.6rem; font-weight:700; padding:3px 8px; border-radius:999px;
+  text-transform:uppercase; letter-spacing:.06em; white-space:nowrap;
+  font-variation-settings:'wdth' 100,'wght' 700;
+}
+.tt-red    { background:#FFF1F1; color:#CC1417; }
+.tt-orange { background:#FFF5EE; color:#E8601A; }
+.tt-teal   { background:#EDF7F8; color:#006D77; }
+.tt-gold   { background:#FFFBEA; color:#C8960C; }
+
+/* TRUST BAR */
+.trust-bar {
+  background:#fff; border:1px solid #E5E7EB; border-radius:10px;
+  padding:1.5rem 2rem; display:flex; align-items:center; gap:2rem;
+  flex-wrap:wrap;
+}
+.tb-label {
+  font-size:.72rem; font-weight:700; color:#9CA3AF; text-transform:uppercase;
+  letter-spacing:.12em; white-space:nowrap;
+  font-variation-settings:'wdth' 100,'wght' 700;
+}
+.tb-badges { display:flex; flex-wrap:wrap; gap:1.25rem; }
+.tb-badge {
+  display:flex; align-items:center; gap:7px;
+  font-size:.82rem;
+}
+.tb-badge strong { color:#111827; font-weight:700; display:block; font-size:.82rem; font-variation-settings:'wdth' 100,'wght' 700; }
+.tb-badge span   { color:#6B7280; font-size:.7rem; }
+
+/* RESPONSIVE */
+@media(max-width:900px){ .ts-grid{ grid-template-columns:1fr; } }
+@media(max-width:600px){
+  .ts-head{ flex-direction:column; align-items:flex-start; }
+  .ts-rating-summary{ align-items:flex-start; }
+  .trust-bar{ flex-direction:column; align-items:flex-start; }
+}
+</style>

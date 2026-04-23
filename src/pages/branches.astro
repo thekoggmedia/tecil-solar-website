@@ -1,226 +1,293 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import MarqueeStrip from '../components/MarqueeStrip.astro';
-import { contactChannels } from '../data/site';
+import CTASection from '../components/CTASection.astro';
+import { branches } from '../data/site';
+
+const stateGroups = [
+  {
+    state: 'Cross River State',
+    color: 'red',
+    branches: branches.filter(b => b.state === 'Cross River State'),
+  },
+  {
+    state: 'Rivers State',
+    color: 'orange',
+    branches: branches.filter(b => b.state === 'Rivers State'),
+  },
+  {
+    state: 'Akwa Ibom State',
+    color: 'teal',
+    branches: branches.filter(b => b.state === 'Akwa Ibom State'),
+  },
+  {
+    state: 'Lagos State',
+    color: 'gold',
+    branches: branches.filter(b => b.state === 'Lagos State'),
+  },
+];
+
+const mapLinks: Record<string, string> = {
+  'Lagos / Ikeja':   'https://maps.google.com/?q=90+Obafemi+Awolowo+Way+Ikeja+Lagos',
+  'Port Harcourt 1': 'https://maps.google.com/?q=Plot+54+Stadium+Road+Port+Harcourt',
+  'Port Harcourt 2': 'https://maps.google.com/?q=18+Ogbunabali+Road+Port+Harcourt',
+  'Uyo':             'https://maps.google.com/?q=109+Oron+Road+Uyo+Akwa+Ibom',
+  'Calabar':         'https://maps.google.com/?q=89+Ndidem+Usang+Iso+Road+Calabar',
+  'Calabar South':   'https://maps.google.com/?q=6+Target+Road+Calabar+South',
+  'Ikom':            'https://maps.google.com/?q=16+Obudu+Road+Ikom+Cross+River',
+};
 ---
 
 <Layout
-  title="Contact — TECIL Solar"
-  description="Contact TECIL Solar for a quote, support, or product enquiry."
-  page="contact"
+  title="Find a Branch — TECIL Solar"
+  description="TECIL Solar has 7 branches across 5 Nigerian states — Lagos, Port Harcourt, Calabar, Uyo, and Ikom. Walk in or call your nearest branch."
+  page="branches"
 >
+
+  <!-- PAGE HERO -->
   <section class="page-hero">
     <div class="page-hero-grid"></div>
     <div class="page-hero-orb a"></div>
     <div class="page-hero-orb b"></div>
     <div class="container">
-      <span class="section-tag">Contact</span>
-      <h1>Get a quote without the clutter.</h1>
+      <span class="section-tag">Find Us</span>
+      <h1>7 Branches.<br/><span class="text-gradient">5 States.</span></h1>
       <p class="page-hero-sub">
-        A cleaner contact experience helps the user act faster and helps the business look more organized.
+        Walk into any TECIL Solar location and receive the same product quality,
+        technical depth, and customer service. Our branches are staffed with trained
+        engineers — not just sales people.
       </p>
     </div>
   </section>
 
   <MarqueeStrip variant="red" />
 
-  <section class="section bg-off">
-    <div class="container contact-shell">
-      <div class="contact-cards">
-        {contactChannels.map((item) => (
-          <a class="contact-card card reveal" href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
-            <span>{item.label}</span>
-            <strong>{item.value}</strong>
-          </a>
-        ))}
-
-        <div class="contact-card card reveal reveal-delay-2">
-          <span>What happens next</span>
-          <strong>We review your needs, then respond with the right solution.</strong>
+  <!-- COVERAGE STATS -->
+  <section class="cov-bar">
+    <div class="container cov-inner">
+      {[
+        { val: '7',  label: 'Active Branches' },
+        { val: '5',  label: 'States Covered' },
+        { val: '1',  label: 'HQ — Calabar, CRS' },
+        { val: '16+', label: 'Years Operating' },
+      ].map(s => (
+        <div class="cov-stat">
+          <strong>{s.val}</strong>
+          <span>{s.label}</span>
         </div>
-      </div>
-
-      <form class="contact-form card reveal reveal-delay-2" id="contact-form">
-        <span class="section-tag">Request a Quote</span>
-        <h2>Send a clear enquiry.</h2>
-
-        <div class="form-grid">
-          <label>
-            <span>Your Name</span>
-            <input name="name" type="text" placeholder="Enter your name" required />
-          </label>
-
-          <label>
-            <span>Phone Number</span>
-            <input name="phone" type="tel" placeholder="0803 000 0000" required />
-          </label>
-
-          <label>
-            <span>Email Address</span>
-            <input name="email" type="email" placeholder="name@example.com" />
-          </label>
-
-          <label>
-            <span>City / Location</span>
-            <input name="location" type="text" placeholder="Lagos, Port Harcourt..." required />
-          </label>
-        </div>
-
-        <label class="full">
-          <span>What do you need?</span>
-          <textarea name="message" rows="6" placeholder="Tell us about your solar or inverter need" required></textarea>
-        </label>
-
-        <button class="btn-primary" id="submit-btn" type="submit">Send via WhatsApp</button>
-        <p class="form-note" id="form-note">We will open WhatsApp with a pre-filled message so you can send it instantly.</p>
-      </form>
+      ))}
     </div>
   </section>
+
+  <!-- BRANCH GROUPS -->
+  <section class="section bg-off">
+    <div class="container">
+      <div class="bg-head reveal">
+        <span class="section-tag">Locations</span>
+        <h2>Where to <span class="text-gradient">Find Us</span></h2>
+        <p class="bg-sub">
+          Our branches stock full product ranges and are staffed with certified engineers.
+          No appointment needed — walk in during business hours or call ahead.
+        </p>
+      </div>
+
+      <div class="branch-groups">
+        {stateGroups.filter(g => g.branches.length > 0).map((group) => (
+          <div class={`branch-group reveal`}>
+            <div class={`group-header gh-${group.color}`}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>{group.state}</span>
+              <span class="g-count">{group.branches.length} {group.branches.length === 1 ? 'Branch' : 'Branches'}</span>
+            </div>
+
+            <div class="branch-cards">
+              {group.branches.map((b) => (
+                <div class="branch-card">
+                  {b.hq && <span class="hq-badge">HQ</span>}
+                  <div class="bc-city">{b.city}</div>
+                  <div class="bc-address">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    {b.address}
+                  </div>
+                  <div class="bc-actions">
+                    <a href={b.telHref} class="bca-phone">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38a2 2 0 0 1 1.99-1.8h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
+                      {b.phone}
+                    </a>
+                    <a href={b.waHref} target="_blank" rel="noopener" class="bca-wa">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+                      WhatsApp
+                    </a>
+                    {mapLinks[b.city] && (
+                      <a href={mapLinks[b.city]} target="_blank" rel="noopener" class="bca-map">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+                        Directions
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CALL US FROM ANYWHERE -->
+  <section class="section bg-white">
+    <div class="container">
+      <div class="remote-grid reveal">
+        <div class="remote-copy">
+          <span class="section-tag">Remote Enquiries</span>
+          <h2>Not Near a Branch? <span class="text-gradient">No Problem.</span></h2>
+          <p>
+            We serve clients across Nigeria, including locations without a nearby branch.
+            Contact us by phone or WhatsApp — our technical team can advise remotely,
+            and we can arrange delivery and installation to your site.
+          </p>
+        </div>
+        <div class="remote-actions">
+          <a href="tel:+2348037135545" class="ra-card ra-phone">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38a2 2 0 0 1 1.99-1.8h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
+            <div>
+              <strong>Call HQ Direct</strong>
+              <span>0803 713 5545</span>
+            </div>
+          </a>
+          <a href="https://wa.me/2348037135545" target="_blank" rel="noopener" class="ra-card ra-wa">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+            <div>
+              <strong>WhatsApp Us</strong>
+              <span>Fastest response</span>
+            </div>
+          </a>
+          <a href="/contact" class="ra-card ra-quote">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <div>
+              <strong>Get a Quote Online</strong>
+              <span>We respond within 24hrs</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTASection />
 </Layout>
 
 <style>
-  .contact-shell {
-    display: grid;
-    grid-template-columns: minmax(320px, 0.85fr) minmax(0, 1.15fr);
-    gap: 1.2rem;
-    align-items: start;
-  }
+/* COVERAGE BAR */
+.cov-bar { background:#fff;border-bottom:1px solid #E5E7EB; }
+.cov-inner { display:flex;flex-wrap:wrap;justify-content:center; }
+.cov-stat {
+  display:flex;flex-direction:column;align-items:center;padding:1.25rem 2rem;
+  border-right:1px solid #E5E7EB;gap:3px;
+}
+.cov-stat:last-child{border-right:none}
+.cov-stat strong {
+  font-family:var(--font);font-size:1.8rem;font-weight:900;color:#CC1417;line-height:1;
+  font-variation-settings:'wdth' 125,'wght' 900;
+}
+.cov-stat span { font-size:.62rem;font-weight:600;color:#6B7280;text-transform:uppercase;letter-spacing:.06em;text-align:center; }
 
-  .contact-cards {
-    display: grid;
-    gap: 1rem;
-  }
+/* BRANCH GROUPS */
+.bg-head { margin-bottom:3rem; }
+.bg-head h2 { color:#111827;margin-bottom:.75rem; }
+.bg-sub { max-width:56ch;color:#6B7280; }
 
-  .contact-card {
-    padding: 1.35rem;
-    border-radius: 28px;
-  }
+.branch-groups { display:flex;flex-direction:column;gap:2.5rem; }
 
-  .contact-card span {
-    display: inline-flex;
-    margin-bottom: 0.55rem;
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--orange);
-  }
+.branch-group { border:1px solid #E5E7EB;border-radius:12px;overflow:hidden; }
 
-  .contact-card strong {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 1.7rem;
-    line-height: 1.02;
-    color: var(--text);
-  }
+.group-header {
+  display:flex;align-items:center;gap:8px;padding:.85rem 1.5rem;
+  font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+  font-variation-settings:'wdth' 100,'wght' 700;
+}
+.gh-red    { background:#FFF1F1;color:#CC1417;border-bottom:1px solid rgba(204,20,23,.12); }
+.gh-orange { background:#FFF5EE;color:#E8601A;border-bottom:1px solid rgba(232,96,26,.12); }
+.gh-teal   { background:#EDF7F8;color:#006D77;border-bottom:1px solid rgba(0,109,119,.12); }
+.gh-gold   { background:#FFFBEA;color:#C8960C;border-bottom:1px solid rgba(200,150,12,.12); }
 
-  .contact-form {
-    padding: 1.5rem;
-  }
+.g-count {
+  margin-left:auto;font-size:.68rem;font-weight:600;
+  background:rgba(255,255,255,.7);padding:2px 8px;border-radius:999px;
+  opacity:.75;
+}
 
-  .contact-form h2 {
-    margin-top: 0.5rem;
-    font-size: clamp(2rem, 4vw, 3rem);
-  }
+.branch-cards { display:grid;grid-template-columns:repeat(3,1fr);gap:0; }
 
-  .form-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    margin-top: 1.2rem;
-  }
+.branch-card {
+  padding:1.5rem;border-right:1px solid #E5E7EB;
+  position:relative;transition:background .2s ease;
+  display:flex;flex-direction:column;gap:8px;
+}
+.branch-card:last-child{border-right:none}
+.branch-card:hover{background:#FAFAFA}
 
-  label {
-    display: block;
-  }
+.hq-badge {
+  position:absolute;top:12px;right:12px;
+  background:#CC1417;color:#fff;font-size:.55rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border-radius:4px;
+}
+.bc-city {
+  font-family:var(--font);font-size:1.05rem;font-weight:800;
+  text-transform:uppercase;color:#111827;letter-spacing:.02em;
+  font-variation-settings:'wdth' 125,'wght' 800;
+}
+.bc-address {
+  display:flex;align-items:flex-start;gap:6px;
+  font-size:.78rem;color:#6B7280;line-height:1.5;
+}
+.bc-address svg{flex-shrink:0;margin-top:3px}
 
-  label span {
-    display: block;
-    margin-bottom: 0.45rem;
-    font-size: 0.74rem;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--soft);
-  }
+.bc-actions { display:flex;flex-wrap:wrap;gap:6px;margin-top:4px; }
 
-  input,
-  textarea {
-    width: 100%;
-    padding: 0.95rem 1rem;
-    border-radius: 18px;
-    border: 1px solid var(--border);
-    background: #fff;
-    color: var(--text);
-    outline: none;
-    transition: var(--ease);
-  }
+.bca-phone,.bca-wa,.bca-map {
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:.72rem;font-weight:600;padding:5px 10px;border-radius:5px;
+  text-decoration:none;transition:all .2s ease;
+  font-variation-settings:'wdth' 100,'wght' 600;
+}
+.bca-phone { color:#E8601A;background:#FFF5EE;border:1px solid rgba(232,96,26,.2); }
+.bca-phone:hover { background:#E8601A;color:#fff; }
+.bca-wa   { color:#166534;background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.2); }
+.bca-wa:hover { background:#25D366;color:#fff;border-color:#25D366; }
+.bca-map  { color:#6B7280;background:#F7F8FA;border:1px solid #E5E7EB; }
+.bca-map:hover { background:#111827;color:#fff;border-color:#111827; }
 
-  input:focus,
-  textarea:focus {
-    border-color: rgba(204,20,23,0.35);
-    box-shadow: 0 0 0 4px rgba(204,20,23,0.08);
-  }
+/* REMOTE SECTION */
+.remote-grid { display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center; }
+.remote-copy h2 { color:#111827;margin-bottom:1rem; }
+.remote-copy p  { color:#4B5563;line-height:1.85; }
+.remote-actions { display:flex;flex-direction:column;gap:12px; }
 
-  .full {
-    display: block;
-    margin-top: 1rem;
-  }
+.ra-card {
+  display:flex;align-items:center;gap:14px;padding:1.1rem 1.4rem;
+  border:1px solid #E5E7EB;border-radius:10px;background:#fff;
+  text-decoration:none;transition:all .25s ease;
+}
+.ra-card:hover { transform:translateX(4px);box-shadow:0 4px 16px rgba(0,0,0,.07); }
+.ra-card strong { display:block;font-size:.9rem;font-weight:700;color:#111827;margin-bottom:2px; }
+.ra-card span { font-size:.78rem;color:#6B7280; }
+.ra-phone svg { color:#E8601A; }
+.ra-phone:hover { border-color:rgba(232,96,26,.3); }
+.ra-wa svg { color:#25D366; }
+.ra-wa:hover { border-color:rgba(37,211,102,.3); }
+.ra-quote svg { color:#CC1417; }
+.ra-quote:hover { border-color:rgba(204,20,23,.3); }
 
-  .btn-primary {
-    margin-top: 1rem;
-  }
-
-  .form-note {
-    margin-top: 0.8rem;
-    font-size: 0.92rem;
-  }
-
-  @media (max-width: 980px) {
-    .contact-shell {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  @media (max-width: 720px) {
-    .form-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .contact-card strong {
-      font-size: 1.45rem;
-    }
-  }
+/* RESPONSIVE */
+@media(max-width:900px){
+  .branch-cards{grid-template-columns:1fr 1fr}
+  .remote-grid{grid-template-columns:1fr;gap:3rem}
+}
+@media(max-width:600px){
+  .branch-cards{grid-template-columns:1fr}
+  .branch-card{border-right:none;border-bottom:1px solid #E5E7EB}
+  .branch-card:last-child{border-bottom:none}
+  .cov-stat{padding:.85rem 1rem}
+}
 </style>
-
-<script is:inline>
-  const form = document.getElementById('contact-form');
-  const note = document.getElementById('form-note');
-  const button = document.getElementById('submit-btn');
-
-  form?.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const fd = new FormData(form);
-    const name = String(fd.get('name') || '').trim();
-    const phone = String(fd.get('phone') || '').trim();
-    const email = String(fd.get('email') || '').trim();
-    const location = String(fd.get('location') || '').trim();
-    const message = String(fd.get('message') || '').trim();
-
-    const whatsappText = [
-      `Hello TECIL Solar, my name is ${name}.`,
-      `Phone: ${phone}`,
-      email ? `Email: ${email}` : null,
-      `Location: ${location}`,
-      '',
-      message,
-    ].filter(Boolean).join('\n');
-
-    const url = `https://wa.me/2348037135545?text=${encodeURIComponent(whatsappText)}`;
-
-    note.textContent = 'Opening WhatsApp with your enquiry...';
-    button.textContent = 'Opening...';
-    window.open(url, '_blank', 'noopener,noreferrer');
-  });
-</script>
