@@ -8,16 +8,21 @@ import AudienceSection from '../components/AudienceSection.astro';
 import ProjectsPreview from '../components/ProjectsPreview.astro';
 import BranchesPreview from '../components/BranchesPreview.astro';
 import CTASection from '../components/CTASection.astro';
+import BrandsStrip from '../components/BrandsStrip.astro';
+import VideoSection from '../components/VideoSection.astro';
+import TestimonialsSection from '../components/TestimonialsSection.astro';
 ---
 <Layout page="home">
   <HeroSection />
   <MarqueeStrip variant="red" />
   <AboutSection />
-  <MarqueeStrip variant="light" />
+  <BrandsStrip variant="light" />
   <ServicesPreview />
   <AudienceSection />
+  <VideoSection />
   <MarqueeStrip variant="dark" />
   <ProjectsPreview />
+  <TestimonialsSection />
   <BranchesPreview />
   <CTASection />
 </Layout>
