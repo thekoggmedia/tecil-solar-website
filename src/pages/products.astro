@@ -3,40 +3,40 @@ import Layout from '../layouts/Layout.astro';
 import MarqueeStrip from '../components/MarqueeStrip.astro';
 import CTASection from '../components/CTASection.astro';
 import BrandsStrip from '../components/BrandsStrip.astro';
-import { authorisedBrands } from '../data/site';
 
+// Google Sheet — Product Library tab
 const SHEET_ID  = '1O13BFsTZflUc-B5ZPjXuJUparLHP9GBip6psVVED99E';
-const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Product%20Library`;
 
-const categories = [
-  'Solar Panels',
-  'Inverters',
-  'Batteries',
-  'Charge Controllers',
-  'Solar Lighting',
-  'Stabilizers',
-  'Accessories',
+// Exact categories from the sheet
+const CATEGORIES = [
+  'Inverter',
+  'Battery',
+  'Solar Panel',
+  'Charge Controller',
+  'Solar Light',
+  'Solar Generator',
 ];
 ---
 
 <Layout
   title="Products — TECIL Solar"
-  description="Browse TECIL Solar's full range — solar panels, hybrid inverters, LiFePO4 batteries, charge controllers, solar lighting and accessories from 15+ authorised brands."
+  description="Browse 69+ products — inverters, batteries, solar panels, charge controllers, lighting and generators from 15+ authorised brands. Live pricing from Calabar."
   page="products"
 >
 
-  <!-- HERO -->
+  <!-- ── HERO ── -->
   <section class="page-hero">
     <div class="page-hero-grid"></div>
     <div class="page-hero-orb a"></div>
     <div class="page-hero-orb b"></div>
     <div class="container">
       <span class="section-tag">Products</span>
-      <h1>Quality You Can<br/><span class="text-gradient">Count On.</span></h1>
+      <h1>69 Products.<br/><span class="text-gradient">Live Pricing.</span></h1>
       <p class="page-hero-sub">
         Solar panels, hybrid inverters, lithium batteries, charge controllers, solar lighting
-        and accessories — sourced from 15+ authorised international brands, built for the
-        Nigerian climate and the Nigerian customer.
+        and generators — from 15+ authorised brands. All prices are live from our Calabar
+        branch and updated regularly.
       </p>
       <div class="hero-btns">
         <a href="#product-section" class="btn-primary">Browse Products</a>
@@ -47,14 +47,14 @@ const categories = [
 
   <MarqueeStrip variant="red" />
 
-  <!-- STATS BAR -->
+  <!-- ── STATS BAR ── -->
   <div class="pstats-bar">
     <div class="container pstats-inner">
       {[
+        { val:'69',   label:'Products in Stock' },
+        { val:'6',    label:'Product Categories' },
         { val:'15+',  label:'Authorised Brands' },
-        { val:'200+', label:'Products in Range' },
-        { val:'16+',  label:'Years Sourcing Quality' },
-        { val:'7',    label:'Branches to Visit' },
+        { val:'Live', label:'Pricing Updated Daily' },
       ].map(s => (
         <div class="pstat-item">
           <strong>{s.val}</strong>
@@ -64,58 +64,69 @@ const categories = [
     </div>
   </div>
 
-  <!-- FILTER + SEARCH BAR -->
+  <!-- ── FILTER + SEARCH BAR ── -->
   <div class="filter-bar" id="filter-bar">
     <div class="container fb-inner">
+
+      <!-- CATEGORY TABS -->
       <div class="filter-tabs" id="filter-tabs">
-        <button class="ftab is-active" data-cat="all">All</button>
-        {categories.map(c => (
-          <button class="ftab" data-cat={c}>{c}</button>
+        <button class="ftab is-active" data-cat="all">All Products</button>
+        {CATEGORIES.map(c => (
+          <button class="ftab" data-cat={c}>{c}s</button>
         ))}
       </div>
-      <div class="fb-search">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input type="text" id="product-search" placeholder="Search by name or brand…" autocomplete="off"/>
-        <button id="search-clear" class="sc-btn" style="display:none" aria-label="Clear">✕</button>
+
+      <!-- SEARCH + FILTERS -->
+      <div class="fb-right">
+        <div class="fb-search">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="product-search" placeholder="Search name, brand, capacity…" autocomplete="off"/>
+          <button id="search-clear" class="sc-btn" style="display:none" aria-label="Clear">✕</button>
+        </div>
+        <select id="brand-filter" class="fb-select">
+          <option value="">All Brands</option>
+        </select>
+        <select id="sort-filter" class="fb-select">
+          <option value="">Sort: Default</option>
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+          <option value="name-asc">Name: A → Z</option>
+        </select>
       </div>
+
     </div>
   </div>
 
-  <!-- PRODUCT SECTION -->
+  <!-- ── PRODUCT SECTION ── -->
   <section class="section bg-off" id="product-section">
     <div class="container">
 
-      <!-- LOADING -->
       <div id="products-loading" class="state-box">
         <div class="spin"></div>
-        <p>Loading products from live catalogue…</p>
+        <p>Loading live catalogue…</p>
       </div>
 
-      <!-- ERROR -->
       <div id="products-error" class="state-box" style="display:none">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#CC1417" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12" y2="16.01"/></svg>
-        <p>Could not load live products right now.</p>
+        <p>Could not load products right now.</p>
         <a href="/contact" class="btn-primary" style="margin-top:1rem">Contact Us for Pricing</a>
       </div>
 
-      <!-- EMPTY -->
       <div id="products-empty" class="state-box" style="display:none">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
         <p>No products match your search.</p>
-        <button onclick="window.resetFilters()" class="btn-primary" style="margin-top:1rem">Show All Products</button>
+        <button onclick="window.resetFilters()" class="btn-primary" style="margin-top:1rem">Clear Filters</button>
       </div>
 
-      <!-- GRID -->
       <div id="products-meta" class="products-meta" style="display:none"></div>
       <div id="products-grid" class="product-grid" style="display:none"></div>
 
     </div>
   </section>
 
-  <!-- BRANDS -->
   <BrandsStrip variant="light" />
 
-  <!-- BUYING GUIDE -->
+  <!-- ── BUYING GUIDE ── -->
   <section class="section bg-dark">
     <div class="container">
       <div class="guide-grid reveal">
@@ -180,8 +191,8 @@ const categories = [
 
 </Layout>
 
+<!-- ─────────────────── STYLES ─────────────────── -->
 <style>
-/* HERO BTNS */
 .hero-btns { display:flex; gap:12px; margin-top:2rem; flex-wrap:wrap; }
 
 /* STATS BAR */
@@ -193,7 +204,7 @@ const categories = [
 }
 .pstat-item:last-child { border-right:none; }
 .pstat-item strong {
-  font-family:var(--font); font-size:2rem; font-weight:900; color:#CC1417; line-height:1;
+  font-family:var(--font); font-size:1.9rem; font-weight:900; color:#CC1417; line-height:1;
   font-variation-settings:'wdth' 125,'wght' 900;
 }
 .pstat-item span { font-size:.62rem; font-weight:600; color:#6B7280; text-transform:uppercase; letter-spacing:.07em; text-align:center; }
@@ -209,33 +220,41 @@ const categories = [
 }
 .filter-tabs { display:flex; gap:4px; flex-wrap:wrap; }
 .ftab {
-  padding:.42rem .85rem; border-radius:6px; font-size:.72rem; font-weight:700;
+  padding:.4rem .85rem; border-radius:6px; font-size:.7rem; font-weight:700;
   border:1.5px solid #E5E7EB; background:#fff; cursor:pointer; color:#6B7280;
   letter-spacing:.05em; text-transform:uppercase; transition:all .2s ease;
-  font-variation-settings:'wdth' 100,'wght' 700;
+  font-variation-settings:'wdth' 100,'wght' 700; white-space:nowrap;
 }
-.ftab:hover  { border-color:rgba(204,20,23,.3); color:#CC1417; }
+.ftab:hover   { border-color:rgba(204,20,23,.3); color:#CC1417; }
 .ftab.is-active { background:#CC1417; border-color:#CC1417; color:#fff; }
 
+.fb-right { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
 .fb-search {
-  display:flex; align-items:center; gap:8px;
-  padding:.42rem .9rem; border:1.5px solid #E5E7EB; border-radius:6px;
-  background:#F7F8FA; min-width:240px; transition:border-color .2s;
+  display:flex; align-items:center; gap:7px;
+  padding:.4rem .85rem; border:1.5px solid #E5E7EB; border-radius:6px;
+  background:#F7F8FA; min-width:220px; transition:border-color .2s;
 }
 .fb-search:focus-within { border-color:rgba(204,20,23,.4); background:#fff; }
 .fb-search svg { color:#9CA3AF; flex-shrink:0; }
-.fb-search input { border:none; background:transparent; font-size:.82rem; color:#111827; outline:none; width:100%; }
+.fb-search input { border:none; background:transparent; font-size:.8rem; color:#111827; outline:none; width:100%; }
 .fb-search input::placeholder { color:#9CA3AF; }
-.sc-btn { background:none; border:none; cursor:pointer; color:#9CA3AF; font-size:.8rem; padding:0 2px; }
+.sc-btn { background:none; border:none; cursor:pointer; color:#9CA3AF; font-size:.8rem; padding:0 2px; line-height:1; }
 .sc-btn:hover { color:#CC1417; }
+
+.fb-select {
+  padding:.4rem .75rem; border:1.5px solid #E5E7EB; border-radius:6px;
+  background:#F7F8FA; font-size:.75rem; font-weight:600; color:#4B5563;
+  cursor:pointer; outline:none; transition:border-color .2s;
+  font-variation-settings:'wdth' 100,'wght' 600;
+}
+.fb-select:focus { border-color:rgba(204,20,23,.4); }
 
 /* STATES */
 .state-box {
   display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:14px; padding:5rem 2rem; text-align:center;
+  gap:14px; padding:5rem 2rem; text-align:center; min-height:300px;
 }
 .state-box p { font-size:.95rem; color:#6B7280; }
-.state-box a, .state-box button { font-size:.82rem; }
 .spin {
   width:36px; height:36px; border:3px solid #F3F4F6; border-top-color:#CC1417;
   border-radius:50%; animation:spin .75s linear infinite;
@@ -244,114 +263,147 @@ const categories = [
 
 /* META */
 .products-meta {
-  font-size:.75rem; color:#9CA3AF; font-weight:500;
-  margin-bottom:1rem; letter-spacing:.04em;
+  font-size:.75rem; color:#9CA3AF; font-weight:500; margin-bottom:1.25rem;
+  letter-spacing:.04em; text-transform:uppercase;
 }
 
-/* GRID */
+/* ── PRODUCT GRID ── */
 .product-grid {
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:2px;
+  gap:0;
+  border:1px solid #E5E7EB;
+  border-radius:12px;
+  overflow:hidden;
+  background:#E5E7EB; /* acts as gap colour */
 }
 
-/* CARD */
+/* ── PRODUCT CARD ── */
 .pcard {
-  background:#fff; border:1px solid #E5E7EB;
+  background:#fff;
   display:flex; flex-direction:column;
-  transition:all .3s ease; position:relative; overflow:hidden;
+  transition:all .3s ease;
+  position:relative; overflow:hidden;
 }
 .pcard::after {
   content:''; position:absolute; top:0; left:0; right:0; height:3px;
   background:linear-gradient(90deg,#CC1417,#E8601A);
   transform:scaleX(0); transform-origin:left; transition:transform .3s ease;
 }
-.pcard:hover { transform:translateY(-5px); box-shadow:0 16px 40px rgba(0,0,0,.1); border-color:transparent; }
+.pcard:hover { transform:translateY(-3px); box-shadow:0 12px 36px rgba(0,0,0,.12); z-index:2; }
 .pcard:hover::after { transform:scaleX(1); }
-.pcard.pcard-oos { opacity:.7; }
-.pcard.pcard-oos::after { background:linear-gradient(90deg,#9CA3AF,#D1D5DB); }
 
-/* CARD IMAGE */
+/* IMAGE AREA */
 .pcard-img-wrap {
   width:100%; aspect-ratio:4/3; overflow:hidden;
-  background:linear-gradient(135deg,#F7F8FA,#EDEEF0);
+  background:linear-gradient(145deg,#F7F8FA 0%,#EDEEF0 100%);
   position:relative; flex-shrink:0;
 }
 .pcard-img {
-  width:100%; height:100%; object-fit:cover; display:block;
+  width:100%; height:100%; object-fit:contain; display:block;
+  padding:1rem;
   transition:transform .4s ease;
 }
-.pcard:hover .pcard-img { transform:scale(1.04); }
+.pcard:hover .pcard-img { transform:scale(1.05); }
 .pcard-img-ph {
   width:100%; height:100%; display:flex; flex-direction:column;
-  align-items:center; justify-content:center; gap:8px;
-  color:#C4C9D4;
+  align-items:center; justify-content:center; gap:10px;
 }
-.pcard-img-ph svg { opacity:.4; }
-.pcard-img-ph span { font-size:.62rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; opacity:.45; }
+.pcard-img-ph .ph-icon { color:#D1D5DB; }
+.pcard-img-ph .ph-cat {
+  font-size:.6rem; font-weight:800; text-transform:uppercase;
+  letter-spacing:.12em; color:#C4C9D4;
+  font-variation-settings:'wdth' 100,'wght' 800;
+}
+.pcard-img-ph .ph-brand {
+  font-size:.72rem; font-weight:700; color:#9CA3AF;
+  font-variation-settings:'wdth' 100,'wght' 700;
+}
 
-.pcard-oos-tag {
-  position:absolute; top:10px; left:10px;
-  background:rgba(0,0,0,.65); color:#fff;
-  font-size:.58rem; font-weight:700; letter-spacing:.08em;
-  text-transform:uppercase; padding:3px 8px; border-radius:4px;
+/* CARD TYPE TAG (top-left overlay) */
+.pcard-type-tag {
+  position:absolute; bottom:8px; left:8px;
+  background:rgba(0,0,0,.55); backdrop-filter:blur(4px);
+  color:rgba(255,255,255,.9); font-size:.56rem; font-weight:700;
+  text-transform:uppercase; letter-spacing:.08em;
+  padding:3px 8px; border-radius:4px;
+  font-variation-settings:'wdth' 100,'wght' 700;
 }
 
 /* CARD BODY */
-.pcard-body { padding:1.25rem; display:flex; flex-direction:column; gap:.5rem; flex:1; }
+.pcard-body {
+  padding:1.1rem 1.25rem 1.25rem;
+  display:flex; flex-direction:column; gap:.45rem; flex:1;
+}
 
+/* CATEGORY CHIP */
 .pcard-cat {
   display:inline-flex; font-size:.58rem; font-weight:800;
   padding:3px 9px; border-radius:999px;
-  text-transform:uppercase; letter-spacing:.07em;
-  background:#FFF5EE; color:#E8601A; width:fit-content;
+  text-transform:uppercase; letter-spacing:.07em; width:fit-content;
   font-variation-settings:'wdth' 100,'wght' 800;
 }
+.cat-Inverter        { background:#FFF1F1; color:#CC1417; }
+.cat-Battery         { background:#EDF7F8; color:#006D77; }
+.cat-Solar-Panel     { background:#FFFBEA; color:#C8960C; }
+.cat-Charge-Controller { background:#FFF5EE; color:#E8601A; }
+.cat-Solar-Light     { background:#F0FDF4; color:#166534; }
+.cat-Solar-Generator { background:#EFF6FF; color:#1D4ED8; }
 
+/* NAME */
 .pcard-name {
-  font-family:var(--font); font-size:.95rem; font-weight:800;
-  color:#111827; text-transform:uppercase; line-height:1.2; letter-spacing:.02em;
+  font-family:var(--font); font-size:.9rem; font-weight:800;
+  color:#111827; line-height:1.25; letter-spacing:.01em;
   font-variation-settings:'wdth' 125,'wght' 800;
 }
+
+/* BRAND */
 .pcard-brand {
-  font-size:.7rem; font-weight:700; color:#6B7280;
-  text-transform:uppercase; letter-spacing:.05em;
-}
-.pcard-desc {
-  font-size:.8rem; color:#6B7280; line-height:1.65; flex:1;
-  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+  font-size:.68rem; font-weight:700; color:#9CA3AF;
+  text-transform:uppercase; letter-spacing:.06em;
+  font-variation-settings:'wdth' 100,'wght' 700;
 }
 
+/* CAPACITY BADGE */
+.pcard-capacity {
+  display:inline-flex; align-items:center; gap:5px;
+  background:#F7F8FA; border:1px solid #E5E7EB;
+  padding:4px 10px; border-radius:6px; width:fit-content;
+  font-size:.72rem; font-weight:700; color:#374151;
+  font-variation-settings:'wdth' 100,'wght' 700;
+}
+.pcard-capacity svg { color:#CC1417; flex-shrink:0; }
+
+/* FOOTER */
 .pcard-footer {
   display:flex; align-items:center; justify-content:space-between;
   padding-top:.85rem; margin-top:auto;
-  border-top:1px solid #F3F4F6; gap:.5rem; flex-wrap:wrap;
+  border-top:1px solid #F3F4F6; gap:.5rem;
 }
 .pcard-price {
-  font-family:var(--font); font-size:1.3rem; font-weight:900; color:#CC1417; line-height:1;
+  font-family:var(--font); font-size:1.25rem; font-weight:900; color:#CC1417; line-height:1;
   font-variation-settings:'wdth' 125,'wght' 900;
 }
-.pcard-price-na { font-size:.72rem; color:#9CA3AF; font-weight:600; font-style:italic; }
-.pcard-stars { color:#C8960C; font-size:.85rem; letter-spacing:1px; }
-
+.pcard-price-label {
+  font-size:.56rem; font-weight:600; color:#9CA3AF;
+  text-transform:uppercase; letter-spacing:.06em; display:block; margin-top:1px;
+}
 .pcard-enquire {
   display:inline-flex; align-items:center; gap:5px;
-  font-size:.68rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
-  color:#CC1417; text-decoration:none; transition:gap .2s ease;
+  font-size:.68rem; font-weight:800; letter-spacing:.06em;
+  text-transform:uppercase; color:#fff; background:#CC1417;
+  padding:.45rem .9rem; border-radius:6px; text-decoration:none;
+  transition:all .2s ease; white-space:nowrap;
   font-variation-settings:'wdth' 100,'wght' 800;
-  white-space:nowrap;
 }
-.pcard:hover .pcard-enquire { gap:9px; }
+.pcard-enquire:hover { background:#B01215; transform:translateY(-1px); }
 
 /* GUIDE */
 .guide-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
 .guide-copy h2 { color:#fff; margin-bottom:1rem; }
 .guide-copy > p { color:rgba(255,255,255,.6); line-height:1.85; margin-bottom:1.5rem; }
-.guide-steps { display:flex; flex-direction:column; gap:0; }
-.gs-row {
-  display:flex; align-items:flex-start; gap:14px;
-  padding:.85rem 0; border-bottom:1px solid rgba(255,255,255,.07);
-}
+.guide-steps { display:flex; flex-direction:column; }
+.gs-row { display:flex; align-items:flex-start; gap:14px; padding:.85rem 0; border-bottom:1px solid rgba(255,255,255,.07); }
 .gs-row:last-child { border-bottom:none; }
 .gs-n { font-family:var(--font); font-size:1.4rem; font-weight:900; color:rgba(204,20,23,.4); line-height:1; flex-shrink:0; width:32px; font-variation-settings:'wdth' 125,'wght' 900; }
 .gs-t { display:block; font-size:.88rem; font-weight:700; color:#fff; margin-bottom:2px; font-variation-settings:'wdth' 100,'wght' 700; }
@@ -365,146 +417,160 @@ const categories = [
 .gw-list li svg { flex-shrink:0; margin-top:3px; }
 
 /* RESPONSIVE */
-@media(max-width:1080px){ .product-grid{ grid-template-columns:repeat(2,1fr); } }
-@media(max-width:900px){
-  .guide-grid{ grid-template-columns:1fr; gap:3rem; }
-  .filter-bar{ position:relative; top:auto; }
-  .fb-inner{ flex-direction:column; align-items:flex-start; }
-  .fb-search{ width:100%; }
+@media(max-width:1080px) { .product-grid { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:900px)  {
+  .guide-grid { grid-template-columns:1fr; gap:3rem; }
+  .filter-bar { position:relative; top:auto; }
+  .fb-inner { flex-direction:column; align-items:flex-start; }
+  .fb-right { width:100%; }
+  .fb-search { flex:1; }
 }
-@media(max-width:600px){
-  .product-grid{ grid-template-columns:1fr; }
-  .pstat-item{ padding:.85rem 1.25rem; }
+@media(max-width:600px)  {
+  .product-grid { grid-template-columns:1fr; }
+  .pstat-item { padding:.85rem 1.25rem; }
 }
 </style>
 
-<script define:vars={{ SHEET_URL, categories }}>
-// ── CONFIG ───────────────────────────────────────────────────────
-const FETCH_URL = SHEET_URL;
-
-// Smart column aliases — handles ANY reasonable header name from the sheet
-const ALIASES = {
-  name:     ['product name','name','item','product','title','item name','sku name'],
-  category: ['category','cat','type','product type','product category','section'],
-  brand:    ['brand','make','manufacturer','brand name','supplier'],
-  desc:     ['description','desc','details','product description','about','summary'],
-  price:    ['price','unit price','selling price','amount','cost','rate','price (ngn)','ngn','naira'],
-  rating:   ['rating','rate','stars','score','review','reviews'],
-  image:    ['image','image url','photo','picture','img','img url','photo url'],
-  stock:    ['stock','in stock','availability','available','status','qty','quantity'],
+<!-- ─────────────────── SCRIPT ─────────────────── -->
+<script define:vars={{ SHEET_URL }}>
+// ── EXACT COLUMN INDICES (from the sheet we read) ──
+// Row 1 (header): Product ID | Category | Brand | Model Name / Description |
+//                 Capacity / Power / Size | Product Type | Quick Name |
+//                 Price — Calabar (NGN) | Price Last Updated | Drive Folder URL |
+//                 Hero JPEG URL | PNG Transparent URL | SVG Card URL | WebP URL |
+//                 Website Page URL | Branches in Stock | Pricing Notes | Date Photographed | Status
+const COL = {
+  id:         0,
+  category:   1,
+  brand:      2,
+  modelName:  3,   // "Model Name / Description"
+  capacity:   4,   // "Capacity / Power / Size"
+  type:       5,   // "Product Type"
+  quickName:  6,   // "Quick Name"
+  price:      7,   // "Price — Calabar (NGN)"
+  heroJpeg:  10,   // "Hero JPEG URL"
+  pngUrl:    11,   // "PNG Transparent URL"
+  webpUrl:   13,   // "WebP URL"
+  status:    18,   // "Status"
 };
 
-// ── STATE ─────────────────────────────────────────────────────────
-let allProducts   = [];
+// ── STATE ──
+let allProducts    = [];
 let activeCategory = 'all';
-let searchQuery   = '';
-let colMap        = {}; // resolved column positions
+let searchQuery    = '';
+let activeBrand    = '';
+let sortMode       = '';
 
-// ── HELPERS ───────────────────────────────────────────────────────
-function resolveColumns(headers) {
-  const map = {};
-  const lc = headers.map(h => String(h).toLowerCase().trim());
-  for (const [field, aliases] of Object.entries(ALIASES)) {
-    for (const alias of aliases) {
-      const idx = lc.indexOf(alias);
-      if (idx !== -1) { map[field] = idx; break; }
-    }
-  }
-  return map;
-}
-
-function get(row, field) {
-  const idx = colMap[field];
-  if (idx === undefined) return '';
-  const cell = row.c[idx];
-  if (!cell || cell.v === null || cell.v === undefined) return '';
-  return String(cell.v).trim();
+// ── HELPERS ──
+function cell(row, idx) {
+  const c = row.c?.[idx];
+  if (!c || c.v === null || c.v === undefined) return '';
+  return String(c.v).trim();
 }
 
 function formatPrice(raw) {
-  if (!raw || raw === '0') return null;
   const n = parseFloat(String(raw).replace(/[^0-9.]/g, ''));
-  if (isNaN(n) || n === 0) return null;
-  if (n >= 1_000_000) return '₦' + (n / 1_000_000).toFixed(1) + 'M';
+  if (!n || n === 0) return null;
+  if (n >= 1_000_000) return '₦' + (n / 1_000_000).toFixed(1).replace('.0','') + 'M';
   if (n >= 1_000)     return '₦' + n.toLocaleString('en-NG');
   return '₦' + n;
 }
 
-function stars(r) {
-  const n = Math.round(parseFloat(r) || 0);
-  return '★'.repeat(Math.min(n, 5)) + '☆'.repeat(Math.max(0, 5 - n));
+function getBestImage(row) {
+  // Try images in priority order: WebP → Hero JPEG → PNG Transparent
+  return cell(row, COL.webpUrl)
+      || cell(row, COL.heroJpeg)
+      || cell(row, COL.pngUrl)
+      || '';
 }
 
-// ── CARD HTML ─────────────────────────────────────────────────────
-function buildCard(row) {
-  const name     = get(row, 'name')     || 'Product';
-  const cat      = get(row, 'category') || '';
-  const brand    = get(row, 'brand')    || '';
-  const desc     = get(row, 'desc')     || '';
-  const rawPrice = get(row, 'price')    || '';
-  const rating   = get(row, 'rating')   || '';
-  const imgUrl   = get(row, 'image')    || '';
-  const stockRaw = get(row, 'stock')    || 'yes';
+function catClass(cat) {
+  return 'cat-' + cat.replace(/\s+/g, '-');
+}
 
+// ── CARD HTML ──
+function buildCard(row) {
+  const id       = cell(row, COL.id);
+  const category = cell(row, COL.category);
+  const brand    = cell(row, COL.brand);
+  const name     = cell(row, COL.modelName) || cell(row, COL.quickName) || 'Product';
+  const capacity = cell(row, COL.capacity);
+  const type     = cell(row, COL.type);
+  const rawPrice = cell(row, COL.price);
+  const imgUrl   = getBestImage(row);
   const price    = formatPrice(rawPrice);
-  const oos      = ['no','out','0','false','unavailable','out of stock']
-                   .includes(stockRaw.toLowerCase());
 
   const waMsg = encodeURIComponent(
-    `Hello TECIL Solar, I'd like to enquire about: ${name}${brand ? ' ('+brand+')' : ''}. Please share pricing and availability.`
+    `Hello TECIL Solar, I'd like to enquire about: ${cell(row, COL.quickName) || name}${capacity ? ' — ' + capacity : ''}. Please share availability and current pricing.`
   );
 
+  const imgHtml = imgUrl
+    ? `<img class="pcard-img" src="${imgUrl}" alt="${name}" loading="lazy"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+    : '';
+
   return `
-  <div class="pcard${oos ? ' pcard-oos' : ''}" data-cat="${cat}" data-search="${(name+' '+brand+' '+desc).toLowerCase()}">
+  <div class="pcard"
+    data-cat="${category}"
+    data-brand="${brand.toLowerCase()}"
+    data-search="${(name+' '+brand+' '+capacity+' '+type).toLowerCase()}"
+    data-price="${rawPrice || 0}">
+
     <div class="pcard-img-wrap">
-      ${imgUrl
-        ? `<img class="pcard-img" src="${imgUrl}" alt="${name}" loading="lazy"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
-        : ''
-      }
+      ${imgHtml}
       <div class="pcard-img-ph"${imgUrl ? ' style="display:none"' : ''}>
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        <span>${cat || 'TECIL Solar'}</span>
+        <svg class="ph-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="2" width="20" height="20" rx="4"/><path d="M8 12h8M12 8v8"/></svg>
+        <span class="ph-brand">${brand}</span>
+        <span class="ph-cat">${category}</span>
       </div>
-      ${oos ? '<div class="pcard-oos-tag">Out of Stock</div>' : ''}
+      ${type ? `<div class="pcard-type-tag">${type}</div>` : ''}
     </div>
+
     <div class="pcard-body">
-      ${cat   ? `<span class="pcard-cat">${cat}</span>` : ''}
+      ${category ? `<span class="pcard-cat ${catClass(category)}">${category}</span>` : ''}
       <div class="pcard-name">${name}</div>
       ${brand ? `<div class="pcard-brand">${brand}</div>` : ''}
-      ${desc  ? `<div class="pcard-desc">${desc}</div>` : ''}
+      ${capacity ? `
+        <div class="pcard-capacity">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          ${capacity}
+        </div>` : ''}
       <div class="pcard-footer">
         <div>
           ${price
-            ? `<div class="pcard-price">${price}</div>`
-            : `<span class="pcard-price-na">Call for price</span>`
+            ? `<div class="pcard-price">${price}</div>
+               <span class="pcard-price-label">Calabar Price</span>`
+            : `<div class="pcard-price" style="font-size:.82rem;color:#9CA3AF;font-weight:600">Call for price</div>`
           }
-          ${rating ? `<div class="pcard-stars">${stars(rating)}</div>` : ''}
         </div>
         <a class="pcard-enquire"
            href="https://wa.me/2348037135545?text=${waMsg}"
            target="_blank" rel="noopener">
           Enquire
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
     </div>
   </div>`;
 }
 
-// ── RENDER ────────────────────────────────────────────────────────
+// ── RENDER ──
 function render() {
   const grid  = document.getElementById('products-grid');
   const empty = document.getElementById('products-empty');
   const meta  = document.getElementById('products-meta');
 
-  const filtered = allProducts.filter(row => {
-    const cat      = get(row, 'category');
-    const catMatch = activeCategory === 'all' || cat === activeCategory;
-    const searchMatch = !searchQuery
-      || (row._search || '').includes(searchQuery);
-    return catMatch && searchMatch;
+  let filtered = allProducts.filter(row => {
+    const catMatch    = activeCategory === 'all' || cell(row, COL.category) === activeCategory;
+    const brandMatch  = !activeBrand || cell(row, COL.brand).toLowerCase() === activeBrand;
+    const searchMatch = !searchQuery  || (row._search || '').includes(searchQuery);
+    return catMatch && brandMatch && searchMatch;
   });
+
+  // Sort
+  if (sortMode === 'price-asc')  filtered.sort((a,b) => parseFloat(cell(a,COL.price)||0) - parseFloat(cell(b,COL.price)||0));
+  if (sortMode === 'price-desc') filtered.sort((a,b) => parseFloat(cell(b,COL.price)||0) - parseFloat(cell(a,COL.price)||0));
+  if (sortMode === 'name-asc')   filtered.sort((a,b) => cell(a,COL.modelName).localeCompare(cell(b,COL.modelName)));
 
   if (!filtered.length) {
     grid.style.display  = 'none';
@@ -520,58 +586,65 @@ function render() {
   grid.innerHTML      = filtered.map(buildCard).join('');
 }
 
-// ── LOAD ──────────────────────────────────────────────────────────
+// ── LOAD FROM SHEET ──
 async function loadProducts() {
   const loading = document.getElementById('products-loading');
   const error   = document.getElementById('products-error');
-
   try {
-    const res  = await fetch(FETCH_URL);
+    const res  = await fetch(SHEET_URL);
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const text = await res.text();
 
-    // Strip the Google Visualization JSONP wrapper
     const start = text.indexOf('{');
     const end   = text.lastIndexOf('}') + 1;
-    if (start < 0) throw new Error('No JSON found');
+    if (start < 0) throw new Error('No JSON');
     const json  = JSON.parse(text.slice(start, end));
 
-    const { cols, rows } = json.table;
-    const headers = cols.map(c => c.label || c.id || '');
-    colMap = resolveColumns(headers);
+    // Skip row 0 (title row) and row 1 (header row) — data starts at row 2
+    const rows = json.table.rows.slice(2);
 
-    // Cache a searchable string on each row
-    allProducts = rows
-      .filter(r => r && r.c && r.c.some(c => c && c.v !== null))
-      .map(r => {
-        r._search = [
-          get(r, 'name'), get(r, 'brand'), get(r, 'category'), get(r, 'desc')
-        ].join(' ').toLowerCase();
-        return r;
-      });
+    allProducts = rows.filter(r =>
+      r && r.c && cell(r, COL.id) && cell(r, COL.status).toLowerCase() === 'active'
+    ).map(r => {
+      r._search = [
+        cell(r, COL.modelName),
+        cell(r, COL.brand),
+        cell(r, COL.capacity),
+        cell(r, COL.type),
+        cell(r, COL.quickName),
+      ].join(' ').toLowerCase();
+      return r;
+    });
+
+    // Populate brand dropdown
+    const brands = [...new Set(allProducts.map(r => cell(r, COL.brand)).filter(Boolean))].sort();
+    const brandSel = document.getElementById('brand-filter');
+    brands.forEach(b => {
+      const opt = document.createElement('option');
+      opt.value = b.toLowerCase();
+      opt.textContent = b;
+      brandSel.appendChild(opt);
+    });
 
     loading.style.display = 'none';
-
-    if (!allProducts.length) throw new Error('Empty sheet');
-
+    if (!allProducts.length) throw new Error('No active products');
     document.getElementById('products-grid').style.display = 'grid';
     render();
 
-  } catch (err) {
+  } catch(err) {
     console.error('Products load error:', err);
     loading.style.display = 'none';
     error.style.display   = 'flex';
   }
 }
 
-// ── EVENTS ────────────────────────────────────────────────────────
+// ── EVENTS ──
 document.querySelectorAll('.ftab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.ftab').forEach(t => t.classList.remove('is-active'));
     tab.classList.add('is-active');
     activeCategory = tab.dataset.cat || 'all';
     render();
-    // Scroll to grid smoothly
     document.getElementById('product-section')?.scrollIntoView({ behavior:'smooth', block:'start' });
   });
 });
@@ -579,38 +652,40 @@ document.querySelectorAll('.ftab').forEach(tab => {
 let debounce;
 const searchInput = document.getElementById('product-search');
 const clearBtn    = document.getElementById('search-clear');
-
 searchInput?.addEventListener('input', e => {
   clearTimeout(debounce);
-  const val = e.target.value.trim().toLowerCase();
-  clearBtn.style.display = val ? 'block' : 'none';
-  debounce = setTimeout(() => {
-    searchQuery = val;
-    render();
-  }, 250);
+  const v = e.target.value.trim().toLowerCase();
+  clearBtn.style.display = v ? 'block' : 'none';
+  debounce = setTimeout(() => { searchQuery = v; render(); }, 200);
+});
+clearBtn?.addEventListener('click', () => {
+  searchInput.value = ''; clearBtn.style.display = 'none'; searchQuery = ''; render();
 });
 
-clearBtn?.addEventListener('click', () => {
-  searchInput.value   = '';
-  clearBtn.style.display = 'none';
-  searchQuery = '';
-  render();
+document.getElementById('brand-filter')?.addEventListener('change', e => {
+  activeBrand = e.target.value; render();
+});
+document.getElementById('sort-filter')?.addEventListener('change', e => {
+  sortMode = e.target.value; render();
 });
 
 window.resetFilters = () => {
-  activeCategory = 'all';
-  searchQuery    = '';
-  if (searchInput) { searchInput.value = ''; }
+  activeCategory = 'all'; searchQuery = ''; activeBrand = ''; sortMode = '';
+  if (searchInput) searchInput.value = '';
   if (clearBtn) clearBtn.style.display = 'none';
   document.querySelectorAll('.ftab').forEach(t => t.classList.remove('is-active'));
   document.querySelector('[data-cat="all"]')?.classList.add('is-active');
+  const bs = document.getElementById('brand-filter');
+  const ss = document.getElementById('sort-filter');
+  if (bs) bs.value = '';
+  if (ss) ss.value = '';
   render();
 };
 
-// Boot
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', loadProducts);
 } else {
   loadProducts();
 }
 </script>
+
