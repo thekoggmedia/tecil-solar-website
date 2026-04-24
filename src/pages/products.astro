@@ -2,152 +2,615 @@
 import Layout from '../layouts/Layout.astro';
 import MarqueeStrip from '../components/MarqueeStrip.astro';
 import CTASection from '../components/CTASection.astro';
-import { products } from '../data/site';
+import BrandsStrip from '../components/BrandsStrip.astro';
+import { authorisedBrands } from '../data/site';
+
+const SHEET_ID  = '1O13BFsTZflUc-B5ZPjXuJUparLHP9GBip6psVVED99E';
+const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
+const categories = [
+  'Solar Panels',
+  'Inverters',
+  'Batteries',
+  'Charge Controllers',
+  'Solar Lighting',
+  'Stabilizers',
+  'Accessories',
+];
 ---
 
 <Layout
   title="Products — TECIL Solar"
-  description="Solar panels, inverters, batteries, controllers, lighting, and accessories from TECIL Solar."
+  description="Browse TECIL Solar's full range — solar panels, hybrid inverters, LiFePO4 batteries, charge controllers, solar lighting and accessories from 15+ authorised brands."
   page="products"
 >
+
+  <!-- HERO -->
   <section class="page-hero">
     <div class="page-hero-grid"></div>
     <div class="page-hero-orb a"></div>
     <div class="page-hero-orb b"></div>
     <div class="container">
       <span class="section-tag">Products</span>
-      <h1>Show the actual products you sell.</h1>
+      <h1>Quality You Can<br/><span class="text-gradient">Count On.</span></h1>
       <p class="page-hero-sub">
-        This page turns the site into a sales page instead of only an information page.
+        Solar panels, hybrid inverters, lithium batteries, charge controllers, solar lighting
+        and accessories — sourced from 15+ authorised international brands, built for the
+        Nigerian climate and the Nigerian customer.
       </p>
+      <div class="hero-btns">
+        <a href="#product-section" class="btn-primary">Browse Products</a>
+        <a href="/contact" class="btn-outline-white">Get a Free Quote</a>
+      </div>
     </div>
   </section>
 
   <MarqueeStrip variant="red" />
 
-  <section class="section bg-white">
-    <div class="container">
-      <div class="product-grid">
-        {products.map((item, index) => (
-          <article class:list={['product-card', 'card', 'reveal', `reveal-delay-${(index % 5) + 1}`]} id={
-            item.category.toLowerCase().includes('panel') ? 'panels' :
-            item.category.toLowerCase().includes('inverter') ? 'inverters' :
-            item.category.toLowerCase().includes('battery') ? 'batteries' :
-            item.category.toLowerCase().includes('controller') ? 'controllers' :
-            item.category.toLowerCase().includes('lighting') ? 'lighting' : 'accessories'
-          }>
-            <span class="product-kicker">{item.category}</span>
-            <h3>{item.title}</h3>
-            <p>{item.summary}</p>
-            <ul>
-              {item.bullets.map((bullet) => <li>{bullet}</li>)}
-            </ul>
-          </article>
+  <!-- STATS BAR -->
+  <div class="pstats-bar">
+    <div class="container pstats-inner">
+      {[
+        { val:'15+',  label:'Authorised Brands' },
+        { val:'200+', label:'Products in Range' },
+        { val:'16+',  label:'Years Sourcing Quality' },
+        { val:'7',    label:'Branches to Visit' },
+      ].map(s => (
+        <div class="pstat-item">
+          <strong>{s.val}</strong>
+          <span>{s.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- FILTER + SEARCH BAR -->
+  <div class="filter-bar" id="filter-bar">
+    <div class="container fb-inner">
+      <div class="filter-tabs" id="filter-tabs">
+        <button class="ftab is-active" data-cat="all">All</button>
+        {categories.map(c => (
+          <button class="ftab" data-cat={c}>{c}</button>
         ))}
       </div>
+      <div class="fb-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="product-search" placeholder="Search by name or brand…" autocomplete="off"/>
+        <button id="search-clear" class="sc-btn" style="display:none" aria-label="Clear">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCT SECTION -->
+  <section class="section bg-off" id="product-section">
+    <div class="container">
+
+      <!-- LOADING -->
+      <div id="products-loading" class="state-box">
+        <div class="spin"></div>
+        <p>Loading products from live catalogue…</p>
+      </div>
+
+      <!-- ERROR -->
+      <div id="products-error" class="state-box" style="display:none">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#CC1417" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12" y2="16.01"/></svg>
+        <p>Could not load live products right now.</p>
+        <a href="/contact" class="btn-primary" style="margin-top:1rem">Contact Us for Pricing</a>
+      </div>
+
+      <!-- EMPTY -->
+      <div id="products-empty" class="state-box" style="display:none">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <p>No products match your search.</p>
+        <button onclick="window.resetFilters()" class="btn-primary" style="margin-top:1rem">Show All Products</button>
+      </div>
+
+      <!-- GRID -->
+      <div id="products-meta" class="products-meta" style="display:none"></div>
+      <div id="products-grid" class="product-grid" style="display:none"></div>
+
     </div>
   </section>
 
-  <section class="section bg-off">
+  <!-- BRANDS -->
+  <BrandsStrip variant="light" />
+
+  <!-- BUYING GUIDE -->
+  <section class="section bg-dark">
     <div class="container">
-      <div class="buying-shell reveal">
-        <div>
-          <span class="section-tag">What To Buy First</span>
-          <h2>Guide visitors toward the right product combination.</h2>
+      <div class="guide-grid reveal">
+        <div class="guide-copy">
+          <span class="section-tag">Buying Guide</span>
+          <h2>Not Sure What <span class="text-gradient">You Need?</span></h2>
+          <p>
+            Solar systems are not one-size-fits-all. The right panel wattage, inverter
+            capacity, and battery bank depends on your actual load — not guesswork.
+            Our engineers will assess your site and recommend the right combination
+            before you spend a naira.
+          </p>
+          <div class="guide-steps">
+            {[
+              { n:'01', t:'Tell us your load',       d:'Appliances, usage hours, priority items' },
+              { n:'02', t:'We size your system',     d:'Panel wattage, inverter KVA, battery AH' },
+              { n:'03', t:'We quote transparently',  d:'Full BOQ with brand options and pricing' },
+              { n:'04', t:'We install & commission', d:'Documented handover with system baseline' },
+            ].map(s => (
+              <div class="gs-row">
+                <span class="gs-n">{s.n}</span>
+                <div>
+                  <strong class="gs-t">{s.t}</strong>
+                  <span class="gs-d">{s.d}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <a href="/contact" class="btn-primary" style="margin-top:1.75rem">
+            Get a Free Assessment
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
         </div>
-        <div class="buying-box">
-          <p>
-            When you present panels, inverters, batteries, and accessories in grouped categories, the page feels
-            clearer and easier to buy from.
-          </p>
-          <p>
-            That structure also helps the MD see the business as a seller of real products, not only a service provider.
-          </p>
+        <div class="guide-warranty">
+          <div class="gw-card">
+            <div class="gw-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#CC1417" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3>Our Quality Promise</h3>
+            <ul class="gw-list">
+              {[
+                'All products from authorised channels only',
+                'Full manufacturer warranty honoured',
+                'Installation backed by TECIL guarantee',
+                'Technical support after every installation',
+                'Honest advice — we recommend what fits your budget',
+                'No counterfeit or grey-market products. Ever.',
+              ].map(p => (
+                <li>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#CC1417" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  {p}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <CTASection />
+
 </Layout>
 
 <style>
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
+/* HERO BTNS */
+.hero-btns { display:flex; gap:12px; margin-top:2rem; flex-wrap:wrap; }
 
-  .product-card {
-    padding: 1.45rem;
-  }
+/* STATS BAR */
+.pstats-bar { background:#fff; border-bottom:1px solid #E5E7EB; }
+.pstats-inner { display:flex; flex-wrap:wrap; justify-content:center; }
+.pstat-item {
+  display:flex; flex-direction:column; align-items:center;
+  padding:1.25rem 2.5rem; border-right:1px solid #E5E7EB; gap:3px;
+}
+.pstat-item:last-child { border-right:none; }
+.pstat-item strong {
+  font-family:var(--font); font-size:2rem; font-weight:900; color:#CC1417; line-height:1;
+  font-variation-settings:'wdth' 125,'wght' 900;
+}
+.pstat-item span { font-size:.62rem; font-weight:600; color:#6B7280; text-transform:uppercase; letter-spacing:.07em; text-align:center; }
 
-  .product-kicker {
-    display: inline-flex;
-    margin-bottom: 0.8rem;
-    padding: 0.5rem 0.72rem;
-    border-radius: 999px;
-    background: rgba(232,96,26,0.10);
-    color: var(--orange);
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
+/* FILTER BAR */
+.filter-bar {
+  background:#fff; border-bottom:1px solid #E5E7EB;
+  position:sticky; top:68px; z-index:90;
+}
+.fb-inner {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:1rem; padding-top:.65rem; padding-bottom:.65rem; flex-wrap:wrap;
+}
+.filter-tabs { display:flex; gap:4px; flex-wrap:wrap; }
+.ftab {
+  padding:.42rem .85rem; border-radius:6px; font-size:.72rem; font-weight:700;
+  border:1.5px solid #E5E7EB; background:#fff; cursor:pointer; color:#6B7280;
+  letter-spacing:.05em; text-transform:uppercase; transition:all .2s ease;
+  font-variation-settings:'wdth' 100,'wght' 700;
+}
+.ftab:hover  { border-color:rgba(204,20,23,.3); color:#CC1417; }
+.ftab.is-active { background:#CC1417; border-color:#CC1417; color:#fff; }
 
-  .product-card h3 {
-    font-size: 1.55rem;
-  }
+.fb-search {
+  display:flex; align-items:center; gap:8px;
+  padding:.42rem .9rem; border:1.5px solid #E5E7EB; border-radius:6px;
+  background:#F7F8FA; min-width:240px; transition:border-color .2s;
+}
+.fb-search:focus-within { border-color:rgba(204,20,23,.4); background:#fff; }
+.fb-search svg { color:#9CA3AF; flex-shrink:0; }
+.fb-search input { border:none; background:transparent; font-size:.82rem; color:#111827; outline:none; width:100%; }
+.fb-search input::placeholder { color:#9CA3AF; }
+.sc-btn { background:none; border:none; cursor:pointer; color:#9CA3AF; font-size:.8rem; padding:0 2px; }
+.sc-btn:hover { color:#CC1417; }
 
-  .product-card p {
-    margin-top: 0.6rem;
-  }
+/* STATES */
+.state-box {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:14px; padding:5rem 2rem; text-align:center;
+}
+.state-box p { font-size:.95rem; color:#6B7280; }
+.state-box a, .state-box button { font-size:.82rem; }
+.spin {
+  width:36px; height:36px; border:3px solid #F3F4F6; border-top-color:#CC1417;
+  border-radius:50%; animation:spin .75s linear infinite;
+}
+@keyframes spin { to { transform:rotate(360deg) } }
 
-  .product-card ul {
-    margin: 1rem 0 0;
-    padding-left: 1.1rem;
-    color: var(--muted);
-  }
+/* META */
+.products-meta {
+  font-size:.75rem; color:#9CA3AF; font-weight:500;
+  margin-bottom:1rem; letter-spacing:.04em;
+}
 
-  .product-card li + li {
-    margin-top: 0.4rem;
-  }
+/* GRID */
+.product-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:2px;
+}
 
-  .buying-shell {
-    display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    gap: 1.4rem;
-    align-items: start;
-  }
+/* CARD */
+.pcard {
+  background:#fff; border:1px solid #E5E7EB;
+  display:flex; flex-direction:column;
+  transition:all .3s ease; position:relative; overflow:hidden;
+}
+.pcard::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,#CC1417,#E8601A);
+  transform:scaleX(0); transform-origin:left; transition:transform .3s ease;
+}
+.pcard:hover { transform:translateY(-5px); box-shadow:0 16px 40px rgba(0,0,0,.1); border-color:transparent; }
+.pcard:hover::after { transform:scaleX(1); }
+.pcard.pcard-oos { opacity:.7; }
+.pcard.pcard-oos::after { background:linear-gradient(90deg,#9CA3AF,#D1D5DB); }
 
-  .buying-shell h2 {
-    max-width: 11ch;
-  }
+/* CARD IMAGE */
+.pcard-img-wrap {
+  width:100%; aspect-ratio:4/3; overflow:hidden;
+  background:linear-gradient(135deg,#F7F8FA,#EDEEF0);
+  position:relative; flex-shrink:0;
+}
+.pcard-img {
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .4s ease;
+}
+.pcard:hover .pcard-img { transform:scale(1.04); }
+.pcard-img-ph {
+  width:100%; height:100%; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:8px;
+  color:#C4C9D4;
+}
+.pcard-img-ph svg { opacity:.4; }
+.pcard-img-ph span { font-size:.62rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; opacity:.45; }
 
-  .buying-box {
-    padding: 1.35rem;
-    border-radius: 28px;
-    border: 1px solid var(--border);
-    background: #fff;
-  }
+.pcard-oos-tag {
+  position:absolute; top:10px; left:10px;
+  background:rgba(0,0,0,.65); color:#fff;
+  font-size:.58rem; font-weight:700; letter-spacing:.08em;
+  text-transform:uppercase; padding:3px 8px; border-radius:4px;
+}
 
-  .buying-box p + p {
-    margin-top: 0.85rem;
-  }
+/* CARD BODY */
+.pcard-body { padding:1.25rem; display:flex; flex-direction:column; gap:.5rem; flex:1; }
 
-  @media (max-width: 980px) {
-    .product-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+.pcard-cat {
+  display:inline-flex; font-size:.58rem; font-weight:800;
+  padding:3px 9px; border-radius:999px;
+  text-transform:uppercase; letter-spacing:.07em;
+  background:#FFF5EE; color:#E8601A; width:fit-content;
+  font-variation-settings:'wdth' 100,'wght' 800;
+}
 
-    .buying-shell {
-      grid-template-columns: 1fr;
-    }
-  }
+.pcard-name {
+  font-family:var(--font); font-size:.95rem; font-weight:800;
+  color:#111827; text-transform:uppercase; line-height:1.2; letter-spacing:.02em;
+  font-variation-settings:'wdth' 125,'wght' 800;
+}
+.pcard-brand {
+  font-size:.7rem; font-weight:700; color:#6B7280;
+  text-transform:uppercase; letter-spacing:.05em;
+}
+.pcard-desc {
+  font-size:.8rem; color:#6B7280; line-height:1.65; flex:1;
+  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+}
 
-  @media (max-width: 720px) {
-    .product-grid {
-      grid-template-columns: 1fr;
-    }
-  }
+.pcard-footer {
+  display:flex; align-items:center; justify-content:space-between;
+  padding-top:.85rem; margin-top:auto;
+  border-top:1px solid #F3F4F6; gap:.5rem; flex-wrap:wrap;
+}
+.pcard-price {
+  font-family:var(--font); font-size:1.3rem; font-weight:900; color:#CC1417; line-height:1;
+  font-variation-settings:'wdth' 125,'wght' 900;
+}
+.pcard-price-na { font-size:.72rem; color:#9CA3AF; font-weight:600; font-style:italic; }
+.pcard-stars { color:#C8960C; font-size:.85rem; letter-spacing:1px; }
+
+.pcard-enquire {
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:.68rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+  color:#CC1417; text-decoration:none; transition:gap .2s ease;
+  font-variation-settings:'wdth' 100,'wght' 800;
+  white-space:nowrap;
+}
+.pcard:hover .pcard-enquire { gap:9px; }
+
+/* GUIDE */
+.guide-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
+.guide-copy h2 { color:#fff; margin-bottom:1rem; }
+.guide-copy > p { color:rgba(255,255,255,.6); line-height:1.85; margin-bottom:1.5rem; }
+.guide-steps { display:flex; flex-direction:column; gap:0; }
+.gs-row {
+  display:flex; align-items:flex-start; gap:14px;
+  padding:.85rem 0; border-bottom:1px solid rgba(255,255,255,.07);
+}
+.gs-row:last-child { border-bottom:none; }
+.gs-n { font-family:var(--font); font-size:1.4rem; font-weight:900; color:rgba(204,20,23,.4); line-height:1; flex-shrink:0; width:32px; font-variation-settings:'wdth' 125,'wght' 900; }
+.gs-t { display:block; font-size:.88rem; font-weight:700; color:#fff; margin-bottom:2px; font-variation-settings:'wdth' 100,'wght' 700; }
+.gs-d { font-size:.78rem; color:rgba(255,255,255,.4); }
+.guide-warranty { padding-top:1rem; }
+.gw-card { background:rgba(255,255,255,.05); border:1px solid rgba(204,20,23,.2); border-radius:16px; padding:2rem; }
+.gw-icon { width:52px; height:52px; background:rgba(204,20,23,.12); border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:1rem; }
+.gw-card h3 { font-family:var(--font); font-size:1.05rem; font-weight:800; text-transform:uppercase; color:#fff; margin-bottom:1rem; letter-spacing:.02em; font-variation-settings:'wdth' 125,'wght' 800; }
+.gw-list { list-style:none; display:flex; flex-direction:column; gap:10px; }
+.gw-list li { display:flex; align-items:flex-start; gap:8px; font-size:.82rem; color:rgba(255,255,255,.65); line-height:1.5; }
+.gw-list li svg { flex-shrink:0; margin-top:3px; }
+
+/* RESPONSIVE */
+@media(max-width:1080px){ .product-grid{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:900px){
+  .guide-grid{ grid-template-columns:1fr; gap:3rem; }
+  .filter-bar{ position:relative; top:auto; }
+  .fb-inner{ flex-direction:column; align-items:flex-start; }
+  .fb-search{ width:100%; }
+}
+@media(max-width:600px){
+  .product-grid{ grid-template-columns:1fr; }
+  .pstat-item{ padding:.85rem 1.25rem; }
+}
 </style>
+
+<script define:vars={{ SHEET_URL, categories }}>
+// ── CONFIG ───────────────────────────────────────────────────────
+const FETCH_URL = SHEET_URL;
+
+// Smart column aliases — handles ANY reasonable header name from the sheet
+const ALIASES = {
+  name:     ['product name','name','item','product','title','item name','sku name'],
+  category: ['category','cat','type','product type','product category','section'],
+  brand:    ['brand','make','manufacturer','brand name','supplier'],
+  desc:     ['description','desc','details','product description','about','summary'],
+  price:    ['price','unit price','selling price','amount','cost','rate','price (ngn)','ngn','naira'],
+  rating:   ['rating','rate','stars','score','review','reviews'],
+  image:    ['image','image url','photo','picture','img','img url','photo url'],
+  stock:    ['stock','in stock','availability','available','status','qty','quantity'],
+};
+
+// ── STATE ─────────────────────────────────────────────────────────
+let allProducts   = [];
+let activeCategory = 'all';
+let searchQuery   = '';
+let colMap        = {}; // resolved column positions
+
+// ── HELPERS ───────────────────────────────────────────────────────
+function resolveColumns(headers) {
+  const map = {};
+  const lc = headers.map(h => String(h).toLowerCase().trim());
+  for (const [field, aliases] of Object.entries(ALIASES)) {
+    for (const alias of aliases) {
+      const idx = lc.indexOf(alias);
+      if (idx !== -1) { map[field] = idx; break; }
+    }
+  }
+  return map;
+}
+
+function get(row, field) {
+  const idx = colMap[field];
+  if (idx === undefined) return '';
+  const cell = row.c[idx];
+  if (!cell || cell.v === null || cell.v === undefined) return '';
+  return String(cell.v).trim();
+}
+
+function formatPrice(raw) {
+  if (!raw || raw === '0') return null;
+  const n = parseFloat(String(raw).replace(/[^0-9.]/g, ''));
+  if (isNaN(n) || n === 0) return null;
+  if (n >= 1_000_000) return '₦' + (n / 1_000_000).toFixed(1) + 'M';
+  if (n >= 1_000)     return '₦' + n.toLocaleString('en-NG');
+  return '₦' + n;
+}
+
+function stars(r) {
+  const n = Math.round(parseFloat(r) || 0);
+  return '★'.repeat(Math.min(n, 5)) + '☆'.repeat(Math.max(0, 5 - n));
+}
+
+// ── CARD HTML ─────────────────────────────────────────────────────
+function buildCard(row) {
+  const name     = get(row, 'name')     || 'Product';
+  const cat      = get(row, 'category') || '';
+  const brand    = get(row, 'brand')    || '';
+  const desc     = get(row, 'desc')     || '';
+  const rawPrice = get(row, 'price')    || '';
+  const rating   = get(row, 'rating')   || '';
+  const imgUrl   = get(row, 'image')    || '';
+  const stockRaw = get(row, 'stock')    || 'yes';
+
+  const price    = formatPrice(rawPrice);
+  const oos      = ['no','out','0','false','unavailable','out of stock']
+                   .includes(stockRaw.toLowerCase());
+
+  const waMsg = encodeURIComponent(
+    `Hello TECIL Solar, I'd like to enquire about: ${name}${brand ? ' ('+brand+')' : ''}. Please share pricing and availability.`
+  );
+
+  return `
+  <div class="pcard${oos ? ' pcard-oos' : ''}" data-cat="${cat}" data-search="${(name+' '+brand+' '+desc).toLowerCase()}">
+    <div class="pcard-img-wrap">
+      ${imgUrl
+        ? `<img class="pcard-img" src="${imgUrl}" alt="${name}" loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+        : ''
+      }
+      <div class="pcard-img-ph"${imgUrl ? ' style="display:none"' : ''}>
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span>${cat || 'TECIL Solar'}</span>
+      </div>
+      ${oos ? '<div class="pcard-oos-tag">Out of Stock</div>' : ''}
+    </div>
+    <div class="pcard-body">
+      ${cat   ? `<span class="pcard-cat">${cat}</span>` : ''}
+      <div class="pcard-name">${name}</div>
+      ${brand ? `<div class="pcard-brand">${brand}</div>` : ''}
+      ${desc  ? `<div class="pcard-desc">${desc}</div>` : ''}
+      <div class="pcard-footer">
+        <div>
+          ${price
+            ? `<div class="pcard-price">${price}</div>`
+            : `<span class="pcard-price-na">Call for price</span>`
+          }
+          ${rating ? `<div class="pcard-stars">${stars(rating)}</div>` : ''}
+        </div>
+        <a class="pcard-enquire"
+           href="https://wa.me/2348037135545?text=${waMsg}"
+           target="_blank" rel="noopener">
+          Enquire
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── RENDER ────────────────────────────────────────────────────────
+function render() {
+  const grid  = document.getElementById('products-grid');
+  const empty = document.getElementById('products-empty');
+  const meta  = document.getElementById('products-meta');
+
+  const filtered = allProducts.filter(row => {
+    const cat      = get(row, 'category');
+    const catMatch = activeCategory === 'all' || cat === activeCategory;
+    const searchMatch = !searchQuery
+      || (row._search || '').includes(searchQuery);
+    return catMatch && searchMatch;
+  });
+
+  if (!filtered.length) {
+    grid.style.display  = 'none';
+    empty.style.display = 'flex';
+    meta.style.display  = 'none';
+    return;
+  }
+
+  empty.style.display = 'none';
+  grid.style.display  = 'grid';
+  meta.style.display  = 'block';
+  meta.textContent    = `Showing ${filtered.length} of ${allProducts.length} products`;
+  grid.innerHTML      = filtered.map(buildCard).join('');
+}
+
+// ── LOAD ──────────────────────────────────────────────────────────
+async function loadProducts() {
+  const loading = document.getElementById('products-loading');
+  const error   = document.getElementById('products-error');
+
+  try {
+    const res  = await fetch(FETCH_URL);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const text = await res.text();
+
+    // Strip the Google Visualization JSONP wrapper
+    const start = text.indexOf('{');
+    const end   = text.lastIndexOf('}') + 1;
+    if (start < 0) throw new Error('No JSON found');
+    const json  = JSON.parse(text.slice(start, end));
+
+    const { cols, rows } = json.table;
+    const headers = cols.map(c => c.label || c.id || '');
+    colMap = resolveColumns(headers);
+
+    // Cache a searchable string on each row
+    allProducts = rows
+      .filter(r => r && r.c && r.c.some(c => c && c.v !== null))
+      .map(r => {
+        r._search = [
+          get(r, 'name'), get(r, 'brand'), get(r, 'category'), get(r, 'desc')
+        ].join(' ').toLowerCase();
+        return r;
+      });
+
+    loading.style.display = 'none';
+
+    if (!allProducts.length) throw new Error('Empty sheet');
+
+    document.getElementById('products-grid').style.display = 'grid';
+    render();
+
+  } catch (err) {
+    console.error('Products load error:', err);
+    loading.style.display = 'none';
+    error.style.display   = 'flex';
+  }
+}
+
+// ── EVENTS ────────────────────────────────────────────────────────
+document.querySelectorAll('.ftab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.ftab').forEach(t => t.classList.remove('is-active'));
+    tab.classList.add('is-active');
+    activeCategory = tab.dataset.cat || 'all';
+    render();
+    // Scroll to grid smoothly
+    document.getElementById('product-section')?.scrollIntoView({ behavior:'smooth', block:'start' });
+  });
+});
+
+let debounce;
+const searchInput = document.getElementById('product-search');
+const clearBtn    = document.getElementById('search-clear');
+
+searchInput?.addEventListener('input', e => {
+  clearTimeout(debounce);
+  const val = e.target.value.trim().toLowerCase();
+  clearBtn.style.display = val ? 'block' : 'none';
+  debounce = setTimeout(() => {
+    searchQuery = val;
+    render();
+  }, 250);
+});
+
+clearBtn?.addEventListener('click', () => {
+  searchInput.value   = '';
+  clearBtn.style.display = 'none';
+  searchQuery = '';
+  render();
+});
+
+window.resetFilters = () => {
+  activeCategory = 'all';
+  searchQuery    = '';
+  if (searchInput) { searchInput.value = ''; }
+  if (clearBtn) clearBtn.style.display = 'none';
+  document.querySelectorAll('.ftab').forEach(t => t.classList.remove('is-active'));
+  document.querySelector('[data-cat="all"]')?.classList.add('is-active');
+  render();
+};
+
+// Boot
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', loadProducts);
+} else {
+  loadProducts();
+}
+</script>
