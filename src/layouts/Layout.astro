@@ -28,21 +28,21 @@ const {
   <div class="nav-inner">
 
     <a href="/" class="nav-brand">
-      <img src="/logo-mark.svg" alt="TECIL Solar" class="nav-logo-svg" width="40" height="40" onerror="this.style.display='none'"/>
+      <img src="/logo-mark.svg" alt="TECIL Solar" class="nav-logo-svg" width="44" height="44" onerror="this.style.display='none'"/>
       <div class="nav-brand-text">
         <strong><span style="color:#CC1417">TECIL</span><span style="color:#E8601A">Solar</span></strong>
-        <span>...the inverter place</span>
+        <span class="nav-tagline">...the inverter place</span>
       </div>
     </a>
 
     <ul class="nav-links">
-      <li><a href="/"          class={`nav-link ${page==='home'?'is-active':''}`}>Home</a></li>
-      <li><a href="/services"  class={`nav-link ${page==='services'?'is-active':''}`}>Services</a></li>
-      <li><a href="/products"  class={`nav-link ${page==='products'?'is-active':''}`}>Products</a></li>
-      <li><a href="/projects"  class={`nav-link ${page==='projects'?'is-active':''}`}>Projects</a></li>
-      <li><a href="/team"      class={`nav-link ${page==='team'?'is-active':''}`}>Our Team</a></li>
-      <li><a href="/branches"  class={`nav-link ${page==='branches'?'is-active':''}`}>Find Us</a></li>
-      <li><a href="/contact"   class="nav-link nav-cta">Get a Quote</a></li>
+      <li><a href="/"         class={`nav-link ${page==='home'?'is-active':''}`}>Home</a></li>
+      <li><a href="/services" class={`nav-link ${page==='services'?'is-active':''}`}>Services</a></li>
+      <li><a href="/products" class={`nav-link ${page==='products'?'is-active':''}`}>Products</a></li>
+      <li><a href="/projects" class={`nav-link ${page==='projects'?'is-active':''}`}>Projects</a></li>
+      <li><a href="/team"     class={`nav-link ${page==='team'?'is-active':''}`}>Our Team</a></li>
+      <li><a href="/branches" class={`nav-link ${page==='branches'?'is-active':''}`}>Find Us</a></li>
+      <li><a href="/contact"  class="nav-link nav-cta">Get a Quote</a></li>
     </ul>
 
     <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
@@ -142,29 +142,90 @@ const {
 </html>
 
 <style>
-/* ── NAV BRAND TEXT WEIGHT FIX ── */
-/* Override the global nav-brand-text strong rule to make it heavier and more visible */
+/* ════════════════════════════════════════
+   CORRECTION 1 — Brand text bigger + bolder
+   ════════════════════════════════════════ */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.nav-brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* TECILSOLAR text — matched to logo height */
 .nav-brand-text strong {
   font-family: var(--font);
-  font-size: 1.5rem;
+  font-size: 2rem;           /* ← was 1.5rem, now matches 44px logo */
   text-transform: uppercase;
-  letter-spacing: 0.03em;
-  /* Increased weight significantly — 950 is the heaviest available on Nunito Sans variable */
+  letter-spacing: 0.04em;
   font-variation-settings: 'wdth' 125, 'wght' 950;
   line-height: 1;
   display: block;
 }
-.nav-brand-text span {
-  font-size: 0.6rem;
+
+/* "...the inverter place" tagline — unchanged */
+.nav-tagline {
+  font-size: 0.58rem;
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.5);
   font-variation-settings: 'wdth' 100, 'wght' 600;
-  margin-top: 2px;
+  margin-top: 3px;
   display: block;
+  white-space: nowrap;
 }
-.site-nav.is-light .nav-brand-text span { color: var(--soft); }
+.site-nav.is-light .nav-tagline { color: var(--soft); }
+
+/* ════════════════════════════════════════
+   CORRECTION 2 — Nav collapse earlier so
+   links never distort or wrap
+   ════════════════════════════════════════ */
+
+/* Desktop nav — keep all links on one line */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  list-style: none;
+  flex-wrap: nowrap;      /* ← never wrap */
+}
+
+.nav-links li {
+  flex-shrink: 0;         /* ← never squish */
+}
+
+.nav-link {
+  white-space: nowrap;    /* ← text never breaks */
+  padding: 0.45rem 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-variation-settings: 'wdth' 100, 'wght' 700;
+}
+
+/* Hamburger — hidden on desktop, shown below 1180px */
+.nav-toggle { display: none; }
+
+/* ── COLLAPSE BREAKPOINT ── 
+   Collapse to hamburger at 1180px (was probably 768px before)
+   This prevents any wrapping on medium screens              */
+@media (max-width: 1180px) {
+  .nav-links  { display: none; }
+  .nav-toggle { display: flex; }
+}
+
+/* At very small screens make brand text slightly smaller */
+@media (max-width: 480px) {
+  .nav-brand-text strong { font-size: 1.6rem; }
+}
 </style>
 
 <script>

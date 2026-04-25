@@ -1,226 +1,437 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import MarqueeStrip from '../components/MarqueeStrip.astro';
-import { contactChannels } from '../data/site';
+import CTASection from '../components/CTASection.astro';
+
+const branches = [
+  { label: 'Calabar HQ',      phone: '08037135545' },
+  { label: 'Calabar South',   phone: '09071242120' },
+  { label: 'Ikom',            phone: '08035601371' },
+  { label: 'Port Harcourt 1', phone: '07016164397' },
+  { label: 'Port Harcourt 2', phone: '07016164397' },
+  { label: 'Uyo',             phone: '08121138060' },
+  { label: 'Lagos / Ikeja',   phone: '08026835985' },
+];
+
+const trustPoints = [
+  'Free load assessment before any quote',
+  'Response within 24 hours guaranteed',
+  'No pushy sales — honest advice only',
+  'Serving Nigeria since 2008',
+];
 ---
 
 <Layout
-  title="Contact — TECIL Solar"
-  description="Contact TECIL Solar for a quote, support, or product enquiry."
+  title="Get a Quote — TECIL Solar"
+  description="Contact TECIL Solar for a free solar assessment and quote. 7 branches across Nigeria — Lagos, Port Harcourt, Calabar, Uyo and Ikom."
   page="contact"
 >
+
+  <!-- HERO -->
   <section class="page-hero">
     <div class="page-hero-grid"></div>
     <div class="page-hero-orb a"></div>
     <div class="page-hero-orb b"></div>
     <div class="container">
-      <span class="section-tag">Contact</span>
-      <h1>Get a quote without the clutter.</h1>
+      <span class="section-tag">Get a Quote</span>
+      <h1>Let's Talk<br/><span class="text-gradient">About Your Power.</span></h1>
       <p class="page-hero-sub">
-        A cleaner contact experience helps the user act faster and helps the business look more organized.
+        Tell us what you need — a home backup system, a commercial installation,
+        or a large-scale project. We'll assess your load and come back with
+        an honest recommendation and a clear price.
       </p>
     </div>
   </section>
 
   <MarqueeStrip variant="red" />
 
+  <!-- MAIN SECTION -->
   <section class="section bg-off">
     <div class="container contact-shell">
-      <div class="contact-cards">
-        {contactChannels.map((item) => (
-          <a class="contact-card card reveal" href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
-            <span>{item.label}</span>
-            <strong>{item.value}</strong>
-          </a>
-        ))}
 
-        <div class="contact-card card reveal reveal-delay-2">
-          <span>What happens next</span>
-          <strong>We review your needs, then respond with the right solution.</strong>
+      <!-- LEFT — Info + Trust -->
+      <div class="contact-left">
+
+        <!-- QUICK CONTACT CHANNELS -->
+        <div class="cc-block reveal">
+          <h3 class="cc-title">Reach Us Directly</h3>
+
+          <a href="https://wa.me/2348037135545" target="_blank" rel="noopener" class="cc-card cc-wa">
+            <div class="cc-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+            </div>
+            <div class="cc-info">
+              <strong>WhatsApp</strong>
+              <span>Fastest response — usually within the hour</span>
+            </div>
+            <svg class="cc-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <a href="tel:+2348037135545" class="cc-card cc-phone">
+            <div class="cc-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38a2 2 0 0 1 1.99-1.8h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
+            </div>
+            <div class="cc-info">
+              <strong>Call HQ</strong>
+              <span>0803 713 5545</span>
+            </div>
+            <svg class="cc-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <a href="mailto:info.tecilservices@gmail.com" class="cc-card cc-email">
+            <div class="cc-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+            </div>
+            <div class="cc-info">
+              <strong>Email</strong>
+              <span>info.tecilservices@gmail.com</span>
+            </div>
+            <svg class="cc-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+
+          <a href="/branches" class="cc-card cc-branch">
+            <div class="cc-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="cc-info">
+              <strong>Walk In</strong>
+              <span>7 branches across Lagos, PH, Calabar, Uyo & Ikom</span>
+            </div>
+            <svg class="cc-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <!-- TRUST POINTS -->
+        <div class="trust-block reveal reveal-delay-2">
+          {trustPoints.map(p => (
+            <div class="trust-row">
+              <div class="trust-dot"></div>
+              <span>{p}</span>
+            </div>
+          ))}
+        </div>
+
+        <!-- QUOTE PROCESS -->
+        <div class="process-block reveal reveal-delay-3">
+          <h4 class="pb-title">What happens after you send?</h4>
+          {[
+            { n:'01', t:'We review your enquiry',    d:'Usually within a few hours' },
+            { n:'02', t:'We assess your load',       d:'Call or site visit — no charge' },
+            { n:'03', t:'We send a clear quote',     d:'Full BOQ, brand options, pricing' },
+            { n:'04', t:'You decide — no pressure',  d:'Honest advice, zero pushy sales' },
+          ].map(s => (
+            <div class="pb-step">
+              <span class="pb-n">{s.n}</span>
+              <div>
+                <strong class="pb-t">{s.t}</strong>
+                <span class="pb-d">{s.d}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </div>
+
+      <!-- RIGHT — Form -->
+      <div class="contact-right reveal">
+        <div class="form-card">
+          <div class="form-card-head">
+            <span class="section-tag">Free Quote Request</span>
+            <h2>Tell Us What<br/>You Need</h2>
+            <p class="form-sub">
+              Fill in the form below and we'll open WhatsApp with your enquiry
+              pre-filled — so you can send it with one tap.
+            </p>
+          </div>
+
+          <form id="contact-form" class="cform">
+
+            <div class="form-row">
+              <div class="form-field">
+                <label for="cf-name">
+                  <span class="field-label">Your Name</span>
+                  <input id="cf-name" name="name" type="text" placeholder="Full name" required/>
+                </label>
+              </div>
+              <div class="form-field">
+                <label for="cf-phone">
+                  <span class="field-label">Phone Number</span>
+                  <input id="cf-phone" name="phone" type="tel" placeholder="0803 000 0000" required/>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label for="cf-email">
+                  <span class="field-label">Email <em>(optional)</em></span>
+                  <input id="cf-email" name="email" type="email" placeholder="name@example.com"/>
+                </label>
+              </div>
+              <div class="form-field">
+                <label for="cf-location">
+                  <span class="field-label">Your City / State</span>
+                  <input id="cf-location" name="location" type="text" placeholder="e.g. Lagos, Calabar…" required/>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-field full">
+              <label for="cf-branch">
+                <span class="field-label">Nearest TECIL Solar Branch</span>
+                <div class="select-wrap">
+                  <select id="cf-branch" name="branch">
+                    <option value="">Select a branch (optional)</option>
+                    {branches.map(b => (
+                      <option value={b.label}>{b.label} — {b.phone}</option>
+                    ))}
+                  </select>
+                  <svg class="sel-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+              </label>
+            </div>
+
+            <div class="form-field full">
+              <label for="cf-type">
+                <span class="field-label">What do you need?</span>
+                <div class="select-wrap">
+                  <select id="cf-type" name="type">
+                    <option value="">Select enquiry type</option>
+                    <option>Home Solar / Inverter System</option>
+                    <option>Commercial / SME Installation</option>
+                    <option>Institutional / Government Project</option>
+                    <option>Product Purchase Only</option>
+                    <option>Maintenance / Repair</option>
+                    <option>Technical Advisory</option>
+                    <option>Training Enquiry</option>
+                    <option>Other</option>
+                  </select>
+                  <svg class="sel-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+              </label>
+            </div>
+
+            <div class="form-field full">
+              <label for="cf-message">
+                <span class="field-label">Describe your need</span>
+                <textarea id="cf-message" name="message" rows="5"
+                  placeholder="Tell us about your space, your appliances, your current power situation, and what you're hoping to achieve…"
+                  required></textarea>
+              </label>
+            </div>
+
+            <button class="cform-submit" id="submit-btn" type="submit">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+              Send Enquiry via WhatsApp
+            </button>
+
+            <p class="form-note" id="form-note">
+              Tapping Send opens WhatsApp with your message pre-filled. We respond to all enquiries.
+            </p>
+
+          </form>
         </div>
       </div>
 
-      <form class="contact-form card reveal reveal-delay-2" id="contact-form">
-        <span class="section-tag">Request a Quote</span>
-        <h2>Send a clear enquiry.</h2>
-
-        <div class="form-grid">
-          <label>
-            <span>Your Name</span>
-            <input name="name" type="text" placeholder="Enter your name" required />
-          </label>
-
-          <label>
-            <span>Phone Number</span>
-            <input name="phone" type="tel" placeholder="0803 000 0000" required />
-          </label>
-
-          <label>
-            <span>Email Address</span>
-            <input name="email" type="email" placeholder="name@example.com" />
-          </label>
-
-          <label>
-            <span>City / Location</span>
-            <input name="location" type="text" placeholder="Lagos, Port Harcourt..." required />
-          </label>
-        </div>
-
-        <label class="full">
-          <span>What do you need?</span>
-          <textarea name="message" rows="6" placeholder="Tell us about your solar or inverter need" required></textarea>
-        </label>
-
-        <button class="btn-primary" id="submit-btn" type="submit">Send via WhatsApp</button>
-        <p class="form-note" id="form-note">We will open WhatsApp with a pre-filled message so you can send it instantly.</p>
-      </form>
     </div>
   </section>
+
+  <CTASection />
 </Layout>
 
 <style>
-  .contact-shell {
-    display: grid;
-    grid-template-columns: minmax(320px, 0.85fr) minmax(0, 1.15fr);
-    gap: 1.2rem;
-    align-items: start;
-  }
+/* ── LAYOUT ── */
+.contact-shell {
+  display:grid;
+  grid-template-columns:1fr 1.4fr;
+  gap:3rem;
+  align-items:start;
+}
 
-  .contact-cards {
-    display: grid;
-    gap: 1rem;
-  }
+/* ── LEFT SIDE ── */
+.contact-left { display:flex; flex-direction:column; gap:1.5rem; }
 
-  .contact-card {
-    padding: 1.35rem;
-    border-radius: 28px;
-  }
+/* CONTACT CHANNELS */
+.cc-block {}
+.cc-title {
+  font-family:var(--font); font-size:.7rem; font-weight:800;
+  text-transform:uppercase; letter-spacing:.12em; color:#9CA3AF;
+  margin-bottom:1rem;
+  font-variation-settings:'wdth' 100,'wght' 800;
+}
+.cc-card {
+  display:flex; align-items:center; gap:14px;
+  padding:1rem 1.25rem; border-radius:12px;
+  border:1.5px solid #E5E7EB; background:#fff;
+  text-decoration:none; transition:all .25s ease;
+  margin-bottom:8px;
+}
+.cc-card:last-child { margin-bottom:0; }
+.cc-card:hover { transform:translateX(4px); box-shadow:0 4px 16px rgba(0,0,0,.08); }
+.cc-icon {
+  width:42px; height:42px; border-radius:10px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+}
+.cc-wa    .cc-icon { background:rgba(37,211,102,.1);  color:#25D366; }
+.cc-phone .cc-icon { background:#FFF5EE; color:#E8601A; }
+.cc-email .cc-icon { background:#FFF1F1; color:#CC1417; }
+.cc-branch .cc-icon { background:#EDF7F8; color:#006D77; }
+.cc-wa:hover    { border-color:rgba(37,211,102,.35); }
+.cc-phone:hover { border-color:rgba(232,96,26,.35); }
+.cc-email:hover { border-color:rgba(204,20,23,.35); }
+.cc-branch:hover { border-color:rgba(0,109,119,.35); }
+.cc-info { flex:1; }
+.cc-info strong { display:block; font-size:.88rem; font-weight:700; color:#111827; margin-bottom:1px; font-variation-settings:'wdth' 100,'wght' 700; }
+.cc-info span   { font-size:.75rem; color:#6B7280; }
+.cc-arrow { color:#C4C9D4; flex-shrink:0; }
+.cc-card:hover .cc-arrow { color:#CC1417; }
 
-  .contact-card span {
-    display: inline-flex;
-    margin-bottom: 0.55rem;
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--orange);
-  }
+/* TRUST BLOCK */
+.trust-block {
+  background:#F7F8FA; border:1px solid #E5E7EB;
+  border-radius:12px; padding:1.25rem 1.5rem;
+  display:flex; flex-direction:column; gap:10px;
+}
+.trust-row { display:flex; align-items:center; gap:10px; }
+.trust-dot {
+  width:7px; height:7px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,#CC1417,#E8601A);
+}
+.trust-row span { font-size:.84rem; color:#4B5563; font-weight:500; }
 
-  .contact-card strong {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 1.7rem;
-    line-height: 1.02;
-    color: var(--text);
-  }
+/* PROCESS BLOCK */
+.process-block {
+  background:#0F1117; border-radius:12px;
+  padding:1.5rem; display:flex; flex-direction:column; gap:0;
+}
+.pb-title {
+  font-family:var(--font); font-size:.7rem; font-weight:800;
+  text-transform:uppercase; letter-spacing:.12em; color:#E8601A;
+  margin-bottom:1.1rem;
+  font-variation-settings:'wdth' 100,'wght' 800;
+}
+.pb-step {
+  display:flex; align-items:flex-start; gap:12px;
+  padding:.75rem 0; border-bottom:1px solid rgba(255,255,255,.06);
+}
+.pb-step:last-child { border-bottom:none; }
+.pb-n {
+  font-family:var(--font); font-size:1.2rem; font-weight:900;
+  color:rgba(204,20,23,.35); line-height:1; flex-shrink:0; width:28px;
+  font-variation-settings:'wdth' 125,'wght' 900;
+}
+.pb-t { display:block; font-size:.82rem; font-weight:700; color:#fff; margin-bottom:2px; font-variation-settings:'wdth' 100,'wght' 700; }
+.pb-d { font-size:.72rem; color:rgba(255,255,255,.38); }
 
-  .contact-form {
-    padding: 1.5rem;
-  }
+/* ── RIGHT SIDE — FORM CARD ── */
+.form-card {
+  background:#fff; border:1px solid #E5E7EB;
+  border-radius:16px; overflow:hidden;
+  box-shadow:0 4px 32px rgba(0,0,0,.06);
+}
+.form-card-head {
+  background:linear-gradient(135deg,#0F1117 0%,#1A1F2E 100%);
+  padding:2rem 2.25rem;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.form-card-head h2 { color:#fff; margin:.5rem 0 .75rem; font-size:clamp(1.5rem,3vw,2.2rem); }
+.form-sub { color:rgba(255,255,255,.5); font-size:.88rem; line-height:1.7; }
 
-  .contact-form h2 {
-    margin-top: 0.5rem;
-    font-size: clamp(2rem, 4vw, 3rem);
-  }
+.cform { padding:2rem 2.25rem; display:flex; flex-direction:column; gap:1rem; }
 
-  .form-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    margin-top: 1.2rem;
-  }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.form-field { display:flex; flex-direction:column; }
+.form-field.full { grid-column:1/-1; }
 
-  label {
-    display: block;
-  }
+.field-label {
+  display:block; font-size:.72rem; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:#9CA3AF; margin-bottom:.5rem;
+  font-variation-settings:'wdth' 100,'wght' 700;
+}
+.field-label em { font-style:normal; font-weight:500; opacity:.7; text-transform:none; letter-spacing:0; }
 
-  label span {
-    display: block;
-    margin-bottom: 0.45rem;
-    font-size: 0.74rem;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--soft);
-  }
+input, textarea, select {
+  width:100%; padding:.85rem 1rem;
+  border:1.5px solid #E5E7EB; border-radius:9px;
+  background:#F7F8FA; color:#111827; font-size:.88rem;
+  outline:none; transition:all .2s ease;
+  font-family:inherit;
+  appearance:none;
+}
+input:focus, textarea:focus, select:focus {
+  border-color:#CC1417; background:#fff;
+  box-shadow:0 0 0 3px rgba(204,20,23,.08);
+}
+textarea { resize:vertical; min-height:120px; }
+input::placeholder, textarea::placeholder { color:#C4C9D4; }
 
-  input,
-  textarea {
-    width: 100%;
-    padding: 0.95rem 1rem;
-    border-radius: 18px;
-    border: 1px solid var(--border);
-    background: #fff;
-    color: var(--text);
-    outline: none;
-    transition: var(--ease);
-  }
+.select-wrap { position:relative; }
+.select-wrap select { cursor:pointer; padding-right:2.5rem; }
+.sel-arrow {
+  position:absolute; right:12px; top:50%; transform:translateY(-50%);
+  color:#9CA3AF; pointer-events:none;
+}
 
-  input:focus,
-  textarea:focus {
-    border-color: rgba(204,20,23,0.35);
-    box-shadow: 0 0 0 4px rgba(204,20,23,0.08);
-  }
+.cform-submit {
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  width:100%; padding:1rem 2rem;
+  background:linear-gradient(135deg,#25D366,#1DA851);
+  color:#fff; border:none; border-radius:10px; cursor:pointer;
+  font-size:.92rem; font-weight:800; text-transform:uppercase;
+  letter-spacing:.06em; transition:all .25s ease;
+  font-variation-settings:'wdth' 100,'wght' 800;
+  box-shadow:0 4px 16px rgba(37,211,102,.3);
+}
+.cform-submit:hover {
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(37,211,102,.4);
+}
+.cform-submit:active { transform:translateY(0); }
 
-  .full {
-    display: block;
-    margin-top: 1rem;
-  }
+.form-note {
+  font-size:.75rem; color:#9CA3AF; text-align:center; line-height:1.5;
+}
 
-  .btn-primary {
-    margin-top: 1rem;
-  }
-
-  .form-note {
-    margin-top: 0.8rem;
-    font-size: 0.92rem;
-  }
-
-  @media (max-width: 980px) {
-    .contact-shell {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  @media (max-width: 720px) {
-    .form-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .contact-card strong {
-      font-size: 1.45rem;
-    }
-  }
+/* RESPONSIVE */
+@media(max-width:1024px) { .contact-shell { grid-template-columns:1fr; } }
+@media(max-width:600px)  { .form-row { grid-template-columns:1fr; } .cform { padding:1.5rem; } .form-card-head { padding:1.5rem; } }
 </style>
 
 <script is:inline>
-  const form = document.getElementById('contact-form');
-  const note = document.getElementById('form-note');
-  const button = document.getElementById('submit-btn');
+const form   = document.getElementById('contact-form');
+const note   = document.getElementById('form-note');
+const button = document.getElementById('submit-btn');
 
-  form?.addEventListener('submit', (event) => {
-    event.preventDefault();
+form?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const fd       = new FormData(form);
+  const name     = String(fd.get('name')     || '').trim();
+  const phone    = String(fd.get('phone')    || '').trim();
+  const email    = String(fd.get('email')    || '').trim();
+  const location = String(fd.get('location') || '').trim();
+  const branch   = String(fd.get('branch')   || '').trim();
+  const type     = String(fd.get('type')     || '').trim();
+  const message  = String(fd.get('message')  || '').trim();
 
-    const fd = new FormData(form);
-    const name = String(fd.get('name') || '').trim();
-    const phone = String(fd.get('phone') || '').trim();
-    const email = String(fd.get('email') || '').trim();
-    const location = String(fd.get('location') || '').trim();
-    const message = String(fd.get('message') || '').trim();
+  const lines = [
+    `Hello TECIL Solar, my name is *${name}*.`,
+    `📱 Phone: ${phone}`,
+    email    ? `📧 Email: ${email}`             : null,
+    `📍 Location: ${location}`,
+    branch   ? `🏪 Nearest Branch: ${branch}`   : null,
+    type     ? `🔧 Enquiry Type: ${type}`        : null,
+    ``,
+    message,
+  ].filter(Boolean).join('\n');
 
-    const whatsappText = [
-      `Hello TECIL Solar, my name is ${name}.`,
-      `Phone: ${phone}`,
-      email ? `Email: ${email}` : null,
-      `Location: ${location}`,
-      '',
-      message,
-    ].filter(Boolean).join('\n');
+  const url = `https://wa.me/2348037135545?text=${encodeURIComponent(lines)}`;
+  note.textContent = '✓ Opening WhatsApp with your enquiry…';
+  button.textContent = 'Opening WhatsApp…';
+  window.open(url, '_blank', 'noopener,noreferrer');
 
-    const url = `https://wa.me/2348037135545?text=${encodeURIComponent(whatsappText)}`;
-
-    note.textContent = 'Opening WhatsApp with your enquiry...';
-    button.textContent = 'Opening...';
-    window.open(url, '_blank', 'noopener,noreferrer');
-  });
+  setTimeout(() => {
+    note.textContent   = 'Tapping Send opens WhatsApp with your message pre-filled. We respond to all enquiries.';
+    button.innerHTML   = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg> Send Enquiry via WhatsApp`;
+  }, 4000);
+});
 </script>

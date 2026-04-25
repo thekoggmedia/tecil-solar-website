@@ -1,42 +1,56 @@
 ---
-// BrandsStrip.astro
-// Displays TECIL Solar's 15+ authorised brand partnerships
-// Usage: <BrandsStrip variant="light" | "dark" />
-
 interface Props { variant?: 'light' | 'dark' }
 const { variant = 'light' } = Astro.props;
 
+// Each brand has a slug that maps to a file in /public/brands/
+// Accepted formats: SVG (preferred) or PNG
+// Drop your logo files into public/brands/ using the exact slugs below
 const brands = [
-  { name: 'Jinko Solar',    tag: 'Panels' },
-  { name: 'Longi Solar',    tag: 'Panels' },
-  { name: 'Felicity Solar', tag: 'Panels & Systems' },
-  { name: 'Deye',           tag: 'Hybrid Inverters' },
-  { name: 'Smarten',        tag: 'Inverters' },
-  { name: 'Dique',          tag: 'Inverters' },
-  { name: 'Tsolar',         tag: 'Systems' },
-  { name: 'Restar',         tag: 'Batteries' },
-  { name: 'EcoFlow',        tag: 'Portable Power' },
-  { name: 'Oraimo',         tag: 'Solar Accessories' },
-  { name: 'itel',           tag: 'Energy Products' },
+  { name: 'Jinko Solar',    tag: 'Panels',           slug: 'jinko-solar' },
+  { name: 'Longi Solar',    tag: 'Panels',           slug: 'longi-solar' },
+  { name: 'Felicity Solar', tag: 'Panels & Systems', slug: 'felicity-solar' },
+  { name: 'Deye',           tag: 'Hybrid Inverters', slug: 'deye' },
+  { name: 'Smarten',        tag: 'Inverters',        slug: 'smarten' },
+  { name: 'Dique',          tag: 'Inverters',        slug: 'dique' },
+  { name: 'Tsolar',         tag: 'Systems',          slug: 'tsolar' },
+  { name: 'Restar',         tag: 'Batteries',        slug: 'restar' },
+  { name: 'EcoFlow',        tag: 'Portable Power',   slug: 'ecoflow' },
+  { name: 'Oraimo',         tag: 'Solar Accessories',slug: 'oraimo' },
+  { name: 'itel',           tag: 'Energy Products',  slug: 'itel' },
 ];
 ---
 
 <section class={`brands-strip bs-${variant}`}>
   <div class="container">
     <div class="bs-head reveal">
-      <span class="section-tag" style={variant==='dark' ? 'color:#E8601A' : ''}>Authorised Partners</span>
-      <p class={`bs-note ${variant==='dark' ? 'bs-note-dark' : ''}`}>
-        TECIL Solar is an authorised distributor and partner for 15+ world-class international brands
-      </p>
+      <div>
+        <span class="section-tag" style={variant==='dark' ? 'color:#E8601A' : ''}>Authorised Partners</span>
+        <p class={`bs-note ${variant==='dark' ? 'bs-note-dark' : ''}`}>
+          TECIL Solar is an authorised distributor and partner for 15+ world-class international brands
+        </p>
+      </div>
+      <a href="/products" class={`bs-cta ${variant==='dark' ? 'bs-cta-dark' : ''}`}>
+        Browse Products
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
     </div>
   </div>
 
-  <!-- Scrolling brand track -->
+  <!-- Scrolling marquee -->
   <div class="bs-marquee" aria-hidden="true">
     <div class="bs-track">
       {[...brands, ...brands, ...brands].map(b => (
         <div class={`bs-chip bc-${variant}`}>
-          <div class="bc-dot"></div>
+          <div class="bc-logo-wrap">
+            <!-- SVG tried first, PNG as fallback, brand initial as last resort -->
+            <img
+              class="bc-logo"
+              src={`/brands/${b.slug}.svg`}
+              alt={b.name}
+              onerror={`this.onerror=null;this.src='/brands/${b.slug}.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'}`}
+            />
+            <span class="bc-logo-fallback">{b.name.charAt(0)}</span>
+          </div>
           <span class="bc-name">{b.name}</span>
           <span class="bc-tag">{b.tag}</span>
         </div>
@@ -44,13 +58,22 @@ const brands = [
     </div>
   </div>
 
-  <!-- Static grid (fallback / second view) -->
+  <!-- Static grid -->
   <div class="container">
     <div class="bs-grid">
       {brands.map((b, i) => (
         <div class={`bs-item bi-${variant} reveal reveal-delay-${(i % 5) + 1}`}>
-          <div class="bi-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="20 6 9 17 4 12"/></svg>
+          <div class="bi-logo-wrap">
+            <img
+              class="bi-logo"
+              src={`/brands/${b.slug}.svg`}
+              alt={b.name}
+              onerror={`this.onerror=null;this.src='/brands/${b.slug}.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex'}`}
+            />
+            <!-- Fallback: brand initial in coloured circle -->
+            <div class={`bi-logo-fallback bif-${variant}`}>
+              <span>{b.name.charAt(0)}</span>
+            </div>
           </div>
           <div class="bi-text">
             <strong>{b.name}</strong>
@@ -59,11 +82,13 @@ const brands = [
         </div>
       ))}
       <div class={`bs-item bi-${variant} bi-more reveal`}>
-        <div class="bi-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+        <div class="bi-logo-wrap">
+          <div class={`bi-logo-fallback bif-${variant}`} style="display:flex">
+            <span>+</span>
+          </div>
         </div>
         <div class="bi-text">
-          <strong>+ More Brands</strong>
+          <strong>More Brands</strong>
           <span>Growing portfolio</span>
         </div>
       </div>
@@ -72,113 +97,107 @@ const brands = [
 </section>
 
 <style>
-/* SECTION */
-.brands-strip { padding: 4rem 0; overflow: hidden; }
-.bs-light { background: var(--off); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.bs-dark  { background: var(--dark-2); border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
+.brands-strip { padding:4rem 0; overflow:hidden; }
+.bs-light { background:var(--off); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.bs-dark  { background:var(--dark-2); border-top:1px solid rgba(255,255,255,.06); border-bottom:1px solid rgba(255,255,255,.06); }
 
-/* HEADER */
 .bs-head { display:flex; align-items:center; justify-content:space-between; gap:1.5rem; margin-bottom:1.5rem; flex-wrap:wrap; }
-.bs-note { font-size:0.86rem; color:var(--muted); max-width:48ch; }
-.bs-note-dark { color:rgba(255,255,255,0.45); }
+.bs-note { font-size:.86rem; color:var(--muted); max-width:48ch; margin-top:4px; }
+.bs-note-dark { color:rgba(255,255,255,.45); }
 
-/* SCROLLING MARQUEE */
+.bs-cta {
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+  color:#CC1417; border:1.5px solid rgba(204,20,23,.25); border-radius:6px;
+  padding:.45rem .9rem; text-decoration:none; white-space:nowrap;
+  transition:all .2s ease; flex-shrink:0;
+  font-variation-settings:'wdth' 100,'wght' 700;
+}
+.bs-cta:hover { background:#CC1417; color:#fff; border-color:#CC1417; }
+.bs-cta-dark { color:#E8601A; border-color:rgba(232,96,26,.3); }
+.bs-cta-dark:hover { background:#E8601A; color:#fff; border-color:#E8601A; }
+
+/* MARQUEE */
 .bs-marquee { overflow:hidden; margin-bottom:2rem; }
 .bs-track {
   display:flex; width:max-content;
-  animation: brandScroll 40s linear infinite;
+  animation:brandScroll 40s linear infinite;
   gap:8px; padding:4px 0;
 }
 .bs-track:hover { animation-play-state:paused; }
 
 .bs-chip {
   display:inline-flex; align-items:center; gap:8px;
-  padding:0.55rem 1.1rem; border-radius:8px;
+  padding:.5rem 1rem; border-radius:8px;
   flex-shrink:0; white-space:nowrap; cursor:default;
-  transition:all 0.2s ease;
+  transition:all .2s ease;
 }
-.bc-light {
-  background:#fff; border:1.5px solid var(--border);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-}
-.bc-dark {
-  background:rgba(255,255,255,0.05); border:1.5px solid rgba(255,255,255,0.10);
-}
-.bc-light:hover { border-color:rgba(204,20,23,0.35); transform:translateY(-2px); }
-.bc-dark:hover  { border-color:rgba(232,96,26,0.4); transform:translateY(-2px); background:rgba(255,255,255,0.08); }
+.bc-light { background:#fff; border:1.5px solid var(--border); box-shadow:0 1px 4px rgba(0,0,0,.05); }
+.bc-dark  { background:rgba(255,255,255,.05); border:1.5px solid rgba(255,255,255,.10); }
+.bc-light:hover { border-color:rgba(204,20,23,.35); transform:translateY(-2px); }
+.bc-dark:hover  { border-color:rgba(232,96,26,.4);  transform:translateY(-2px); background:rgba(255,255,255,.08); }
 
-.bc-dot {
-  width:7px; height:7px; border-radius:50%;
+/* MARQUEE LOGO */
+.bc-logo-wrap {
+  width:28px; height:28px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+}
+.bc-logo {
+  max-width:28px; max-height:28px; object-fit:contain; display:block;
+}
+.bc-logo-fallback {
+  display:none; width:28px; height:28px; border-radius:6px;
+  align-items:center; justify-content:center;
   background:linear-gradient(135deg,#CC1417,#E8601A);
-  flex-shrink:0;
+  color:#fff; font-size:.75rem; font-weight:900;
+  font-variation-settings:'wdth' 125,'wght' 900;
 }
-.bc-name {
-  font-size:0.82rem; font-weight:700; text-transform:uppercase;
-  letter-spacing:0.04em;
-  font-variation-settings:'wdth' 100,'wght' 700;
-}
-.bc-light .bc-name { color:var(--text); }
-.bc-dark  .bc-name { color:rgba(255,255,255,0.9); }
 
-.bc-tag {
-  font-size:0.64rem; font-weight:500;
-  padding:2px 7px; border-radius:4px;
-  font-variation-settings:'wdth' 100,'wght' 500;
-}
+.bc-name { font-size:.82rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; font-variation-settings:'wdth' 100,'wght' 700; }
+.bc-light .bc-name { color:var(--text); }
+.bc-dark  .bc-name { color:rgba(255,255,255,.9); }
+.bc-tag { font-size:.62rem; font-weight:500; padding:2px 7px; border-radius:4px; font-variation-settings:'wdth' 100,'wght' 500; }
 .bc-light .bc-tag { background:var(--orange-light); color:var(--orange); }
-.bc-dark  .bc-tag { background:rgba(232,96,26,0.15); color:#E8601A; }
+.bc-dark  .bc-tag { background:rgba(232,96,26,.15); color:#E8601A; }
 
 /* STATIC GRID */
-.bs-grid {
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:8px;
-  margin-top:0.5rem;
-}
+.bs-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:8px; margin-top:.5rem; }
 
 .bs-item {
   display:flex; align-items:center; gap:10px;
-  padding:0.85rem 1rem; border-radius:8px;
+  padding:.9rem 1rem; border-radius:10px;
   border:1.5px solid; cursor:default;
-  transition:all 0.25s ease;
+  transition:all .25s ease;
 }
 .bi-light { background:#fff; border-color:var(--border); }
-.bi-dark  { background:rgba(255,255,255,0.04); border-color:rgba(255,255,255,0.08); }
-.bi-light:hover { border-color:rgba(204,20,23,0.3); transform:translateY(-2px); box-shadow:0 4px 14px rgba(0,0,0,0.07); }
-.bi-dark:hover  { border-color:rgba(204,20,23,0.3); background:rgba(204,20,23,0.06); transform:translateY(-2px); }
+.bi-dark  { background:rgba(255,255,255,.04); border-color:rgba(255,255,255,.08); }
+.bi-light:hover { border-color:rgba(204,20,23,.3); transform:translateY(-2px); box-shadow:0 4px 14px rgba(0,0,0,.07); }
+.bi-dark:hover  { border-color:rgba(204,20,23,.3); background:rgba(204,20,23,.06); transform:translateY(-2px); }
 
-.bi-icon {
+/* GRID LOGO */
+.bi-logo-wrap {
+  width:36px; height:36px; flex-shrink:0;
   display:flex; align-items:center; justify-content:center;
-  width:32px; height:32px; border-radius:8px; flex-shrink:0;
 }
-.bi-light .bi-icon { background:var(--red-light); color:var(--red); }
-.bi-dark  .bi-icon { background:rgba(204,20,23,0.12); color:#E8601A; }
-
-.bi-more .bi-icon { background:var(--off); }
-.bi-light.bi-more .bi-icon { color:var(--muted); }
-.bi-dark.bi-more  .bi-icon { color:rgba(255,255,255,0.35); }
+.bi-logo { max-width:36px; max-height:36px; object-fit:contain; display:block; }
+.bi-logo-fallback {
+  display:none; width:36px; height:36px; border-radius:8px;
+  align-items:center; justify-content:center;
+  font-size:.85rem; font-weight:900;
+  font-variation-settings:'wdth' 125,'wght' 900;
+}
+.bif-light { background:var(--red-light); color:var(--red); }
+.bif-dark  { background:rgba(204,20,23,.15); color:#E8601A; }
 
 .bi-text { display:flex; flex-direction:column; gap:1px; min-width:0; }
-.bi-text strong {
-  font-size:0.75rem; font-weight:700;
-  text-transform:uppercase; letter-spacing:0.04em;
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-  font-variation-settings:'wdth' 100,'wght' 700;
-}
-.bi-text span {
-  font-size:0.62rem; font-weight:500;
-  font-variation-settings:'wdth' 100,'wght' 500;
-}
+.bi-text strong { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-variation-settings:'wdth' 100,'wght' 700; }
+.bi-text span   { font-size:.6rem; font-weight:500; font-variation-settings:'wdth' 100,'wght' 500; }
 .bi-light strong { color:var(--text); }
-.bi-dark  strong { color:rgba(255,255,255,0.9); }
+.bi-dark  strong { color:rgba(255,255,255,.9); }
 .bi-light span   { color:var(--soft); }
-.bi-dark  span   { color:rgba(255,255,255,0.38); }
+.bi-dark  span   { color:rgba(255,255,255,.38); }
 
-@keyframes brandScroll {
-  0%   { transform:translateX(0); }
-  100% { transform:translateX(-33.333%); }
-}
-
+@keyframes brandScroll { 0%{ transform:translateX(0) } 100%{ transform:translateX(-33.333%) } }
 @media(max-width:1080px){ .bs-grid{ grid-template-columns:repeat(4,1fr); } }
 @media(max-width:700px){  .bs-grid{ grid-template-columns:repeat(2,1fr); } }
 </style>

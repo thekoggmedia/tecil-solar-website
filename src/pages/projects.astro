@@ -19,11 +19,11 @@ const tagColors: Record<string, string> = {
 const milestones = [
   { year: '2008', event: 'TECIL Integrated Services Limited founded' },
   { year: '2014', event: 'First documented institutional projects completed' },
-  { year: '2016', event: '₦27.5M solar street light project for Cross River Basin Authority' },
-  { year: '2018', event: '₦48M off-grid solar system — Biase Plantations (Wilmar)' },
-  { year: '2019', event: 'Expanded to Uyo; delivered for Nigerian Navy & HIIT PLC' },
-  { year: '2020', event: 'Projects for UCTH, Eastern Naval Command, two universities' },
-  { year: '2022', event: '₦40M+ Uddyking Oil projects; Unical Microfinance Bank HQ' },
+  { year: '2016', event: 'Solar street light network for Cross River Basin Development Authority' },
+  { year: '2018', event: 'Landmark off-grid solar project for Biase Plantations (Wilmar Group)' },
+  { year: '2019', event: 'Expanded to Uyo; delivered for Nigerian Navy & HIIT PLC, Abuja' },
+  { year: '2020', event: 'Projects for UCTH Radiology, Eastern Naval Command, two Enugu universities' },
+  { year: '2022', event: 'Multiple Uddyking Oil projects; Unical Microfinance Bank HQ' },
   { year: '2024', event: 'Reached 7 operational branches across 5 states' },
   { year: '2026', event: 'EaaS and Training Institute development underway' },
 ];
@@ -53,15 +53,15 @@ const milestones = [
 
   <MarqueeStrip variant="red" />
 
-  <!-- STATS BAR -->
+  <!-- STATS BAR — no monetary values -->
   <section class="proj-stats-bar">
     <div class="container pstat-inner">
       {[
-        { val: '34+',    label: 'Corporate Projects' },
-        { val: '₦250M+', label: 'Total Project Value' },
-        { val: '10+',    label: 'Sectors Served' },
-        { val: '2014',   label: 'First Corporate Project' },
-        { val: '5',      label: 'States Covered' },
+        { val: '34+',  label: 'Corporate Projects' },
+        { val: '10+',  label: 'Sectors Served' },
+        { val: '2014', label: 'First Corporate Project' },
+        { val: '5',    label: 'States Covered' },
+        { val: '7',    label: 'Active Branches' },
       ].map(s => (
         <div class="pstat">
           <strong>{s.val}</strong>
@@ -91,7 +91,7 @@ const milestones = [
           return (
             <article class={`project-card reveal reveal-delay-${(index % 3) + 1}`}>
               <div class="pjc-top">
-                <span class={`pjc-date`}>{item.date}</span>
+                <span class="pjc-date">{item.date}</span>
                 <span class={`pjc-tag ptag-${col}`}>{item.tag}</span>
               </div>
               <h2 class="pjc-title">{item.title}</h2>
@@ -100,10 +100,6 @@ const milestones = [
                 {item.location}
               </p>
               <p class="pjc-summary">{item.summary}</p>
-              <div class="pjc-value-row">
-                <div class="pjc-value">{item.value}</div>
-                <span class="pjc-value-label">Project Value</span>
-              </div>
             </article>
           );
         })}
@@ -177,122 +173,104 @@ const milestones = [
 </Layout>
 
 <style>
-/* STATS BAR */
-.proj-stats-bar { background:#fff;border-bottom:1px solid #E5E7EB; }
-.pstat-inner { display:flex;flex-wrap:wrap;justify-content:center; }
+.proj-stats-bar { background:#fff; border-bottom:1px solid #E5E7EB; }
+.pstat-inner { display:flex; flex-wrap:wrap; justify-content:center; }
 .pstat {
-  display:flex;flex-direction:column;align-items:center;padding:1.4rem 2.5rem;
-  border-right:1px solid #E5E7EB;gap:3px;
+  display:flex; flex-direction:column; align-items:center;
+  padding:1.4rem 2.5rem; border-right:1px solid #E5E7EB; gap:3px;
 }
 .pstat:last-child { border-right:none; }
 .pstat strong {
-  font-family:var(--font);font-size:2rem;font-weight:900;color:#CC1417;line-height:1;
+  font-family:var(--font); font-size:2rem; font-weight:900; color:#CC1417; line-height:1;
   font-variation-settings:'wdth' 125,'wght' 900;
 }
-.pstat span { font-size:.64rem;font-weight:600;color:#6B7280;text-transform:uppercase;letter-spacing:.06em; }
+.pstat span { font-size:.64rem; font-weight:600; color:#6B7280; text-transform:uppercase; letter-spacing:.06em; }
 
-/* PROJECT GRID */
-.pg-head { display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;flex-wrap:wrap;gap:1.5rem; }
-.pg-head-note { max-width:36ch;font-size:.84rem;color:rgba(255,255,255,.4);line-height:1.6;align-self:flex-end; }
+.pg-head { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2.5rem; flex-wrap:wrap; gap:1.5rem; }
+.pg-head-note { max-width:36ch; font-size:.84rem; color:rgba(255,255,255,.4); line-height:1.6; align-self:flex-end; }
 
-.project-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:2px; }
+.project-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
 
 .project-card {
   padding:1.75rem;
   background:rgba(255,255,255,.035);
   border:1px solid rgba(255,255,255,.07);
-  transition:all .3s ease;position:relative;overflow:hidden;
-  display:flex;flex-direction:column;gap:10px;
+  transition:all .3s ease; position:relative; overflow:hidden;
+  display:flex; flex-direction:column; gap:10px;
 }
 .project-card::before {
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
   background:linear-gradient(90deg,#CC1417,#E8601A);
-  transform:scaleX(0);transform-origin:left;transition:transform .3s ease;
+  transform:scaleX(0); transform-origin:left; transition:transform .3s ease;
 }
-.project-card:hover { background:rgba(204,20,23,.06);border-color:rgba(204,20,23,.22);transform:translateY(-3px); }
+.project-card:hover { background:rgba(204,20,23,.06); border-color:rgba(204,20,23,.22); transform:translateY(-3px); }
 .project-card:hover::before { transform:scaleX(1); }
 
-.pjc-top { display:flex;justify-content:space-between;align-items:center; }
-.pjc-date { font-size:.78rem;font-weight:800;color:#E8601A;letter-spacing:.08em;font-variation-settings:'wdth' 100,'wght' 800; }
-.pjc-tag  {
-  font-size:.6rem;font-weight:700;padding:3px 8px;border-radius:4px;
-  text-transform:uppercase;letter-spacing:.06em;
-}
-.ptag-red   { background:rgba(204,20,23,.12);color:#FF9090; }
-.ptag-orange{ background:rgba(232,96,26,.12);color:#FFBE8A; }
-.ptag-teal  { background:rgba(0,109,119,.12);color:#80D8E0; }
-.ptag-gold  { background:rgba(200,150,12,.12);color:#FFD966; }
+.pjc-top { display:flex; justify-content:space-between; align-items:center; }
+.pjc-date { font-size:.78rem; font-weight:800; color:#E8601A; letter-spacing:.08em; font-variation-settings:'wdth' 100,'wght' 800; }
+.pjc-tag { font-size:.6rem; font-weight:700; padding:3px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:.06em; }
+.ptag-red    { background:rgba(204,20,23,.12); color:#FF9090; }
+.ptag-orange { background:rgba(232,96,26,.12); color:#FFBE8A; }
+.ptag-teal   { background:rgba(0,109,119,.12);  color:#80D8E0; }
+.ptag-gold   { background:rgba(200,150,12,.12); color:#FFD966; }
 
 .pjc-title {
-  font-family:var(--font);font-size:1rem;font-weight:800;
-  text-transform:uppercase;color:#fff;line-height:1.2;
+  font-family:var(--font); font-size:1rem; font-weight:800;
+  text-transform:uppercase; color:#fff; line-height:1.2;
   font-variation-settings:'wdth' 125,'wght' 800;
 }
 .pjc-location {
-  display:flex;align-items:center;gap:5px;
-  font-size:.72rem;font-weight:600;letter-spacing:.1em;
-  text-transform:uppercase;color:rgba(255,255,255,.4);
+  display:flex; align-items:center; gap:5px;
+  font-size:.72rem; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:rgba(255,255,255,.4);
 }
-.pjc-summary { font-size:.82rem;color:rgba(255,255,255,.55);line-height:1.65;flex:1; }
-
-.pjc-value-row {
-  display:flex;align-items:baseline;gap:8px;
-  padding-top:12px;border-top:1px solid rgba(255,255,255,.07);
-}
-.pjc-value {
-  font-family:var(--font);font-size:1.75rem;font-weight:900;color:#CC1417;line-height:1;
-  font-variation-settings:'wdth' 125,'wght' 900;
-}
-.pjc-value-label { font-size:.64rem;font-weight:600;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.06em; }
+.pjc-summary { font-size:.82rem; color:rgba(255,255,255,.55); line-height:1.65; flex:1; }
 
 /* TIMELINE */
-.tl-head { text-align:center;margin-bottom:3rem; }
-.tl-head h2 { color:#111827;margin-bottom:.75rem; }
-.tl-desc { max-width:52ch;margin:0 auto;color:#6B7280; }
-
-.timeline { position:relative;display:flex;flex-direction:column;gap:0; }
+.tl-head { text-align:center; margin-bottom:3rem; }
+.tl-head h2 { color:#111827; margin-bottom:.75rem; }
+.tl-desc { max-width:52ch; margin:0 auto; color:#6B7280; }
+.timeline { position:relative; display:flex; flex-direction:column; }
 .timeline::before {
-  content:'';position:absolute;left:120px;top:0;bottom:0;
-  width:2px;background:linear-gradient(to bottom,#CC1417,#E8601A,rgba(232,96,26,.1));
+  content:''; position:absolute; left:120px; top:0; bottom:0;
+  width:2px; background:linear-gradient(to bottom,#CC1417,#E8601A,rgba(232,96,26,.1));
 }
-
-.tl-item { display:grid;grid-template-columns:120px 20px 1fr;gap:20px;align-items:flex-start;padding:20px 0; }
+.tl-item { display:grid; grid-template-columns:120px 20px 1fr; gap:20px; align-items:flex-start; padding:20px 0; }
 .tl-year {
-  font-family:var(--font);font-size:1rem;font-weight:900;color:#CC1417;
-  text-align:right;padding-top:2px;
+  font-family:var(--font); font-size:1rem; font-weight:900; color:#CC1417;
+  text-align:right; padding-top:2px;
   font-variation-settings:'wdth' 125,'wght' 900;
 }
 .tl-dot {
-  width:10px;height:10px;border-radius:50%;background:#CC1417;
-  margin-top:6px;position:relative;z-index:1;
+  width:10px; height:10px; border-radius:50%; background:#CC1417;
+  margin-top:6px; position:relative; z-index:1;
   box-shadow:0 0 0 3px rgba(204,20,23,.15);
 }
-.tl-event { font-size:.92rem;color:#4B5563;line-height:1.65;padding-top:2px; }
+.tl-event { font-size:.92rem; color:#4B5563; line-height:1.65; padding-top:2px; }
 
 /* CREDENTIALS */
-.cred-grid { display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center; }
-.cred-copy h2 { color:#111827;margin-bottom:1rem; }
-.cred-copy p  { color:#6B7280;line-height:1.85; }
-.cred-list { display:flex;flex-direction:column;gap:10px; }
+.cred-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+.cred-copy h2 { color:#111827; margin-bottom:1rem; }
+.cred-copy p  { color:#6B7280; line-height:1.85; }
+.cred-list { display:flex; flex-direction:column; gap:10px; }
 .cred-client {
-  display:flex;align-items:center;gap:10px;
-  padding:.75rem 1rem;background:#fff;
-  border:1px solid #E5E7EB;border-radius:8px;
-  font-size:.88rem;color:#4B5563;transition:all .2s ease;
+  display:flex; align-items:center; gap:10px;
+  padding:.75rem 1rem; background:#fff;
+  border:1px solid #E5E7EB; border-radius:8px;
+  font-size:.88rem; color:#4B5563; transition:all .2s ease;
 }
-.cred-client:hover { border-color:rgba(204,20,23,.25);background:#FFF1F1; }
+.cred-client:hover { border-color:rgba(204,20,23,.25); background:#FFF1F1; }
 
-/* RESPONSIVE */
 @media(max-width:900px){
-  .project-grid{grid-template-columns:1fr 1fr}
-  .pstat{padding:1rem 1.5rem}
-  .cred-grid{grid-template-columns:1fr;gap:3rem}
-  .pg-head{flex-direction:column;align-items:flex-start}
+  .project-grid { grid-template-columns:1fr 1fr; }
+  .pstat { padding:1rem 1.5rem; }
+  .cred-grid { grid-template-columns:1fr; gap:3rem; }
+  .pg-head { flex-direction:column; align-items:flex-start; }
 }
 @media(max-width:600px){
-  .project-grid{grid-template-columns:1fr}
-  .timeline::before{left:80px}
-  .tl-item{grid-template-columns:80px 20px 1fr;gap:12px}
-  .tl-year{font-size:.82rem}
+  .project-grid { grid-template-columns:1fr; }
+  .timeline::before { left:80px; }
+  .tl-item { grid-template-columns:80px 20px 1fr; gap:12px; }
+  .tl-year { font-size:.82rem; }
 }
 </style>
