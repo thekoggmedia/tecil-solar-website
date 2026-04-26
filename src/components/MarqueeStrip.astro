@@ -1,11 +1,27 @@
 ---
 interface Props { variant?: 'red' | 'dark' | 'light' }
 const { variant = 'red' } = Astro.props;
-const items = ['Solar Panels','Hybrid Inverters','LiFePO4 Batteries','System Installation','Maintenance & Repair','Load Assessment','Technical Training','Energy-as-a-Service','Lagos · Port Harcourt · Calabar · Uyo · Ikom','...the inverter place'];
+
+const items = [
+  'Solar Panels',
+  'Hybrid Inverters',
+  'LiFePO4 Batteries',
+  'System Installation',
+  'Maintenance & Repair',
+  'Load Assessment',
+  'Technical Training',
+  'Energy-as-a-Service',
+  'Lagos · Port Harcourt · Calabar · Uyo · Ikom',
+  '...the inverter place'
+];
+
+// DUPLICATE EXACTLY TWICE → perfect loop
+const loopItems = [...items, ...items];
 ---
+
 <div class={`marquee is-${variant}`} aria-hidden="true">
   <div class="marquee-track">
-    {[...items,...items,...items].map(item=>(
+    {loopItems.map(item => (
       <span class="marquee-item">{item}</span>
     ))}
   </div>

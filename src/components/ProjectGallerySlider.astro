@@ -1,0 +1,89 @@
+---
+// ProjectGallerySlider.astro
+// Images go in: public/gallery/projects/
+// Filename pattern: proj-01.webp through proj-10.webp
+
+import ImageSlider from './ImageSlider.astro';
+
+const slides = [
+  {
+    src:     '/gallery/projects/proj-01.webp',
+    alt:     'Biase Plantations — 60KW off-grid solar system',
+    label:   'Industrial — Wilmar Group',
+    caption: '60KW off-grid solar installation at Biase Plantations Ltd, Cross River State',
+  },
+  {
+    src:     '/gallery/projects/proj-02.webp',
+    alt:     'Solar street lighting network — Cross River Basin Authority',
+    label:   'Government Infrastructure',
+    caption: 'Solar street light network delivered for Cross River Basin Development Authority',
+  },
+  {
+    src:     '/gallery/projects/proj-03.webp',
+    alt:     'University campus solar installation',
+    label:   'Education',
+    caption: 'Solar and hybrid backup systems for university campuses in South-East Nigeria',
+  },
+  {
+    src:     '/gallery/projects/proj-04.webp',
+    alt:     'Hybrid inverter system — corporate installation',
+    label:   'Commercial',
+    caption: 'Hybrid inverter and lithium battery system — commissioned with full documentation',
+  },
+  {
+    src:     '/gallery/projects/proj-05.webp',
+    alt:     'Military facility solar backup — Eastern Naval Command',
+    label:   'Military & Diplomatic',
+    caption: 'Reliable solar backup systems delivered for Nigeria\'s Eastern Naval Command HQ',
+  },
+  {
+    src:     '/gallery/projects/proj-06.webp',
+    alt:     'Hotel solar installation — Happkings Hotel Ikom',
+    label:   'Hospitality',
+    caption: '25KVA hybrid system with 15KW solar at Happkings Hotel, Ikom — zero downtime since commissioning',
+  },
+];
+---
+
+<section class="pgs section bg-dark" style="padding-bottom:0">
+  <div class="container">
+    <div class="pgs-head reveal">
+      <span class="section-tag">Project Gallery</span>
+      <h2 style="color:#fff">
+        Real Projects. <span class="text-gradient">Real Photos.</span>
+      </h2>
+      <p class="pgs-sub">
+        Every image below is from an actual TECIL Solar project — commissioned, tested,
+        and handed over with full documentation.
+      </p>
+    </div>
+  </div>
+
+  <div class="pgs-full reveal">
+    <ImageSlider
+      slides={slides}
+      variant="hero"
+      autoplay={6000}
+      id="projects-gallery"
+    />
+  </div>
+</section>
+
+<style>
+.pgs-head { margin-bottom:2rem; }
+.pgs-head h2 { margin:.5rem 0; }
+.pgs-sub { color:rgba(255,255,255,.5); max-width:52ch; font-size:.92rem; line-height:1.7; }
+
+.pgs-full {
+  width:100%; margin-top:2rem;
+}
+
+/* Override hero height for this context */
+.pgs-full .islider-hero {
+  height: clamp(360px, 50vh, 600px);
+}
+
+@media(max-width:600px) {
+  .pgs-full .islider-hero { height:55vw; min-height:260px; }
+}
+</style>

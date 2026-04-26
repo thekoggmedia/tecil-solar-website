@@ -1,0 +1,303 @@
+---
+// ImageSlider.astro — Reusable auto-advancing image slider
+// Props:
+//   slides     — array of { src, alt, caption?, label? }
+//   variant    — 'hero' | 'gallery' | 'strip'
+//   autoplay   — milliseconds between slides (default 5000)
+//   id         — unique ID string (required when using multiple sliders per page)
+
+interface Slide {
+  src: string;
+  alt: string;
+  caption?: string;
+  label?: string;
+}
+interface Props {
+  slides: Slide[];
+  variant?: 'hero' | 'gallery' | 'strip';
+  autoplay?: number;
+  id?: string;
+}
+const {
+  slides,
+  variant  = 'gallery',
+  autoplay = 5000,
+  id       = 'slider-' + Math.random().toString(36).slice(2,8),
+} = Astro.props;
+---
+
+<div class={`islider islider-${variant}`} id={id} data-autoplay={autoplay}>
+
+  <!-- TRACK -->
+  <div class="isl-track">
+    {slides.map((s, i) => (
+      <div class={`isl-slide ${i === 0 ? 'is-active' : ''}`} data-index={i}>
+        <img
+          class="isl-img"
+          src={s.src}
+          alt={s.alt}
+          loading={i === 0 ? 'eager' : 'lazy'}
+        />
+        <div class="isl-overlay"></div>
+        {(s.caption || s.label) && (
+          <div class="isl-caption">
+            {s.label  && <span class="isl-label">{s.label}</span>}
+            {s.caption && <p class="isl-caption-text">{s.caption}</p>}
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+
+  <!-- CONTROLS -->
+  <button class="isl-btn isl-prev" aria-label="Previous slide">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <button class="isl-btn isl-next" aria-label="Next slide">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+
+  <!-- DOTS -->
+  <div class="isl-dots">
+    {slides.map((_, i) => (
+      <button
+        class={`isl-dot ${i === 0 ? 'is-active' : ''}`}
+        data-target={i}
+        aria-label={`Go to slide ${i + 1}`}
+      ></button>
+    ))}
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div class="isl-progress">
+    <div class="isl-progress-bar"></div>
+  </div>
+
+</div>
+
+<style>
+/* ── BASE ── */
+.islider {
+  position: relative;
+  overflow: hidden;
+  background: #0F1117;
+  user-select: none;
+}
+
+/* ── VARIANTS ── */
+.islider-hero    { height: clamp(420px, 60vh, 680px); }
+.islider-gallery { height: clamp(300px, 45vw, 560px); border-radius: 14px; }
+.islider-strip   { height: clamp(220px, 30vw, 380px); }
+
+/* ── TRACK ── */
+.isl-track {
+  position: absolute; inset: 0;
+}
+
+/* ── SLIDE ── */
+.isl-slide {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transform: scale(1.03);
+  transition: opacity 0.7s cubic-bezier(.4,0,.2,1),
+              transform 0.7s cubic-bezier(.4,0,.2,1);
+  pointer-events: none;
+}
+.isl-slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+.isl-slide.is-leaving {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+/* ── IMAGE ── */
+.isl-img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+
+/* ── OVERLAY ── */
+.isl-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 30%,
+    rgba(0,0,0,0.65) 100%
+  );
+}
+
+/* ── CAPTION ── */
+.isl-caption {
+  position: absolute;
+  bottom: 3.5rem; left: 2rem; right: 5rem;
+  z-index: 2;
+}
+.isl-label {
+  display: inline-flex;
+  font-size: .62rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: #E8601A; background: rgba(232,96,26,.15);
+  border: 1px solid rgba(232,96,26,.3);
+  padding: 3px 10px; border-radius: 4px;
+  margin-bottom: 6px;
+  font-variation-settings: 'wdth' 100,'wght' 800;
+}
+.isl-caption-text {
+  font-size: clamp(.82rem, 1.5vw, 1rem);
+  color: rgba(255,255,255,.88);
+  line-height: 1.5;
+  font-weight: 500;
+  max-width: 60ch;
+  text-shadow: 0 1px 4px rgba(0,0,0,.5);
+}
+
+/* ── BUTTONS ── */
+.isl-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 42px; height: 42px; border-radius: 50%;
+  background: rgba(255,255,255,.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.15);
+  color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s ease; z-index: 10;
+  opacity: 0;
+}
+.islider:hover .isl-btn { opacity: 1; }
+.isl-prev { left: 1rem; }
+.isl-next { right: 1rem; }
+.isl-btn:hover {
+  background: rgba(204,20,23,.75);
+  border-color: rgba(204,20,23,.5);
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* ── DOTS ── */
+.isl-dots {
+  position: absolute; bottom: 1rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 6px; z-index: 10;
+}
+.isl-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,.35);
+  border: none; cursor: pointer;
+  transition: all .25s ease; padding: 0;
+}
+.isl-dot.is-active {
+  background: #CC1417;
+  width: 22px; border-radius: 3px;
+}
+.isl-dot:hover { background: rgba(255,255,255,.7); }
+
+/* ── PROGRESS BAR ── */
+.isl-progress {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; background: rgba(255,255,255,.08); z-index: 10;
+}
+.isl-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg,#CC1417,#E8601A);
+  width: 0%;
+  transition: width linear;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .isl-caption { bottom: 2.5rem; left: 1rem; right: 4rem; }
+  .isl-btn { width: 36px; height: 36px; }
+  .islider-hero    { height: 55vw; min-height: 280px; }
+  .islider-gallery { height: 60vw; min-height: 240px; border-radius: 10px; }
+  .islider-strip   { height: 50vw; min-height: 180px; }
+}
+</style>
+
+<script define:vars={{ id, autoplay }}>
+(function() {
+  const root  = document.getElementById(id);
+  if (!root) return;
+
+  const slides   = root.querySelectorAll('.isl-slide');
+  const dots     = root.querySelectorAll('.isl-dot');
+  const bar      = root.querySelector('.isl-progress-bar');
+  const total    = slides.length;
+  let   current  = 0;
+  let   timer    = null;
+  let   paused   = false;
+
+  function goTo(idx) {
+    slides[current].classList.remove('is-active');
+    slides[current].classList.add('is-leaving');
+    dots[current].classList.remove('is-active');
+
+    setTimeout(() => {
+      slides[current].classList.remove('is-leaving');
+      current = (idx + total) % total;
+      slides[current].classList.add('is-active');
+      dots[current].classList.add('is-active');
+      resetBar();
+    }, 100);
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  function resetBar() {
+    if (!bar) return;
+    bar.style.transition = 'none';
+    bar.style.width = '0%';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        bar.style.transition = `width ${autoplay}ms linear`;
+        bar.style.width = '100%';
+      });
+    });
+  }
+
+  function startAuto() {
+    clearInterval(timer);
+    timer = setInterval(() => { if (!paused) next(); }, autoplay);
+    resetBar();
+  }
+
+  // Dots
+  dots.forEach(d => {
+    d.addEventListener('click', () => {
+      goTo(parseInt(d.dataset.target));
+      startAuto();
+    });
+  });
+
+  // Buttons
+  root.querySelector('.isl-prev')?.addEventListener('click', () => { prev(); startAuto(); });
+  root.querySelector('.isl-next')?.addEventListener('click', () => { next(); startAuto(); });
+
+  // Pause on hover
+  root.addEventListener('mouseenter', () => { paused = true; if(bar) bar.style.animationPlayState = 'paused'; });
+  root.addEventListener('mouseleave', () => { paused = false; if(bar) bar.style.animationPlayState = 'running'; });
+
+  // Touch swipe
+  let touchX = 0;
+  root.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  root.addEventListener('touchend',   e => {
+    const diff = touchX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) { diff > 0 ? next() : prev(); startAuto(); }
+  }, { passive: true });
+
+  // Keyboard
+  root.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  { prev(); startAuto(); }
+    if (e.key === 'ArrowRight') { next(); startAuto(); }
+  });
+
+  // Pause when tab hidden
+  document.addEventListener('visibilitychange', () => {
+    paused = document.hidden;
+  });
+
+  startAuto();
+})();
+</script>

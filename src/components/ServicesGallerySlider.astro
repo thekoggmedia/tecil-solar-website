@@ -1,0 +1,71 @@
+---
+// ServicesGallerySlider.astro
+// Images go in: public/gallery/services/
+// Filename pattern: svc-01.webp through svc-06.webp
+
+import ImageSlider from './ImageSlider.astro';
+
+const slides = [
+  {
+    src:     '/gallery/services/svc-01.webp',
+    alt:     'TECIL Solar professional installation — rooftop panels',
+    label:   'Installation',
+    caption: 'Professional panel mounting and wiring — every installation is documented',
+  },
+  {
+    src:     '/gallery/services/svc-02.webp',
+    alt:     'TECIL Solar maintenance team — inverter servicing',
+    label:   'Maintenance & Repair',
+    caption: 'Scheduled preventive maintenance keeps your system running at peak performance',
+  },
+  {
+    src:     '/gallery/services/svc-03.webp',
+    alt:     'TECIL Solar load assessment — site survey',
+    label:   'Load Assessment',
+    caption: 'Every system starts with a proper survey — we right-size before we quote',
+  },
+  {
+    src:     '/gallery/services/svc-04.webp',
+    alt:     'TECIL Solar product range — showroom display',
+    label:   'Product Supply',
+    caption: '15+ authorised brands available across all 7 TECIL Solar branches',
+  },
+  {
+    src:     '/gallery/services/svc-05.webp',
+    alt:     'TECIL Solar large EPC project — commissioning',
+    label:   'EPC Projects',
+    caption: 'End-to-end project delivery — from design to commissioning and handover',
+  },
+  {
+    src:     '/gallery/services/svc-06.webp',
+    alt:     'TECIL Solar training session — technical capacity building',
+    label:   'Training',
+    caption: 'TECIL Solar Training Institute — building renewable energy capacity in Nigeria',
+  },
+];
+---
+
+<section class="sgs section bg-off" style="padding-top:0">
+  <div class="container">
+    <div class="sgs-wrap reveal">
+      <div class="sgs-label-bar">
+        <span class="section-tag">Our Work in Pictures</span>
+        <p class="sgs-note">
+          Six services. One standard. See it in action.
+        </p>
+      </div>
+      <ImageSlider
+        slides={slides}
+        variant="gallery"
+        autoplay={5500}
+        id="services-gallery"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+.sgs-wrap { display:flex; flex-direction:column; gap:1.5rem; }
+.sgs-label-bar { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+.sgs-note { font-size:.88rem; color:#6B7280; font-style:italic; }
+</style>

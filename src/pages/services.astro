@@ -1,4 +1,5 @@
 ---
+import ServicesGallerySlider from '../components/ServicesGallerySlider.astro';
 import Layout from '../layouts/Layout.astro';
 import MarqueeStrip from '../components/MarqueeStrip.astro';
 import CTASection from '../components/CTASection.astro';
@@ -12,7 +13,10 @@ const iconMap: Record<string, string> = {
   projects:     `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`,
   training:     `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`,
 };
-const colorMap: Record<string,string> = { installation:'red', maintenance:'orange', assessment:'teal', supply:'gold', projects:'red', training:'teal' };
+const colorMap: Record<string,string> = {
+  installation:'red', maintenance:'orange', assessment:'teal',
+  supply:'gold', projects:'red', training:'teal',
+};
 ---
 
 <Layout
@@ -55,8 +59,8 @@ const colorMap: Record<string,string> = { installation:'red', maintenance:'orang
 
       <div class="services-list">
         {services?.map((item, i) => {
-          const col = colorMap[item.id] || 'red';
-          const icon = iconMap[item.id] || iconMap.supply;
+          const col  = colorMap[item.id] || 'red';
+          const icon = iconMap[item.id]  || iconMap.supply;
           return (
             <article class={`service-detail card reveal reveal-delay-${(i % 3) + 1}`} id={item.id}>
               <div class="sd-left">
@@ -115,7 +119,7 @@ const colorMap: Record<string,string> = { installation:'red', maintenance:'orang
     </div>
   </section>
 
-  <!-- WHY TECIL SERVICES -->
+  <!-- WHY TECIL -->
   <section class="section bg-dark">
     <div class="container">
       <div class="why-grid reveal">
@@ -128,15 +132,9 @@ const colorMap: Record<string,string> = { installation:'red', maintenance:'orang
             with certified engineers, documented delivery, and a team on the ground across Nigeria.
           </p>
           <div class="why-proof">
-            <div class="wp">
-              <strong>34+</strong><span>Documented Projects</span>
-            </div>
-            <div class="wp">
-              <strong>15+</strong><span>Authorised Brands</span>
-            </div>
-            <div class="wp">
-              <strong>7</strong><span>States Covered</span>
-            </div>
+            <div class="wp"><strong>34+</strong><span>Documented Projects</span></div>
+            <div class="wp"><strong>15+</strong><span>Authorised Brands</span></div>
+            <div class="wp"><strong>7</strong><span>States Covered</span></div>
           </div>
         </div>
         <div class="why-right">
@@ -158,125 +156,109 @@ const colorMap: Record<string,string> = { installation:'red', maintenance:'orang
     </div>
   </section>
 
+  <!-- SERVICES GALLERY SLIDER — between Why TECIL and CTA -->
+  <ServicesGallerySlider />
+
   <CTASection />
 </Layout>
 
 <style>
-/* INTRO */
-.sv-intro { display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;flex-wrap:wrap;gap:2rem; }
-.sv-intro h2 { color:#111827;margin-bottom:.5rem; }
-.sv-intro-desc { max-width:46ch;font-size:1.02rem;color:#6B7280;line-height:1.8; }
+.sv-intro { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:3rem; flex-wrap:wrap; gap:2rem; }
+.sv-intro h2 { color:#111827; margin-bottom:.5rem; }
+.sv-intro-desc { max-width:46ch; font-size:1.02rem; color:#6B7280; line-height:1.8; }
 
-/* SERVICES LIST */
-.services-list { display:grid;gap:1.5px; }
+.services-list { display:grid; gap:1.5px; }
 
 .service-detail {
-  display: grid;
-  grid-template-columns: 80px 1fr;
-  gap: 2.5rem;
-  padding: 2.25rem;
-  align-items: start;
+  display:grid; grid-template-columns:80px 1fr;
+  gap:2.5rem; padding:2.25rem; align-items:start;
 }
-
-.sd-left { display:flex;flex-direction:column;align-items:center;gap:12px;padding-top:4px; }
-
+.sd-left { display:flex; flex-direction:column; align-items:center; gap:12px; padding-top:4px; }
 .sd-num {
-  font-family: var(--font);
-  font-size: 3rem;
-  font-weight: 900;
-  line-height: 1;
-  font-variation-settings: 'wdth' 125, 'wght' 900;
+  font-family:var(--font); font-size:3rem; font-weight:900; line-height:1;
+  font-variation-settings:'wdth' 125,'wght' 900;
 }
-.sn-red    { color: rgba(204,20,23,0.12); }
-.sn-orange { color: rgba(232,96,26,0.12); }
-.sn-teal   { color: rgba(0,109,119,0.12); }
-.sn-gold   { color: rgba(200,150,12,0.12); }
+.sn-red    { color:rgba(204,20,23,0.12); }
+.sn-orange { color:rgba(232,96,26,0.12); }
+.sn-teal   { color:rgba(0,109,119,0.12); }
+.sn-gold   { color:rgba(200,150,12,0.12); }
 
-.sd-icon { display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px; }
-.si-red    { background:#FFF1F1;color:#CC1417; }
-.si-orange { background:#FFF5EE;color:#E8601A; }
-.si-teal   { background:#EDF7F8;color:#006D77; }
-.si-gold   { background:#FFFBEA;color:#C8960C; }
+.sd-icon { display:flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:10px; }
+.si-red    { background:#FFF1F1; color:#CC1417; }
+.si-orange { background:#FFF5EE; color:#E8601A; }
+.si-teal   { background:#EDF7F8; color:#006D77; }
+.si-gold   { background:#FFFBEA; color:#C8960C; }
 
 .sd-header { margin-bottom:.75rem; }
 .sd-chip {
-  display:inline-flex;font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:999px;
-  text-transform:uppercase;letter-spacing:.06em;margin-bottom:.6rem;
+  display:inline-flex; font-size:.65rem; font-weight:700; padding:3px 10px; border-radius:999px;
+  text-transform:uppercase; letter-spacing:.06em; margin-bottom:.6rem;
 }
-.chip-red    { background:#FFF1F1;color:#CC1417; }
-.chip-orange { background:#FFF5EE;color:#E8601A; }
-.chip-teal   { background:#EDF7F8;color:#006D77; }
-.chip-gold   { background:#FFFBEA;color:#C8960C; }
+.chip-red    { background:#FFF1F1; color:#CC1417; }
+.chip-orange { background:#FFF5EE; color:#E8601A; }
+.chip-teal   { background:#EDF7F8; color:#006D77; }
+.chip-gold   { background:#FFFBEA; color:#C8960C; }
 
-.service-detail h2 { font-size:clamp(1.6rem,3vw,2.4rem);color:#111827;max-width:22ch; }
-.service-detail p  { color:#4B5563;max-width:72ch;line-height:1.85;margin-bottom:1.1rem; }
+.service-detail h2 { font-size:clamp(1.6rem,3vw,2.4rem); color:#111827; max-width:22ch; }
+.service-detail p  { color:#4B5563; max-width:72ch; line-height:1.85; margin-bottom:1.1rem; }
 
-.sd-bullets { list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.5rem; }
-.sd-bullets li { display:flex;align-items:flex-start;gap:8px;font-size:.84rem;color:#4B5563;line-height:1.5; }
-.sd-bullets li svg { flex-shrink:0;margin-top:3px;stroke:#CC1417; }
-
+.sd-bullets { list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:1.5rem; }
+.sd-bullets li { display:flex; align-items:flex-start; gap:8px; font-size:.84rem; color:#4B5563; line-height:1.5; }
+.sd-bullets li svg { flex-shrink:0; margin-top:3px; stroke:#CC1417; }
 .sd-cta { width:fit-content; }
 
-/* PROCESS */
-.process-head {
-  display:flex;justify-content:space-between;align-items:flex-end;
-  margin-bottom:2.5rem;flex-wrap:wrap;gap:2rem;
-}
-.process-head h2 { color:#111827;margin-bottom:.5rem; }
-.ph-desc { max-width:48ch;font-size:1rem;color:#6B7280;line-height:1.8; }
+.process-head { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2.5rem; flex-wrap:wrap; gap:2rem; }
+.process-head h2 { color:#111827; margin-bottom:.5rem; }
+.ph-desc { max-width:48ch; font-size:1rem; color:#6B7280; line-height:1.8; }
 
-.process-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:2px; }
-
+.process-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
 .process-card {
-  padding:2rem 1.75rem;border-radius:0;
-  border:1px solid #E5E7EB;background:#fff;
-  position:relative;overflow:hidden;transition:all .3s ease;
+  padding:2rem 1.75rem; border-radius:0;
+  border:1px solid #E5E7EB; background:#fff;
+  position:relative; overflow:hidden; transition:all .3s ease;
 }
 .process-card::before {
-  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
   background:linear-gradient(90deg,#CC1417,#E8601A);
-  transform:scaleX(0);transform-origin:left;transition:transform .3s ease;
+  transform:scaleX(0); transform-origin:left; transition:transform .3s ease;
 }
-.process-card:hover { box-shadow:0 8px 24px rgba(0,0,0,.07);transform:translateY(-3px); }
+.process-card:hover { box-shadow:0 8px 24px rgba(0,0,0,.07); transform:translateY(-3px); }
 .process-card:hover::before { transform:scaleX(1); }
-
 .step-num {
-  display:inline-block;font-family:var(--font);font-size:3.2rem;line-height:1;
-  color:rgba(204,20,23,.1);margin-bottom:.75rem;
+  display:inline-block; font-family:var(--font); font-size:3.2rem; line-height:1;
+  color:rgba(204,20,23,.1); margin-bottom:.75rem;
   font-variation-settings:'wdth' 125,'wght' 900;
 }
-.process-card h3 { font-size:1.15rem;color:#111827;margin-bottom:.5rem; }
-.process-card p  { font-size:.88rem;color:#6B7280;line-height:1.7; }
+.process-card h3 { font-size:1.15rem; color:#111827; margin-bottom:.5rem; }
+.process-card p  { font-size:.88rem; color:#6B7280; line-height:1.7; }
 
-/* WHY TECIL */
-.why-grid { display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center; }
-.why-copy h2 { color:#fff;margin-bottom:1rem; }
-.why-copy p  { color:rgba(255,255,255,.6);line-height:1.85;margin-bottom:1.75rem; }
-.why-proof { display:flex;gap:0;border:1px solid rgba(255,255,255,.08);border-radius:8px;overflow:hidden; }
-.wp { flex:1;display:flex;flex-direction:column;align-items:center;padding:1rem;border-right:1px solid rgba(255,255,255,.08); }
+.why-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+.why-copy h2 { color:#fff; margin-bottom:1rem; }
+.why-copy p  { color:rgba(255,255,255,.6); line-height:1.85; margin-bottom:1.75rem; }
+.why-proof { display:flex; gap:0; border:1px solid rgba(255,255,255,.08); border-radius:8px; overflow:hidden; }
+.wp { flex:1; display:flex; flex-direction:column; align-items:center; padding:1rem; border-right:1px solid rgba(255,255,255,.08); }
 .wp:last-child { border-right:none; }
-.wp strong { font-family:var(--font);font-size:1.8rem;font-weight:900;color:#CC1417;line-height:1;font-variation-settings:'wdth' 125,'wght' 900; }
-.wp span   { font-size:.64rem;font-weight:600;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.06em;text-align:center; }
-.why-right { display:flex;flex-direction:column;gap:12px; }
+.wp strong { font-family:var(--font); font-size:1.8rem; font-weight:900; color:#CC1417; line-height:1; font-variation-settings:'wdth' 125,'wght' 900; }
+.wp span   { font-size:.64rem; font-weight:600; color:rgba(255,255,255,.35); text-transform:uppercase; letter-spacing:.06em; text-align:center; }
+.why-right { display:flex; flex-direction:column; gap:12px; }
 .why-item {
-  display:flex;align-items:flex-start;gap:10px;
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
-  padding:.85rem 1rem;border-radius:8px;transition:all .3s ease;
+  display:flex; align-items:flex-start; gap:10px;
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07);
+  padding:.85rem 1rem; border-radius:8px; transition:all .3s ease;
 }
-.why-item:hover { background:rgba(232,96,26,.08);border-color:rgba(232,96,26,.2); }
-.why-item span { font-size:.86rem;color:rgba(255,255,255,.7);line-height:1.5; }
+.why-item:hover { background:rgba(232,96,26,.08); border-color:rgba(232,96,26,.2); }
+.why-item span { font-size:.86rem; color:rgba(255,255,255,.7); line-height:1.5; }
 
-/* RESPONSIVE */
 @media(max-width:900px){
-  .service-detail{grid-template-columns:1fr}
-  .sd-left{flex-direction:row;justify-content:flex-start}
-  .sd-bullets{grid-template-columns:1fr}
-  .process-grid{grid-template-columns:1fr 1fr}
-  .why-grid{grid-template-columns:1fr;gap:3rem}
+  .service-detail { grid-template-columns:1fr; }
+  .sd-left { flex-direction:row; justify-content:flex-start; }
+  .sd-bullets { grid-template-columns:1fr; }
+  .process-grid { grid-template-columns:1fr 1fr; }
+  .why-grid { grid-template-columns:1fr; gap:3rem; }
 }
 @media(max-width:600px){
-  .process-grid{grid-template-columns:1fr}
-  .sv-intro{flex-direction:column}
-  .process-head{flex-direction:column;align-items:start}
+  .process-grid { grid-template-columns:1fr; }
+  .sv-intro { flex-direction:column; }
+  .process-head { flex-direction:column; align-items:start; }
 }
 </style>

@@ -1,4 +1,5 @@
 ---
+import BranchesSlider from '../components/BranchesSlider.astro';
 import Layout from '../layouts/Layout.astro';
 import MarqueeStrip from '../components/MarqueeStrip.astro';
 import CTASection from '../components/CTASection.astro';
@@ -66,9 +67,9 @@ const mapLinks: Record<string, string> = {
   <section class="cov-bar">
     <div class="container cov-inner">
       {[
-        { val: '7',  label: 'Active Branches' },
-        { val: '5',  label: 'States Covered' },
-        { val: '1',  label: 'HQ — Calabar, CRS' },
+        { val: '7',   label: 'Active Branches' },
+        { val: '5',   label: 'States Covered' },
+        { val: '1',   label: 'HQ — Calabar, CRS' },
         { val: '16+', label: 'Years Operating' },
       ].map(s => (
         <div class="cov-stat">
@@ -79,9 +80,10 @@ const mapLinks: Record<string, string> = {
     </div>
   </section>
 
-  <!-- BRANCH GROUPS -->
+  <!-- BRANCH GROUPS + SLIDER -->
   <section class="section bg-off">
     <div class="container">
+
       <div class="bg-head reveal">
         <span class="section-tag">Locations</span>
         <h2>Where to <span class="text-gradient">Find Us</span></h2>
@@ -91,15 +93,17 @@ const mapLinks: Record<string, string> = {
         </p>
       </div>
 
+      <!-- BRANCH PHOTOS SLIDER -->
+      <BranchesSlider />
+
       <div class="branch-groups">
         {stateGroups.filter(g => g.branches.length > 0).map((group) => (
-          <div class={`branch-group reveal`}>
+          <div class="branch-group reveal">
             <div class={`group-header gh-${group.color}`}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               <span>{group.state}</span>
               <span class="g-count">{group.branches.length} {group.branches.length === 1 ? 'Branch' : 'Branches'}</span>
             </div>
-
             <div class="branch-cards">
               {group.branches.map((b) => (
                 <div class="branch-card">
@@ -131,6 +135,7 @@ const mapLinks: Record<string, string> = {
           </div>
         ))}
       </div>
+
     </div>
   </section>
 
@@ -178,116 +183,105 @@ const mapLinks: Record<string, string> = {
 </Layout>
 
 <style>
-/* COVERAGE BAR */
-.cov-bar { background:#fff;border-bottom:1px solid #E5E7EB; }
-.cov-inner { display:flex;flex-wrap:wrap;justify-content:center; }
+.cov-bar { background:#fff; border-bottom:1px solid #E5E7EB; }
+.cov-inner { display:flex; flex-wrap:wrap; justify-content:center; }
 .cov-stat {
-  display:flex;flex-direction:column;align-items:center;padding:1.25rem 2rem;
-  border-right:1px solid #E5E7EB;gap:3px;
+  display:flex; flex-direction:column; align-items:center; padding:1.25rem 2rem;
+  border-right:1px solid #E5E7EB; gap:3px;
 }
-.cov-stat:last-child{border-right:none}
+.cov-stat:last-child { border-right:none; }
 .cov-stat strong {
-  font-family:var(--font);font-size:1.8rem;font-weight:900;color:#CC1417;line-height:1;
+  font-family:var(--font); font-size:1.8rem; font-weight:900; color:#CC1417; line-height:1;
   font-variation-settings:'wdth' 125,'wght' 900;
 }
-.cov-stat span { font-size:.62rem;font-weight:600;color:#6B7280;text-transform:uppercase;letter-spacing:.06em;text-align:center; }
+.cov-stat span { font-size:.62rem; font-weight:600; color:#6B7280; text-transform:uppercase; letter-spacing:.06em; text-align:center; }
 
-/* BRANCH GROUPS */
-.bg-head { margin-bottom:3rem; }
-.bg-head h2 { color:#111827;margin-bottom:.75rem; }
-.bg-sub { max-width:56ch;color:#6B7280; }
+.bg-head { margin-bottom:2rem; }
+.bg-head h2 { color:#111827; margin-bottom:.75rem; }
+.bg-sub { max-width:56ch; color:#6B7280; }
 
-.branch-groups { display:flex;flex-direction:column;gap:2.5rem; }
-
-.branch-group { border:1px solid #E5E7EB;border-radius:12px;overflow:hidden; }
+.branch-groups { display:flex; flex-direction:column; gap:2.5rem; }
+.branch-group { border:1px solid #E5E7EB; border-radius:12px; overflow:hidden; }
 
 .group-header {
-  display:flex;align-items:center;gap:8px;padding:.85rem 1.5rem;
-  font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+  display:flex; align-items:center; gap:8px; padding:.85rem 1.5rem;
+  font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em;
   font-variation-settings:'wdth' 100,'wght' 700;
 }
-.gh-red    { background:#FFF1F1;color:#CC1417;border-bottom:1px solid rgba(204,20,23,.12); }
-.gh-orange { background:#FFF5EE;color:#E8601A;border-bottom:1px solid rgba(232,96,26,.12); }
-.gh-teal   { background:#EDF7F8;color:#006D77;border-bottom:1px solid rgba(0,109,119,.12); }
-.gh-gold   { background:#FFFBEA;color:#C8960C;border-bottom:1px solid rgba(200,150,12,.12); }
+.gh-red    { background:#FFF1F1; color:#CC1417; border-bottom:1px solid rgba(204,20,23,.12); }
+.gh-orange { background:#FFF5EE; color:#E8601A; border-bottom:1px solid rgba(232,96,26,.12); }
+.gh-teal   { background:#EDF7F8; color:#006D77; border-bottom:1px solid rgba(0,109,119,.12); }
+.gh-gold   { background:#FFFBEA; color:#C8960C; border-bottom:1px solid rgba(200,150,12,.12); }
 
 .g-count {
-  margin-left:auto;font-size:.68rem;font-weight:600;
-  background:rgba(255,255,255,.7);padding:2px 8px;border-radius:999px;
-  opacity:.75;
+  margin-left:auto; font-size:.68rem; font-weight:600;
+  background:rgba(255,255,255,.7); padding:2px 8px; border-radius:999px; opacity:.75;
 }
 
-.branch-cards { display:grid;grid-template-columns:repeat(3,1fr);gap:0; }
-
+.branch-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:0; }
 .branch-card {
-  padding:1.5rem;border-right:1px solid #E5E7EB;
-  position:relative;transition:background .2s ease;
-  display:flex;flex-direction:column;gap:8px;
+  padding:1.5rem; border-right:1px solid #E5E7EB;
+  position:relative; transition:background .2s ease;
+  display:flex; flex-direction:column; gap:8px;
 }
-.branch-card:last-child{border-right:none}
-.branch-card:hover{background:#FAFAFA}
+.branch-card:last-child { border-right:none; }
+.branch-card:hover { background:#FAFAFA; }
 
 .hq-badge {
-  position:absolute;top:12px;right:12px;
-  background:#CC1417;color:#fff;font-size:.55rem;font-weight:700;
-  letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border-radius:4px;
+  position:absolute; top:12px; right:12px;
+  background:#CC1417; color:#fff; font-size:.55rem; font-weight:700;
+  letter-spacing:.1em; text-transform:uppercase; padding:3px 7px; border-radius:4px;
 }
 .bc-city {
-  font-family:var(--font);font-size:1.05rem;font-weight:800;
-  text-transform:uppercase;color:#111827;letter-spacing:.02em;
+  font-family:var(--font); font-size:1.05rem; font-weight:800;
+  text-transform:uppercase; color:#111827; letter-spacing:.02em;
   font-variation-settings:'wdth' 125,'wght' 800;
 }
-.bc-address {
-  display:flex;align-items:flex-start;gap:6px;
-  font-size:.78rem;color:#6B7280;line-height:1.5;
-}
-.bc-address svg{flex-shrink:0;margin-top:3px}
-
-.bc-actions { display:flex;flex-wrap:wrap;gap:6px;margin-top:4px; }
+.bc-address { display:flex; align-items:flex-start; gap:6px; font-size:.78rem; color:#6B7280; line-height:1.5; }
+.bc-address svg { flex-shrink:0; margin-top:3px; }
+.bc-actions { display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }
 
 .bca-phone,.bca-wa,.bca-map {
-  display:inline-flex;align-items:center;gap:5px;
-  font-size:.72rem;font-weight:600;padding:5px 10px;border-radius:5px;
-  text-decoration:none;transition:all .2s ease;
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:.72rem; font-weight:600; padding:5px 10px; border-radius:5px;
+  text-decoration:none; transition:all .2s ease;
   font-variation-settings:'wdth' 100,'wght' 600;
 }
-.bca-phone { color:#E8601A;background:#FFF5EE;border:1px solid rgba(232,96,26,.2); }
-.bca-phone:hover { background:#E8601A;color:#fff; }
-.bca-wa   { color:#166534;background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.2); }
-.bca-wa:hover { background:#25D366;color:#fff;border-color:#25D366; }
-.bca-map  { color:#6B7280;background:#F7F8FA;border:1px solid #E5E7EB; }
-.bca-map:hover { background:#111827;color:#fff;border-color:#111827; }
+.bca-phone { color:#E8601A; background:#FFF5EE; border:1px solid rgba(232,96,26,.2); }
+.bca-phone:hover { background:#E8601A; color:#fff; }
+.bca-wa { color:#166534; background:rgba(37,211,102,.08); border:1px solid rgba(37,211,102,.2); }
+.bca-wa:hover { background:#25D366; color:#fff; border-color:#25D366; }
+.bca-map { color:#6B7280; background:#F7F8FA; border:1px solid #E5E7EB; }
+.bca-map:hover { background:#111827; color:#fff; border-color:#111827; }
 
-/* REMOTE SECTION */
-.remote-grid { display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center; }
-.remote-copy h2 { color:#111827;margin-bottom:1rem; }
-.remote-copy p  { color:#4B5563;line-height:1.85; }
-.remote-actions { display:flex;flex-direction:column;gap:12px; }
+.remote-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+.remote-copy h2 { color:#111827; margin-bottom:1rem; }
+.remote-copy p  { color:#4B5563; line-height:1.85; }
+.remote-actions { display:flex; flex-direction:column; gap:12px; }
 
 .ra-card {
-  display:flex;align-items:center;gap:14px;padding:1.1rem 1.4rem;
-  border:1px solid #E5E7EB;border-radius:10px;background:#fff;
-  text-decoration:none;transition:all .25s ease;
+  display:flex; align-items:center; gap:14px; padding:1.1rem 1.4rem;
+  border:1px solid #E5E7EB; border-radius:10px; background:#fff;
+  text-decoration:none; transition:all .25s ease;
 }
-.ra-card:hover { transform:translateX(4px);box-shadow:0 4px 16px rgba(0,0,0,.07); }
-.ra-card strong { display:block;font-size:.9rem;font-weight:700;color:#111827;margin-bottom:2px; }
-.ra-card span { font-size:.78rem;color:#6B7280; }
-.ra-phone svg { color:#E8601A; }
+.ra-card:hover { transform:translateX(4px); box-shadow:0 4px 16px rgba(0,0,0,.07); }
+.ra-card strong { display:block; font-size:.9rem; font-weight:700; color:#111827; margin-bottom:2px; }
+.ra-card span   { font-size:.78rem; color:#6B7280; }
+.ra-phone svg  { color:#E8601A; }
 .ra-phone:hover { border-color:rgba(232,96,26,.3); }
-.ra-wa svg { color:#25D366; }
-.ra-wa:hover { border-color:rgba(37,211,102,.3); }
-.ra-quote svg { color:#CC1417; }
+.ra-wa svg     { color:#25D366; }
+.ra-wa:hover   { border-color:rgba(37,211,102,.3); }
+.ra-quote svg  { color:#CC1417; }
 .ra-quote:hover { border-color:rgba(204,20,23,.3); }
 
-/* RESPONSIVE */
 @media(max-width:900px){
-  .branch-cards{grid-template-columns:1fr 1fr}
-  .remote-grid{grid-template-columns:1fr;gap:3rem}
+  .branch-cards { grid-template-columns:1fr 1fr; }
+  .remote-grid  { grid-template-columns:1fr; gap:3rem; }
 }
 @media(max-width:600px){
-  .branch-cards{grid-template-columns:1fr}
-  .branch-card{border-right:none;border-bottom:1px solid #E5E7EB}
-  .branch-card:last-child{border-bottom:none}
-  .cov-stat{padding:.85rem 1rem}
+  .branch-cards { grid-template-columns:1fr; }
+  .branch-card  { border-right:none; border-bottom:1px solid #E5E7EB; }
+  .branch-card:last-child { border-bottom:none; }
+  .cov-stat     { padding:.85rem 1rem; }
 }
 </style>
