@@ -1,4 +1,5 @@
 ---
+import ProductModal from '../components/ProductModal.astro';
 import Layout from '../layouts/Layout.astro';
 import MarqueeStrip from '../components/MarqueeStrip.astro';
 import CTASection from '../components/CTASection.astro';
@@ -394,6 +395,7 @@ const CATEGORIES = [
   font-variation-settings:'wdth' 100,'wght' 800;
   backdrop-filter:blur(8px);
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index:1;
 }
 .cat-Inverter        { background:rgba(255,241,241,.95); color:#CC1417; }
 .cat-Battery         { background:rgba(237,247,248,.95); color:#006D77; }
@@ -417,6 +419,7 @@ const CATEGORIES = [
   padding:5px 12px; 
   border-radius:6px;
   font-variation-settings:'wdth' 100,'wght' 700;
+  z-index:1;
 }
 
 /* CARD BODY */
@@ -718,12 +721,12 @@ const COL = {
   status:    18,
 };
 
-// ── PAGINATION CONFIG ──
+// ── CONFIG ──
 const ITEMS_PER_PAGE = 12;
-let currentPage = 1;
 
 // ── STATE ──
 let allProducts    = [];
+let currentPage    = 1;
 let activeCategory = 'all';
 let searchQuery    = '';
 let activeBrand    = '';
@@ -744,226 +747,98 @@ function formatPrice(raw) {
   return '₦' + n;
 }
 
-function fixGoogleDriveUrl(url) {
-  if (!url) return '';
-  
-  // Already in correct format
-  if (url.includes('drive.google.com/uc?export=view')) {
-    return url;
-  }
-  
-  // Convert lh3.googleusercontent.com format
-  if (url.includes('lh3.googleusercontent.com/d/')) {
-    const fileId = url.split('/d/')[1].split(/[?\/]/)[0];
-    console.log('Converting Google Drive URL:', url, '→ ID:', fileId);
-    return `https://drive.google.com/uc?export=view&id=${fileId}`;
-  }
-  
-  // Extract ID from drive.google.com/file/d/ format
-  if (url.includes('drive.google.com/file/d/')) {
-    const fileId = url.split('/file/d/')[1].split('/')[0];
-    console.log('Converting Google Drive URL:', url, '→ ID:', fileId);
-    return `https://drive.google.com/uc?export=view&id=${fileId}`;
-  }
-  
-  return url;
+// ── GOOGLE DRIVE IMAGE FIX ──
+function extractDriveFileId(url) {
+  if (!url) return null;
+
+  const idParam = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (idParam) return idParam[1];
+
+  const filePath = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (filePath) return filePath[1];
+
+  return null;
+}
+
+function toGDriveThumbnail(url) {
+  const id = extractDriveFileId(url);
+  return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w800` : url;
 }
 
 function getBestImage(row) {
-  const webp = fixGoogleDriveUrl(cell(row, COL.webpUrl));
-  const jpeg = fixGoogleDriveUrl(cell(row, COL.heroJpeg));
-  const png  = fixGoogleDriveUrl(cell(row, COL.pngUrl));
-  
-  const finalUrl = webp || jpeg || png || '';
-  
-  if (finalUrl) {
-    console.log('Product image URL:', {
-      webp: cell(row, COL.webpUrl),
-      jpeg: cell(row, COL.heroJpeg),
-      png: cell(row, COL.pngUrl),
-      selected: finalUrl
-    });
-  }
-  
-  return finalUrl;
+  const raw = cell(row, COL.webpUrl) || cell(row, COL.heroJpeg) || cell(row, COL.pngUrl);
+  return toGDriveThumbnail(raw);
 }
 
-function catClass(cat) {
-  return 'cat-' + cat.replace(/\s+/g, '-');
+// ── QUICK ENQUIRY ──
+function quickEnquiry(name, capacity) {
+  const msg = encodeURIComponent(
+    `Hello TECIL Solar, I'm interested in ${name}${capacity ? ' ('+capacity+')' : ''}. Please share details.`
+  );
+
+  window.open(`https://wa.me/2348037135545?text=${msg}`, '_blank');
 }
 
-// ── CARD HTML ──
+// ── PRODUCT MODAL (PREP FOR PHASE 2) ──
+function openProductModal(id) {
+  const product = allProducts.find(p => cell(p, COL.id) === id);
+  if (!product) return;
+
+  const name = cell(product, COL.modelName);
+  const brand = cell(product, COL.brand);
+
+  alert(`${name} (${brand})\n\nModal system coming next.`);
+}
+
+// ── CARD BUILDER (BALANCED UI) ──
 function buildCard(row) {
-  const category = cell(row, COL.category);
+  const id       = cell(row, COL.id);
   const brand    = cell(row, COL.brand);
-  const name     = cell(row, COL.modelName) || cell(row, COL.quickName) || 'Product';
+  const name     = cell(row, COL.modelName) || cell(row, COL.quickName);
   const capacity = cell(row, COL.capacity);
   const type     = cell(row, COL.type);
   const rawPrice = cell(row, COL.price);
   const imgUrl   = getBestImage(row);
   const price    = formatPrice(rawPrice);
 
-  const waMsg = encodeURIComponent(
-    `Hello TECIL Solar, I'd like to enquire about: ${cell(row, COL.quickName) || name}${capacity ? ' — ' + capacity : ''}. Please share availability and current pricing.`
-  );
-
   return `
-  <div class="pcard"
-    data-cat="${category}"
-    data-brand="${brand.toLowerCase()}"
-    data-search="${(name+' '+brand+' '+capacity+' '+type).toLowerCase()}"
-    data-price="${rawPrice || 0}">
+  <div class="pcard v2"
+       onclick="openProductModal('${id}')">
 
     <div class="pcard-img-wrap">
-      ${category ? `<span class="pcard-cat-tag ${catClass(category)}">${category}</span>` : ''}
-      ${type ? `<div class="pcard-type-tag">${type}</div>` : ''}
-      
       ${imgUrl ? `
-        <img class="pcard-img" 
-             src="${imgUrl}" 
-             alt="${name}" 
-             loading="lazy"
-             crossorigin="anonymous"
-             onerror="console.error('Image load error:', this.src); this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <img src="${imgUrl}" class="pcard-img" alt="${name}"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
       ` : ''}
-      
+
       <div class="pcard-img-placeholder" ${imgUrl ? 'style="display:none"' : ''}>
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8">
-          <rect x="3" y="3" width="18" height="18" rx="2"/>
-          <circle cx="8.5" cy="8.5" r="1.5"/>
-          <polyline points="21 15 16 10 5 21"/>
-        </svg>
-        <span class="ph-brand">${brand || 'TECIL Solar'}</span>
-        <span class="ph-cat">${category || 'Product'}</span>
+        <span>${brand || 'TECIL Solar'}</span>
       </div>
     </div>
 
     <div class="pcard-body">
-      
-      <div class="pcard-header">
-        <div class="pcard-name">${name}</div>
-        ${brand ? `<div class="pcard-brand">${brand}</div>` : ''}
+
+      <div class="pcard-brand">${brand}</div>
+      <div class="pcard-name">${name}</div>
+
+      <div class="pcard-meta">
+        ${capacity ? `<span>${capacity}</span>` : ''}
+        ${type ? `<span>${type}</span>` : ''}
       </div>
 
-      <div class="pcard-price-box">
-        ${price
-          ? `<div class="pcard-price">${price}</div>
-             <div class="pcard-price-label">Current Price</div>`
-          : `<div class="pcard-price" style="font-size:1.1rem;font-weight:700;">Call for Price</div>
-             <div class="pcard-price-label">Available on Request</div>`
-        }
-      </div>
+      <div class="pcard-bottom">
+        <div class="pcard-price">
+          ${price ? price : 'Request Price'}
+        </div>
 
-      <div class="pcard-specs">
-        ${capacity ? `
-          <div class="pcard-spec-box">
-            <div class="pcard-spec-label">Capacity</div>
-            <div class="pcard-spec-value">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-              </svg>
-              ${capacity}
-            </div>
-          </div>
-        ` : ''}
-        
-        ${brand ? `
-          <div class="pcard-spec-box">
-            <div class="pcard-spec-label">Brand</div>
-            <div class="pcard-spec-value">${brand}</div>
-          </div>
-        ` : ''}
-        
-        ${type ? `
-          <div class="pcard-spec-box full">
-            <div class="pcard-spec-label">Type</div>
-            <div class="pcard-spec-value">${type}</div>
-          </div>
-        ` : ''}
-      </div>
-
-      <div class="pcard-footer">
-        <a class="pcard-enquire"
-           href="https://wa.me/2348037135545?text=${waMsg}"
-           target="_blank" 
-           rel="noopener">
-          Enquire Now
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </a>
+        <button class="pcard-quick"
+          onclick="event.stopPropagation();quickEnquiry('${name}','${capacity}')">
+          Enquire
+        </button>
       </div>
 
     </div>
   </div>`;
-}
-
-// ── PAGINATION ──
-function renderPagination(totalItems) {
-  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-  const pagination = document.getElementById('pagination');
-  const prevBtn = document.getElementById('prev-page');
-  const nextBtn = document.getElementById('next-page');
-  const pageNumbers = document.getElementById('page-numbers');
-
-  if (totalPages <= 1) {
-    pagination.style.display = 'none';
-    return;
-  }
-
-  pagination.style.display = 'flex';
-  
-  prevBtn.disabled = currentPage === 1;
-  nextBtn.disabled = currentPage === totalPages;
-
-  let pagesHTML = '';
-  const maxVisible = 5;
-  let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
-  let endPage = Math.min(totalPages, startPage + maxVisible - 1);
-  
-  if (endPage - startPage < maxVisible - 1) {
-    startPage = Math.max(1, endPage - maxVisible + 1);
-  }
-
-  if (startPage > 1) {
-    pagesHTML += `<div class="page-num" data-page="1">1</div>`;
-    if (startPage > 2) pagesHTML += `<div class="page-num">…</div>`;
-  }
-
-  for (let i = startPage; i <= endPage; i++) {
-    pagesHTML += `<div class="page-num ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</div>`;
-  }
-
-  if (endPage < totalPages) {
-    if (endPage < totalPages - 1) pagesHTML += `<div class="page-num">…</div>`;
-    pagesHTML += `<div class="page-num" data-page="${totalPages}">${totalPages}</div>`;
-  }
-
-  pageNumbers.innerHTML = pagesHTML;
-
-  pageNumbers.querySelectorAll('[data-page]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      currentPage = parseInt(btn.dataset.page);
-      render();
-      document.getElementById('product-section')?.scrollIntoView({ behavior: 'smooth' });
-    });
-  });
-
-  prevBtn.onclick = () => {
-    if (currentPage > 1) {
-      currentPage--;
-      render();
-      document.getElementById('product-section')?.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  nextBtn.onclick = () => {
-    if (currentPage < totalPages) {
-      currentPage++;
-      render();
-      document.getElementById('product-section')?.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 }
 
 // ── RENDER ──
@@ -987,42 +862,28 @@ function render() {
     grid.style.display  = 'none';
     empty.style.display = 'flex';
     meta.style.display  = 'none';
-    document.getElementById('pagination').style.display = 'none';
     return;
   }
 
   const start = (currentPage - 1) * ITEMS_PER_PAGE;
   const end = start + ITEMS_PER_PAGE;
-  const paginatedProducts = filtered.slice(start, end);
+  const pageItems = filtered.slice(start, end);
 
   empty.style.display = 'none';
   grid.style.display  = 'grid';
   meta.style.display  = 'block';
-  meta.textContent    = `Showing ${start + 1}-${Math.min(end, filtered.length)} of ${filtered.length} products`;
-  grid.innerHTML      = paginatedProducts.map(buildCard).join('');
+  meta.textContent    = `Showing ${start + 1}-${Math.min(end, filtered.length)} of ${filtered.length}`;
 
-  renderPagination(filtered.length);
+  grid.innerHTML = pageItems.map(buildCard).join('');
 }
 
-// ── LOAD FROM SHEET ──
+// ── LOAD DATA ──
 async function loadProducts() {
-  const loading = document.getElementById('products-loading');
-  const error   = document.getElementById('products-error');
-  
-  console.log('Loading products from:', SHEET_URL);
-  
   try {
-    const res  = await fetch(SHEET_URL);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const res = await fetch(SHEET_URL);
     const text = await res.text();
 
-    const start = text.indexOf('{');
-    const end   = text.lastIndexOf('}') + 1;
-    if (start < 0) throw new Error('No JSON');
-    const json  = JSON.parse(text.slice(start, end));
-
-    console.log('Raw data loaded:', json);
-
+    const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
     const rows = json.table.rows.slice(2);
 
     allProducts = rows.filter(r =>
@@ -1032,90 +893,26 @@ async function loadProducts() {
         cell(r, COL.modelName),
         cell(r, COL.brand),
         cell(r, COL.capacity),
-        cell(r, COL.type),
-        cell(r, COL.quickName),
+        cell(r, COL.type)
       ].join(' ').toLowerCase();
       return r;
     });
 
-    console.log(`Loaded ${allProducts.length} active products`);
+    document.getElementById('products-loading').style.display = 'none';
 
-    const statEl = document.getElementById('product-count-stat');
-    if (statEl) statEl.textContent = allProducts.length;
+    if (!allProducts.length) {
+      document.getElementById('products-empty').style.display = 'flex';
+      return;
+    }
 
-    const brands = [...new Set(allProducts.map(r => cell(r, COL.brand)).filter(Boolean))].sort();
-    const brandSel = document.getElementById('brand-filter');
-    brands.forEach(b => {
-      const opt = document.createElement('option');
-      opt.value = b.toLowerCase();
-      opt.textContent = b;
-      brandSel.appendChild(opt);
-    });
-
-    loading.style.display = 'none';
-    if (!allProducts.length) throw new Error('No active products');
-    document.getElementById('products-grid').style.display = 'grid';
     render();
 
-  } catch(err) {
-    console.error('Products load error:', err);
-    loading.style.display = 'none';
-    error.style.display   = 'flex';
+  } catch (err) {
+    console.error(err);
+    document.getElementById('products-loading').style.display = 'none';
+    document.getElementById('products-error').style.display = 'flex';
   }
 }
 
 // ── EVENTS ──
-document.querySelectorAll('.ftab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.ftab').forEach(t => t.classList.remove('is-active'));
-    tab.classList.add('is-active');
-    activeCategory = tab.dataset.cat || 'all';
-    currentPage = 1;
-    render();
-    document.getElementById('product-section')?.scrollIntoView({ behavior:'smooth', block:'start' });
-  });
-});
-
-let debounce;
-const searchInput = document.getElementById('product-search');
-const clearBtn    = document.getElementById('search-clear');
-searchInput?.addEventListener('input', e => {
-  clearTimeout(debounce);
-  const v = e.target.value.trim().toLowerCase();
-  clearBtn.style.display = v ? 'block' : 'none';
-  debounce = setTimeout(() => { 
-    searchQuery = v; 
-    currentPage = 1;
-    render(); 
-  }, 250);
-});
-clearBtn?.addEventListener('click', () => {
-  searchInput.value = ''; clearBtn.style.display = 'none'; searchQuery = ''; currentPage = 1; render();
-});
-
-document.getElementById('brand-filter')?.addEventListener('change', e => {
-  activeBrand = e.target.value; currentPage = 1; render();
-});
-document.getElementById('sort-filter')?.addEventListener('change', e => {
-  sortMode = e.target.value; render();
-});
-
-window.resetFilters = () => {
-  activeCategory = 'all'; searchQuery = ''; activeBrand = ''; sortMode = ''; currentPage = 1;
-  if (searchInput) searchInput.value = '';
-  if (clearBtn) clearBtn.style.display = 'none';
-  document.querySelectorAll('.ftab').forEach(t => t.classList.remove('is-active'));
-  document.querySelector('[data-cat="all"]')?.classList.add('is-active');
-  const bs = document.getElementById('brand-filter');
-  const ss = document.getElementById('sort-filter');
-  if (bs) bs.value = '';
-  if (ss) ss.value = '';
-  render();
-};
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', loadProducts);
-} else {
-  loadProducts();
-}
-</script>
+document.addEventListener('DOMContentLoaded', loadProducts);
