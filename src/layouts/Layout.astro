@@ -12,14 +12,42 @@ const {
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <!-- 🔥 FONT PRELOAD -->
+  <link 
+    rel="preload" 
+    href="/fonts/NunitoSans-Variable.woff2" 
+    as="font" 
+    type="font/woff2" 
+    crossorigin
+  />
+
+  <!-- BASIC SEO -->
   <meta name="description" content={description}/>
   <meta name="theme-color" content="#CC1417"/>
+
+  <!-- OPEN GRAPH -->
   <meta property="og:title" content={title}/>
   <meta property="og:description" content={description}/>
   <meta property="og:type" content="website"/>
+  <meta property="og:image" content="/api/og.png"/>
+  <meta property="og:url" content={Astro.url}/>
+
+  <!-- TWITTER -->
   <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content={title}/>
+  <meta name="twitter:description" content={description}/>
+  <meta name="twitter:image" content="/api/og.png"/>
+
   <link rel="icon" type="image/svg+xml" href="/logo-mark.svg"/>
+
   <title>{title}</title>
+  <!-- 📊 PLAUSIBLE ANALYTICS -->
+<script 
+  defer 
+  data-domain="tecilsolar.com"
+  src="https://plausible.io/js/script.js">
+</script>
 </head>
 <body>
 
