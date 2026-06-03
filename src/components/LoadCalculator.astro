@@ -1,0 +1,861 @@
+---
+/**
+ * LoadCalculator.astro
+ * Reusable Solar Load Assessment Calculator
+ * Props:
+ *   mode: 'full' (standalone page) | 'embed' (services section)
+ */
+interface Props {
+  mode?: 'full' | 'embed';
+}
+const { mode = 'full' } = Astro.props;
+---
+
+<section class={`lc-section${mode === 'embed' ? ' lc-embed' : ''}`} id="load-calculator">
+  <div class="container">
+
+    <!-- ── HEADER ── -->
+    <div class="lc-head reveal">
+      <div class="lc-head-text">
+        <span class="section-tag">Load Assessment Calculator</span>
+        <h2>Find Your Perfect <span class="text-gradient">Solar System</span></h2>
+      </div>
+      <p class="lc-head-desc">
+        Select your appliances, set your daily usage hours, and get an instant 
+        system recommendation — using the same formula our field engineers use.
+      </p>
+    </div>
+
+    <!-- ── STICKY TOTAL BAR ── -->
+    <div class="lc-bar" id="lc-bar">
+      <div class="lc-bar-left">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <span class="lc-bar-label">Running Total:</span>
+        <span class="lc-bar-wh" id="lc-bar-wh">0 Wh/day</span>
+        <span class="lc-bar-kwh" id="lc-bar-kwh"></span>
+      </div>
+      <div class="lc-bar-right">
+        <span class="lc-bar-count" id="lc-bar-count">Select appliances below</span>
+        <button class="lc-bar-clear" id="lc-clear">Clear all</button>
+      </div>
+    </div>
+
+    <!-- ── MAIN TWO-COLUMN LAYOUT ── -->
+    <div class="lc-body">
+
+      <!-- ═══ LEFT: INPUT PANEL ═══ -->
+      <div class="lc-input-panel">
+
+        <!-- Category Tabs -->
+        <div class="lc-cats" id="lc-cats" role="tablist" aria-label="Appliance categories">
+          <button class="lc-cat is-active" data-cat="all"           role="tab">All</button>
+          <button class="lc-cat"           data-cat="lighting"      role="tab">💡 Lighting</button>
+          <button class="lc-cat"           data-cat="fans"          role="tab">🌀 Fans</button>
+          <button class="lc-cat"           data-cat="kitchen"       role="tab">🧊 Kitchen</button>
+          <button class="lc-cat"           data-cat="entertainment" role="tab">📺 TV & Sound</button>
+          <button class="lc-cat"           data-cat="office"        role="tab">💻 Office</button>
+          <button class="lc-cat"           data-cat="ac"            role="tab">❄️ AC</button>
+          <button class="lc-cat"           data-cat="other"         role="tab">🔧 Other</button>
+        </div>
+
+        <!-- Appliance Grid (JS renders cards here) -->
+        <div class="lc-grid" id="lc-grid" role="list" aria-label="Appliance library"></div>
+
+        <!-- Custom Appliance Form -->
+        <details class="lc-custom">
+          <summary class="lc-custom-toggle">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+            Add a custom appliance not listed above
+          </summary>
+          <div class="lc-custom-form">
+            <input  class="lc-cf-input" id="cf-name"  type="text"   placeholder="Appliance name (e.g. Hair Dryer)" />
+            <input  class="lc-cf-input" id="cf-watt"  type="number" placeholder="Wattage (W)" min="1"    max="50000"/>
+            <input  class="lc-cf-input" id="cf-qty"   type="number" placeholder="Qty"          min="1"    max="50"   value="1"/>
+            <input  class="lc-cf-input" id="cf-hours" type="number" placeholder="Hrs/day"      min="0.25" max="24" step="0.25" value="4"/>
+            <button class="lc-cf-btn"   id="cf-add">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+              Add
+            </button>
+          </div>
+        </details>
+
+      </div><!-- /lc-input-panel -->
+
+      <!-- ═══ RIGHT: RESULTS PANEL ═══ -->
+      <div class="lc-results-panel" id="lc-results-panel">
+
+        <!-- EMPTY STATE -->
+        <div class="lc-empty" id="lc-empty">
+          <div class="lc-empty-icon">
+            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h4>No appliances selected</h4>
+          <p>Tap any appliance card to add it to your load calculation.</p>
+          <div class="lc-empty-tips">
+            <div class="lc-tip">💡 Start with your lighting and fans</div>
+            <div class="lc-tip">🧊 Add fridge/freezer next (they run 24/7)</div>
+            <div class="lc-tip">❄️ AC is the biggest load — add last</div>
+          </div>
+        </div>
+
+        <!-- RESULTS (shown when appliances selected) -->
+        <div class="lc-res" id="lc-res" style="display:none">
+
+          <!-- Energy Block -->
+          <div class="res-energy">
+            <span class="section-tag" style="margin-bottom:.5rem">Your Daily Energy Load</span>
+            <div class="res-energy-main">
+              <span class="res-wh-val" id="res-wh">0</span>
+              <span class="res-wh-unit">Wh/day</span>
+            </div>
+            <div class="res-energy-grid">
+              <div class="res-eg-item"><span>Monthly</span><strong id="res-mo">—</strong></div>
+              <div class="res-eg-item"><span>Yearly</span><strong id="res-yr">—</strong></div>
+              <div class="res-eg-item"><span>Peak Load</span><strong id="res-peak">—</strong></div>
+              <div class="res-eg-item"><span>Voltage</span><strong id="res-volt">—</strong></div>
+            </div>
+          </div>
+
+          <!-- Tier Badge -->
+          <div class="res-tier" id="res-tier">
+            <div class="res-tier-icon">⚡</div>
+            <div>
+              <div class="res-tier-label">Recommended System Tier</div>
+              <div class="res-tier-name" id="res-tier-name">—</div>
+            </div>
+          </div>
+
+          <!-- System Specs -->
+          <div class="res-specs">
+            <div class="res-spec" id="spec-inv">
+              <span class="res-spec-ico">🔌</span>
+              <div class="res-spec-body">
+                <div class="res-spec-lbl">Inverter</div>
+                <div class="res-spec-val" id="res-inv">—</div>
+              </div>
+            </div>
+            <div class="res-spec" id="spec-bat">
+              <span class="res-spec-ico">🔋</span>
+              <div class="res-spec-body">
+                <div class="res-spec-lbl">Battery Bank</div>
+                <div class="res-spec-val" id="res-bat">—</div>
+              </div>
+            </div>
+            <div class="res-spec" id="spec-pan">
+              <span class="res-spec-ico">☀️</span>
+              <div class="res-spec-body">
+                <div class="res-spec-lbl">Solar Panels</div>
+                <div class="res-spec-val" id="res-pan">—</div>
+              </div>
+            </div>
+            <div class="res-spec res-spec-price" id="spec-pri">
+              <span class="res-spec-ico">💰</span>
+              <div class="res-spec-body">
+                <div class="res-spec-lbl">Budget Estimate</div>
+                <div class="res-spec-val" id="res-pri">—</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Disclaimer -->
+          <p class="res-disclaimer">
+            ★ Estimates use 5.5 peak sun hours (Nigeria average), 85% system efficiency,
+            1-day battery autonomy, LiFePO4 at 80% DoD. Prices are indicative ranges;
+            final cost depends on brand selection and installation complexity.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="res-actions">
+            <button class="btn-primary res-wa-btn" id="res-wa-btn">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+              Send Results to TECIL Solar
+            </button>
+            <a href="/contact" class="btn-outline res-book-btn">
+              Book Professional Assessment
+            </a>
+          </div>
+
+          <!-- Selected Appliances List -->
+          <div class="res-list">
+            <div class="res-list-header">
+              <span>Selected Appliances</span>
+              <span class="res-list-count" id="res-list-count">0 items</span>
+            </div>
+            <div id="res-list-body"></div>
+          </div>
+
+        </div><!-- /lc-res -->
+      </div><!-- /lc-results-panel -->
+
+    </div><!-- /lc-body -->
+  </div><!-- /container -->
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     STYLES
+══════════════════════════════════════════════════════ -->
+<style>
+/* ── Section ── */
+.lc-section { padding: var(--section-pad); background: var(--off); }
+.lc-embed   { background: var(--white); }
+
+/* ── Head ── */
+.lc-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; margin-bottom: 1.75rem; flex-wrap: wrap; }
+.lc-head h2 { color: var(--text); margin-bottom: .4rem; }
+.lc-head-desc { max-width: 46ch; font-size: 1rem; color: var(--muted); line-height: 1.8; }
+
+/* ── Sticky Total Bar ── */
+.lc-bar {
+  position: sticky; top: 68px; z-index: 50;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1rem; flex-wrap: wrap;
+  background: var(--dark); border-radius: 12px; padding: .9rem 1.4rem;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 8px 28px rgba(0,0,0,.18);
+}
+.lc-bar-left  { display: flex; align-items: center; gap: .65rem; flex-wrap: wrap; }
+.lc-bar-left svg { color: var(--orange); flex-shrink: 0; }
+.lc-bar-label { font-size: .73rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.45); }
+.lc-bar-wh    { font-size: 1.15rem; font-weight: 900; color: #fff; font-variation-settings: 'wdth' 125,'wght' 900; }
+.lc-bar-kwh   { font-size: .78rem; color: var(--orange); font-weight: 700; }
+.lc-bar-right { display: flex; align-items: center; gap: .75rem; }
+.lc-bar-count { font-size: .78rem; color: rgba(255,255,255,.45); }
+.lc-bar-clear {
+  font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: rgba(255,255,255,.55); background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12); border-radius: 6px;
+  padding: .35rem .75rem; cursor: pointer; transition: all .25s;
+}
+.lc-bar-clear:hover { color: #fff; background: rgba(204,20,23,.3); border-color: rgba(204,20,23,.4); }
+
+/* ── Two-column Body ── */
+.lc-body {
+  display: grid; grid-template-columns: 1fr 360px; gap: 2rem; align-items: start;
+}
+
+/* ── Category Tabs ── */
+.lc-cats {
+  display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem;
+}
+.lc-cat {
+  padding: .4rem .9rem; border-radius: 99px; font-size: .72rem;
+  font-weight: 700; letter-spacing: .04em; cursor: pointer;
+  border: 1.5px solid var(--border); background: #fff; color: var(--muted);
+  transition: all .2s; white-space: nowrap;
+  font-variation-settings: 'wdth' 100,'wght' 700;
+}
+.lc-cat:hover   { border-color: var(--red); color: var(--red); }
+.lc-cat.is-active { background: var(--red); color: #fff; border-color: var(--red); }
+
+/* ── Appliance Grid ── */
+.lc-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  gap: 10px; margin-bottom: 1.5rem;
+}
+
+/* ── Appliance Card ── */
+.app-card {
+  position: relative; background: #fff; border: 1.5px solid var(--border);
+  border-radius: 14px; padding: 1rem; cursor: pointer;
+  transition: all .25s; user-select: none;
+}
+.app-card:hover { border-color: var(--red); box-shadow: 0 4px 16px rgba(204,20,23,.1); transform: translateY(-2px); }
+.app-card.is-selected {
+  border-color: var(--red); background: #fff9f9;
+  box-shadow: 0 4px 20px rgba(204,20,23,.12);
+}
+.app-card-check {
+  position: absolute; top: 8px; right: 8px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--red); display: none; align-items: center; justify-content: center;
+  color: #fff; font-size: 10px; font-weight: 700;
+}
+.app-card.is-selected .app-card-check { display: flex; }
+.app-card-icon { font-size: 1.5rem; margin-bottom: .35rem; line-height: 1; }
+.app-card-name { font-size: .78rem; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: .2rem; }
+.app-card-watt { font-size: .68rem; color: var(--soft); }
+
+/* Controls shown when selected */
+.app-card-controls { margin-top: .75rem; display: none; border-top: 1px solid var(--border); padding-top: .65rem; }
+.app-card.is-selected .app-card-controls { display: block; }
+
+.acc-row { display: flex; align-items: center; justify-content: space-between; gap: .4rem; margin-bottom: .5rem; }
+.acc-label { font-size: .62rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--soft); flex-shrink: 0; }
+
+/* Qty control */
+.qty-ctrl { display: flex; align-items: center; gap: 4px; }
+.qty-btn {
+  width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--border);
+  background: #fff; cursor: pointer; font-size: .9rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; transition: all .2s; color: var(--text);
+}
+.qty-btn:hover { border-color: var(--red); color: var(--red); }
+.qty-val { font-size: .82rem; font-weight: 800; color: var(--text); min-width: 18px; text-align: center; }
+
+/* Hours slider */
+.hrs-ctrl { display: flex; align-items: center; gap: 6px; flex: 1; }
+.hrs-slider {
+  flex: 1; -webkit-appearance: none; height: 4px; border-radius: 2px;
+  background: linear-gradient(to right, var(--red) 0%, var(--border) 0%);
+  outline: none; cursor: pointer;
+}
+.hrs-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 14px; height: 14px;
+  border-radius: 50%; background: var(--red);
+  border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.2);
+  cursor: pointer;
+}
+.hrs-val { font-size: .7rem; font-weight: 800; color: var(--red); min-width: 28px; text-align: right; }
+
+/* Per-card energy subtotal */
+.app-card-energy {
+  margin-top: .45rem; padding: .35rem .5rem; border-radius: 6px;
+  background: rgba(204,20,23,.06); font-size: .68rem;
+  display: flex; justify-content: space-between; align-items: center; color: var(--muted);
+}
+.app-card-energy strong { color: var(--red); font-weight: 800; }
+
+/* ── Custom Form ── */
+.lc-custom { margin-top: 1rem; border: 1.5px dashed var(--border); border-radius: 12px; }
+.lc-custom-toggle {
+  display: flex; align-items: center; gap: .6rem; padding: .85rem 1.1rem;
+  font-size: .8rem; font-weight: 700; color: var(--muted); cursor: pointer; list-style: none;
+  transition: color .2s;
+}
+.lc-custom-toggle:hover { color: var(--text); }
+.lc-custom[open] .lc-custom-toggle { color: var(--text); border-bottom: 1px solid var(--border); }
+.lc-custom-form {
+  display: grid; grid-template-columns: 2fr 1fr 0.6fr 0.7fr auto;
+  gap: 8px; padding: 1rem 1.1rem;
+}
+.lc-cf-input {
+  padding: .55rem .75rem; border: 1.5px solid var(--border); border-radius: 8px;
+  font-size: .82rem; color: var(--text); background: #fff; transition: border-color .2s;
+  font-family: var(--font); width: 100%;
+}
+.lc-cf-input:focus { outline: none; border-color: var(--red); }
+.lc-cf-btn {
+  display: flex; align-items: center; gap: 5px; padding: .55rem 1rem;
+  background: var(--red); color: #fff; border: none; border-radius: 8px;
+  font-size: .78rem; font-weight: 700; cursor: pointer; transition: all .2s; white-space: nowrap;
+  font-variation-settings: 'wdth' 100,'wght' 700;
+}
+.lc-cf-btn:hover { background: var(--red-dark); }
+
+/* ── Results Panel ── */
+.lc-results-panel {
+  position: sticky; top: calc(68px + 68px + 1.75rem);
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-md);
+}
+
+/* Empty state */
+.lc-empty { padding: 2.5rem 1.75rem; text-align: center; }
+.lc-empty-icon { width: 72px; height: 72px; border-radius: 50%; background: var(--off); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: var(--faint); }
+.lc-empty h4 { font-size: 1.05rem; color: var(--text); margin-bottom: .4rem; }
+.lc-empty p  { font-size: .86rem; color: var(--muted); margin-bottom: 1.25rem; }
+.lc-empty-tips { display: flex; flex-direction: column; gap: 6px; text-align: left; }
+.lc-tip { font-size: .75rem; color: var(--muted); padding: .4rem .6rem; background: var(--off); border-radius: 8px; }
+
+/* Results content */
+.lc-res { padding: 1.5rem; display: flex; flex-direction: column; gap: 1.1rem; }
+
+/* Energy Block */
+.res-energy { background: var(--dark); border-radius: 14px; padding: 1.25rem; }
+.res-energy-main { display: flex; align-items: baseline; gap: .4rem; margin: .5rem 0 .85rem; }
+.res-wh-val { font-size: 2.4rem; font-weight: 900; color: #fff; font-variation-settings: 'wdth' 125,'wght' 900; line-height: 1; }
+.res-wh-unit { font-size: .85rem; color: rgba(255,255,255,.5); font-weight: 600; }
+.res-energy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.res-eg-item {
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07);
+  border-radius: 8px; padding: .5rem .65rem;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.res-eg-item span  { font-size: .6rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.35); }
+.res-eg-item strong{ font-size: .88rem; font-weight: 800; color: #fff; }
+
+/* Tier badge */
+.res-tier {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .85rem 1rem; border-radius: 12px;
+  background: linear-gradient(135deg, rgba(204,20,23,.08), rgba(232,96,26,.05));
+  border: 1.5px solid rgba(204,20,23,.15);
+}
+.res-tier-icon { font-size: 1.5rem; }
+.res-tier-label { font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--soft); margin-bottom: 2px; }
+.res-tier-name  { font-size: 1rem; font-weight: 900; color: var(--red); font-variation-settings: 'wdth' 125,'wght' 900; }
+
+/* Spec cards */
+.res-specs { display: flex; flex-direction: column; gap: 6px; }
+.res-spec {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .7rem .9rem; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--off); transition: border-color .2s;
+}
+.res-spec:hover { border-color: var(--border-2); }
+.res-spec-price { background: #FFFBEA; border-color: rgba(200,150,12,.25); }
+.res-spec-ico  { font-size: 1.1rem; flex-shrink: 0; }
+.res-spec-lbl  { font-size: .6rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--soft); margin-bottom: 2px; }
+.res-spec-val  { font-size: .88rem; font-weight: 800; color: var(--text); }
+
+/* Disclaimer */
+.res-disclaimer { font-size: .68rem; color: var(--faint); line-height: 1.6; border-top: 1px solid var(--border); padding-top: .85rem; }
+
+/* Action buttons */
+.res-actions { display: flex; flex-direction: column; gap: 8px; }
+.res-wa-btn, .res-book-btn { width: 100%; justify-content: center; font-size: .8rem; }
+
+/* Selected appliance list */
+.res-list { border-top: 1px solid var(--border); padding-top: .85rem; }
+.res-list-header {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: .7rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--soft); margin-bottom: .6rem;
+}
+.res-list-count { color: var(--red); }
+.res-list-item {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: .5rem; padding: .42rem .5rem; border-radius: 8px; margin-bottom: 3px;
+  font-size: .75rem; color: var(--muted); background: var(--off);
+}
+.res-list-item .rli-name { font-weight: 700; color: var(--text); flex: 1; }
+.res-list-item .rli-wh   { font-weight: 800; color: var(--red); flex-shrink: 0; }
+.res-list-remove {
+  width: 18px; height: 18px; border-radius: 4px; border: none;
+  background: rgba(204,20,23,.1); color: var(--red); cursor: pointer;
+  display: flex; align-items: center; justify-content: center; font-size: 10px;
+  flex-shrink: 0; transition: all .2s;
+}
+.res-list-remove:hover { background: var(--red); color: #fff; }
+
+/* ── Responsive ── */
+@media (max-width: 1100px) { .lc-body { grid-template-columns: 1fr; } .lc-results-panel { position: static; } }
+@media (max-width: 800px) {
+  .lc-head { flex-direction: column; align-items: flex-start; }
+  .lc-custom-form { grid-template-columns: 1fr 1fr; }
+  .lc-cf-btn { grid-column: span 2; }
+  .lc-bar { top: 60px; }
+}
+@media (max-width: 500px) {
+  .lc-grid { grid-template-columns: repeat(2, 1fr); }
+  .lc-custom-form { grid-template-columns: 1fr; }
+  .lc-cf-btn { grid-column: span 1; }
+}
+</style>
+
+<!-- ══════════════════════════════════════════════════════
+     CALCULATOR ENGINE — Pure JS, no dependencies
+══════════════════════════════════════════════════════ -->
+<script>
+(function () {
+
+  // ── FORMULA CONSTANTS ────────────────────────────────
+  const SYS_EFFICIENCY  = 0.85;   // 15% system loss factor
+  const SAFETY_FACTOR   = 1.25;   // 25% safety margin on panels + inverter
+  const PEAK_SUN_HRS    = 5.5;    // Nigeria average peak sun hours/day
+  const DOD_LIFEPO4     = 0.80;   // LiFePO4 depth of discharge
+  const AUTONOMY_DAYS   = 1;      // Default: 1 day battery backup
+
+  // ── APPLIANCE LIBRARY ────────────────────────────────
+  const APPLIANCES = [
+    // LIGHTING
+    { id:'led-9',   cat:'lighting',      icon:'💡', name:'LED Bulb (9W)',           watt:9,    hrs:8  },
+    { id:'led-15',  cat:'lighting',      icon:'💡', name:'LED Bulb (15W)',          watt:15,   hrs:8  },
+    { id:'cfl-23',  cat:'lighting',      icon:'💡', name:'Energy Saver (23W)',      watt:23,   hrs:8  },
+    { id:'fluoro',  cat:'lighting',      icon:'💡', name:'Fluorescent Tube (40W)', watt:40,   hrs:8  },
+    { id:'flood',   cat:'lighting',      icon:'🔦', name:'Security Floodlight',     watt:100,  hrs:6  },
+    { id:'led-str', cat:'lighting',      icon:'💡', name:'LED Strip Lights',        watt:24,   hrs:6  },
+
+    // FANS & COOLING
+    { id:'ceil-fan',cat:'fans',          icon:'🌀', name:'Ceiling Fan',             watt:75,   hrs:10 },
+    { id:'stand-fn',cat:'fans',          icon:'🌀', name:'Standing Fan',            watt:65,   hrs:8  },
+    { id:'table-fn',cat:'fans',          icon:'🌀', name:'Table Fan',               watt:45,   hrs:6  },
+    { id:'exh-fan', cat:'fans',          icon:'🌀', name:'Exhaust Fan',             watt:30,   hrs:4  },
+
+    // KITCHEN
+    { id:'fridge',  cat:'kitchen',       icon:'🧊', name:'Refrigerator',            watt:150,  hrs:12 },
+    { id:'fridge-l',cat:'kitchen',       icon:'🧊', name:'Refrigerator (Large)',    watt:250,  hrs:12 },
+    { id:'freezer', cat:'kitchen',       icon:'🧊', name:'Chest Freezer',           watt:200,  hrs:12 },
+    { id:'microwave',cat:'kitchen',      icon:'♨️', name:'Microwave Oven',          watt:1200, hrs:0.5},
+    { id:'kettle',  cat:'kitchen',       icon:'♨️', name:'Electric Kettle',         watt:2000, hrs:0.25},
+    { id:'blender', cat:'kitchen',       icon:'🥤', name:'Blender',                 watt:400,  hrs:0.25},
+
+    // ENTERTAINMENT
+    { id:'tv-32',   cat:'entertainment', icon:'📺', name:'32" LED TV',              watt:45,   hrs:6  },
+    { id:'tv-43',   cat:'entertainment', icon:'📺', name:'43" LED TV',              watt:70,   hrs:6  },
+    { id:'tv-55',   cat:'entertainment', icon:'📺', name:'55"+ Smart TV',           watt:120,  hrs:6  },
+    { id:'decoder', cat:'entertainment', icon:'📡', name:'DSTV/GoTV Decoder',       watt:25,   hrs:8  },
+    { id:'sound',   cat:'entertainment', icon:'🔊', name:'Sound System',            watt:150,  hrs:4  },
+
+    // OFFICE
+    { id:'laptop',  cat:'office',        icon:'💻', name:'Laptop',                  watt:65,   hrs:8  },
+    { id:'desktop', cat:'office',        icon:'🖥️', name:'Desktop Computer',        watt:300,  hrs:8  },
+    { id:'monitor', cat:'office',        icon:'🖥️', name:'Monitor (22")',           watt:40,   hrs:8  },
+    { id:'printer', cat:'office',        icon:'🖨️', name:'Laser Printer',           watt:500,  hrs:2  },
+    { id:'router',  cat:'office',        icon:'📶', name:'WiFi Router/Modem',       watt:15,   hrs:24 },
+    { id:'cctv',    cat:'office',        icon:'📹', name:'CCTV (4 cameras)',        watt:100,  hrs:24 },
+    { id:'phone',   cat:'office',        icon:'📱', name:'Phone Charger',           watt:15,   hrs:3  },
+
+    // AIR CONDITIONING
+    { id:'ac-1hp',  cat:'ac',            icon:'❄️', name:'AC — 1 Horsepower',       watt:900,  hrs:8  },
+    { id:'ac-15hp', cat:'ac',            icon:'❄️', name:'AC — 1.5 Horsepower',     watt:1350, hrs:8  },
+    { id:'ac-2hp',  cat:'ac',            icon:'❄️', name:'AC — 2 Horsepower',       watt:1800, hrs:8  },
+    { id:'ac-3hp',  cat:'ac',            icon:'❄️', name:'AC — 3 Horsepower',       watt:2250, hrs:6  },
+
+    // OTHER
+    { id:'pump-05', cat:'other',         icon:'💧', name:'Water Pump (0.5HP)',      watt:370,  hrs:2  },
+    { id:'pump-1',  cat:'other',         icon:'💧', name:'Water Pump (1HP)',        watt:750,  hrs:2  },
+    { id:'iron',    cat:'other',         icon:'👔', name:'Pressing Iron',           watt:1000, hrs:1  },
+    { id:'wash-m',  cat:'other',         icon:'🫧', name:'Washing Machine',         watt:500,  hrs:1  },
+    { id:'heater',  cat:'other',         icon:'🚿', name:'Water Heater (Instant)',  watt:3000, hrs:0.5},
+  ];
+
+  // ── SYSTEM TIER MATRIX ───────────────────────────────
+  function getTier(totalWh) {
+    if (totalWh < 500)   return { name:'Starter Backup',    inv:'1 KVA / 12V',    bat:'100Ah — 12V (1 unit)',        pan:'200Wp (~1× 200W panel)',    price:'₦350K – ₦650K'   };
+    if (totalWh < 1500)  return { name:'Basic Home',        inv:'2 KVA / 24V',    bat:'200Ah — 24V (2× 100Ah)',      pan:'400Wp (~1× 400W panel)',    price:'₦700K – ₦1.4M'   };
+    if (totalWh < 4000)  return { name:'Standard Home',     inv:'3.5 KVA / 24V',  bat:'200–400Ah — 24V LiFePO4',    pan:'1.2kWp (~3× 400W panels)', price:'₦1.5M – ₦3.5M'   };
+    if (totalWh < 8000)  return { name:'Premium Home',      inv:'5 KVA / 48V',    bat:'400Ah — 48V LiFePO4',        pan:'2.4kWp (~6× 400W panels)', price:'₦3.5M – ₦7M'     };
+    if (totalWh < 20000) return { name:'SME / Office',      inv:'7.5–10 KVA / 48V',bat:'600Ah — 48V LiFePO4',      pan:'4–6kWp (~10–15 panels)',    price:'₦8M – ₦22M'      };
+    return                       { name:'Industrial / EPC', inv:'Custom Design',   bat:'Custom Battery Bank',        pan:'Custom Solar Array',        price:'Contact for Quote' };
+  }
+
+  // ── VOLTAGE AUTO-SELECTION ───────────────────────────
+  function getVoltage(totalWh) {
+    if (totalWh < 1500) return 12;
+    if (totalWh < 8000) return 24;
+    return 48;
+  }
+
+  // ── CORE CALCULATION ENGINE ──────────────────────────
+  function calculate(selected) {
+    let totalWh  = 0;
+    let peakWatt = 0;
+
+    selected.forEach(a => {
+      totalWh  += a.watt * a.qty * a.hrs;
+      peakWatt += a.watt * a.qty;
+    });
+
+    const designEnergy = totalWh / SYS_EFFICIENCY;
+    const voltage      = getVoltage(totalWh);
+    const batteryAh    = Math.ceil((designEnergy / voltage * AUTONOMY_DAYS) / DOD_LIFEPO4);
+    const panelWp      = Math.ceil((designEnergy / PEAK_SUN_HRS) * SAFETY_FACTOR);
+    const numPanels    = Math.ceil(panelWp / 400);
+    const inverterKVA  = Math.ceil((peakWatt * SAFETY_FACTOR) / 100) / 10;
+    const tier         = getTier(totalWh);
+
+    return { totalWh, designEnergy, voltage, batteryAh, panelWp, numPanels, peakWatt, inverterKVA, tier };
+  }
+
+  // ── STATE ─────────────────────────────────────────────
+  const state = {
+    selected: {},   // { id: { ...appliance, qty, hrs } }
+    activecat: 'all',
+  };
+
+  // ── DOM REFS ─────────────────────────────────────────
+  const grid       = document.getElementById('lc-grid');
+  const cats       = document.getElementById('lc-cats');
+  const barWh      = document.getElementById('lc-bar-wh');
+  const barKwh     = document.getElementById('lc-bar-kwh');
+  const barCount   = document.getElementById('lc-bar-count');
+  const clearBtn   = document.getElementById('lc-clear');
+  const empty      = document.getElementById('lc-empty');
+  const resContent = document.getElementById('lc-res');
+  const waBtn      = document.getElementById('res-wa-btn');
+  const cfAdd      = document.getElementById('cf-add');
+
+  if (!grid) return; // Component not on page
+
+  // ── RENDER APPLIANCE CARD ────────────────────────────
+  function renderCard(app) {
+    const sel = state.selected[app.id];
+    const qty  = sel ? sel.qty : 1;
+    const hrs  = sel ? sel.hrs : app.hrs;
+    const wh   = app.watt * qty * hrs;
+    const pct  = Math.min((hrs / 24) * 100, 100);
+    const isSelected = !!sel;
+
+    const card = document.createElement('div');
+    card.className = `app-card${isSelected ? ' is-selected' : ''}`;
+    card.setAttribute('role', 'listitem');
+    card.dataset.id = app.id;
+
+    card.innerHTML = `
+      <div class="app-card-check">✓</div>
+      <div class="app-card-icon">${app.icon}</div>
+      <div class="app-card-name">${app.name}</div>
+      <div class="app-card-watt">${app.watt}W</div>
+      <div class="app-card-controls">
+        <div class="acc-row">
+          <span class="acc-label">Qty</span>
+          <div class="qty-ctrl">
+            <button class="qty-btn" data-action="minus" aria-label="Decrease quantity">−</button>
+            <span class="qty-val">${qty}</span>
+            <button class="qty-btn" data-action="plus"  aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+        <div class="acc-row">
+          <span class="acc-label">Hrs/day</span>
+          <div class="hrs-ctrl">
+            <input type="range" class="hrs-slider" min="0.25" max="24" step="0.25" value="${hrs}"
+              style="background:linear-gradient(to right,var(--red) ${pct}%,var(--border) ${pct}%)"
+              aria-label="Hours per day" />
+            <span class="hrs-val">${hrs}h</span>
+          </div>
+        </div>
+        <div class="app-card-energy">
+          <span>${qty}× ${app.watt}W × ${hrs}h</span>
+          <strong>${formatWh(wh)}</strong>
+        </div>
+      </div>
+    `;
+
+    // Click card body → toggle select
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.app-card-controls')) return;
+      toggleAppliance(app, card);
+    });
+
+    // Qty buttons
+    card.querySelectorAll('.qty-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const delta = btn.dataset.action === 'plus' ? 1 : -1;
+        if (!state.selected[app.id]) { toggleAppliance(app, card); return; }
+        const newQty = Math.max(1, Math.min(50, (state.selected[app.id].qty || 1) + delta));
+        state.selected[app.id].qty = newQty;
+        card.querySelector('.qty-val').textContent = newQty;
+        refreshCardEnergy(card, app);
+        recalculate();
+      });
+    });
+
+    // Hours slider
+    const slider = card.querySelector('.hrs-slider');
+    slider?.addEventListener('input', (e) => {
+      e.stopPropagation();
+      const val = parseFloat(slider.value);
+      if (!state.selected[app.id]) { toggleAppliance(app, card); }
+      state.selected[app.id].hrs = val;
+      const pct = Math.min((val / 24) * 100, 100);
+      slider.style.background = `linear-gradient(to right,var(--red) ${pct}%,var(--border) ${pct}%)`;
+      card.querySelector('.hrs-val').textContent = `${val}h`;
+      refreshCardEnergy(card, app);
+      recalculate();
+    });
+
+    return card;
+  }
+
+  function refreshCardEnergy(card, app) {
+    const sel = state.selected[app.id];
+    if (!sel) return;
+    const wh = app.watt * sel.qty * sel.hrs;
+    const energyEl = card.querySelector('.app-card-energy');
+    if (energyEl) {
+      energyEl.innerHTML = `<span>${sel.qty}× ${app.watt}W × ${sel.hrs}h</span><strong>${formatWh(wh)}</strong>`;
+    }
+  }
+
+  // ── TOGGLE APPLIANCE ─────────────────────────────────
+  function toggleAppliance(app, card) {
+    if (state.selected[app.id]) {
+      delete state.selected[app.id];
+      card.classList.remove('is-selected');
+    } else {
+      state.selected[app.id] = { ...app, qty: 1, hrs: app.hrs };
+      card.classList.add('is-selected');
+    }
+    recalculate();
+  }
+
+  // ── RENDER GRID ───────────────────────────────────────
+  function renderGrid() {
+    if (!grid) return;
+    grid.innerHTML = '';
+    const filtered = state.activecat === 'all'
+      ? APPLIANCES
+      : APPLIANCES.filter(a => a.cat === state.activecat);
+    filtered.forEach(app => grid.appendChild(renderCard(app)));
+  }
+
+  // ── RECALCULATE & UPDATE UI ───────────────────────────
+  function recalculate() {
+    const selected = Object.values(state.selected);
+    const count    = selected.length;
+
+    // Update bar
+    if (barCount) barCount.textContent = count === 0 ? 'Select appliances below' : `${count} appliance${count !== 1 ? 's' : ''} selected`;
+
+    if (count === 0) {
+      if (barWh)  barWh.textContent  = '0 Wh/day';
+      if (barKwh) barKwh.textContent = '';
+      if (empty)      empty.style.display      = '';
+      if (resContent) resContent.style.display = 'none';
+      return;
+    }
+
+    const r = calculate(selected);
+
+    // Update bar
+    if (barWh)  barWh.textContent  = formatWh(r.totalWh);
+    if (barKwh) barKwh.textContent = r.totalWh >= 1000 ? `= ${(r.totalWh/1000).toFixed(2)} kWh` : '';
+
+    // Show results
+    if (empty)      empty.style.display      = 'none';
+    if (resContent) resContent.style.display = '';
+
+    // Energy stats
+    setText('res-wh',   formatWh(r.totalWh));
+    setText('res-mo',   `${(r.totalWh * 30 / 1000).toFixed(1)} kWh`);
+    setText('res-yr',   `${(r.totalWh * 365 / 1000).toFixed(0)} kWh`);
+    setText('res-peak', `${r.peakWatt.toLocaleString()}W`);
+    setText('res-volt', `${r.voltage}V System`);
+
+    // Tier
+    setText('res-tier-name', r.tier.name);
+
+    // Specs
+    setText('res-inv', `${r.inverterKVA} KVA Hybrid Inverter`);
+    setText('res-bat', `${r.batteryAh} Ah LiFePO4 (${r.voltage}V)`);
+    setText('res-pan', `${r.panelWp.toLocaleString()} Wp ≈ ${r.numPanels}× 400W panels`);
+    setText('res-pri', r.tier.price);
+
+    // Appliance list
+    updateResAppList(selected);
+
+    // WhatsApp button
+    if (waBtn) {
+      waBtn.onclick = () => sendWhatsApp(selected, r);
+    }
+  }
+
+  // ── RESULTS APPLIANCE LIST ────────────────────────────
+  function updateResAppList(selected) {
+    const body  = document.getElementById('res-list-body');
+    const count = document.getElementById('res-list-count');
+    if (!body) return;
+    if (count) count.textContent = `${selected.length} item${selected.length !== 1 ? 's' : ''}`;
+    body.innerHTML = selected.map(a => {
+      const wh = a.watt * a.qty * a.hrs;
+      return `
+        <div class="res-list-item">
+          <span>${a.icon}</span>
+          <span class="rli-name">${a.qty > 1 ? a.qty + '× ' : ''}${a.name}</span>
+          <span style="font-size:.7rem;color:var(--soft)">${a.hrs}h</span>
+          <span class="rli-wh">${formatWh(wh)}</span>
+          <button class="res-list-remove" data-id="${a.id}" aria-label="Remove ${a.name}">✕</button>
+        </div>`;
+    }).join('');
+
+    // Remove buttons in list
+    body.querySelectorAll('.res-list-remove').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        delete state.selected[id];
+        // Deselect card in grid
+        const card = grid?.querySelector(`[data-id="${id}"]`);
+        if (card) card.classList.remove('is-selected');
+        recalculate();
+      });
+    });
+  }
+
+  // ── WHATSAPP MESSAGE ─────────────────────────────────
+  function sendWhatsApp(selected, r) {
+    const lines = selected.map(a => {
+      const wh = a.watt * a.qty * a.hrs;
+      return `• ${a.qty > 1 ? a.qty + '× ' : ''}${a.name} (${a.watt}W) — ${a.hrs}h/day → ${formatWh(wh)}`;
+    }).join('\n');
+
+    const msg = `🔋 *TECIL Solar — Load Assessment Results*
+━━━━━━━━━━━━━━━━━━━━
+
+*My Appliances:*
+${lines}
+
+━━━━━━━━━━━━━━━━━━━━
+*Total Daily Load:* ${formatWh(r.totalWh)} (${(r.totalWh/1000).toFixed(2)} kWh)
+*Peak Load:* ${r.peakWatt.toLocaleString()}W
+*System Voltage:* ${r.voltage}V
+
+*Recommended System (${r.tier.name}):*
+🔌 Inverter: ${r.inverterKVA} KVA Hybrid
+🔋 Battery: ${r.batteryAh} Ah LiFePO4 (${r.voltage}V)
+☀️ Panels: ${r.panelWp.toLocaleString()}Wp ≈ ${r.numPanels}× 400W
+💰 Budget Estimate: ${r.tier.price}
+
+I would like to discuss this system with TECIL Solar. Please contact me.`;
+
+    const url = `https://wa.me/2348037135545?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  }
+
+  // ── CUSTOM APPLIANCE ─────────────────────────────────
+  if (cfAdd) {
+    cfAdd.addEventListener('click', () => {
+      const name  = (document.getElementById('cf-name') as HTMLInputElement)?.value?.trim();
+      const watt  = parseFloat((document.getElementById('cf-watt') as HTMLInputElement)?.value || '0');
+      const qty   = parseInt((document.getElementById('cf-qty') as HTMLInputElement)?.value   || '1');
+      const hrs   = parseFloat((document.getElementById('cf-hours') as HTMLInputElement)?.value|| '4');
+
+      if (!name || !watt || watt <= 0) {
+        alert('Please enter an appliance name and wattage.'); return;
+      }
+
+      const id = `custom-${Date.now()}`;
+      const customApp = { id, cat: 'other', icon: '🔧', name, watt, hrs };
+      APPLIANCES.push(customApp);
+      state.selected[id] = { ...customApp, qty, hrs };
+
+      // Clear form
+      ['cf-name','cf-watt','cf-qty','cf-hours'].forEach(fid => {
+        const el = document.getElementById(fid) as HTMLInputElement;
+        if (el) el.value = fid === 'cf-qty' ? '1' : fid === 'cf-hours' ? '4' : '';
+      });
+
+      // If current cat shows 'other' or 'all', render the new card
+      if (state.activecat === 'all' || state.activecat === 'other') {
+        const card = renderCard(customApp);
+        card.classList.add('is-selected');
+        grid?.appendChild(card);
+      }
+      recalculate();
+    });
+  }
+
+  // ── CATEGORY TABS ─────────────────────────────────────
+  cats?.querySelectorAll('.lc-cat').forEach(btn => {
+    btn.addEventListener('click', () => {
+      cats.querySelectorAll('.lc-cat').forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      state.activecat = (btn as HTMLElement).dataset.cat || 'all';
+      renderGrid();
+    });
+  });
+
+  // ── CLEAR ALL ─────────────────────────────────────────
+  clearBtn?.addEventListener('click', () => {
+    state.selected = {};
+    renderGrid();
+    recalculate();
+  });
+
+  // ── HELPERS ───────────────────────────────────────────
+  function setText(id: string, val: string) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  }
+  function formatWh(wh: number) {
+    if (wh >= 1000) return `${(wh / 1000).toFixed(2)} kWh`;
+    return `${Math.round(wh)} Wh`;
+  }
+
+  // ── INIT ──────────────────────────────────────────────
+  renderGrid();
+  recalculate();
+
+})();
+</script>

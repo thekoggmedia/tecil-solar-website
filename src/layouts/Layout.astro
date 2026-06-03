@@ -1,0 +1,311 @@
+---
+import '../styles/global.css';
+interface Props { title?: string; description?: string; page?: string; }
+const {
+  title = 'TECIL Solar — The Inverter Place',
+  description = "Nigeria's leading solar and inverter specialists. End-to-end renewable energy solutions for homes, businesses, and institutions across Lagos, Port Harcourt, Calabar, Uyo, Ikom and beyond.",
+  page = '',
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <!-- 🔥 FONT PRELOAD -->
+<link
+  rel="preload"
+  href="/fonts/NunitoSans-Variable.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin="anonymous"
+/>
+
+<link
+  rel="preload"
+  href="/fonts/NunitoSans-Italic-Variable.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin="anonymous"
+/>
+
+  <!-- BASIC SEO -->
+  <meta name="description" content={description}/>
+  <meta name="theme-color" content="#CC1417"/>
+
+  <!-- OPEN GRAPH -->
+  <meta property="og:title" content={title}/>
+  <meta property="og:description" content={description}/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="/api/og.png"/>
+  <meta property="og:url" content={Astro.url}/>
+
+  <!-- TWITTER -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content={title}/>
+  <meta name="twitter:description" content={description}/>
+  <meta name="twitter:image" content="/api/og.png"/>
+
+  <link rel="icon" type="image/svg+xml" href="/logo-mark.svg"/>
+
+  <title>{title}</title>
+  <!-- 📊 PLAUSIBLE ANALYTICS -->
+<script 
+  defer 
+  data-domain="tecilsolar.com"
+  src="https://plausible.io/js/script.js">
+</script>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="site-nav is-dark" id="site-nav">
+  <div class="nav-inner">
+
+    <a href="/" class="nav-brand">
+      <img src="/logo-mark.svg" alt="TECIL Solar" class="nav-logo-svg" width="44" height="44" onerror="this.style.display='none'"/>
+      <div class="nav-brand-text">
+  <img
+    src="/tecil-solar-wordmark.svg"
+    alt="TECIL Solar"
+    class="nav-wordmark"
+    width="220"
+    height="48"
+  />
+  <span class="nav-tagline">...the inverter place</span>
+</div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="/"         class={`nav-link ${page==='home'?'is-active':''}`}>Home</a></li>
+      <li><a href="/services" class={`nav-link ${page==='services'?'is-active':''}`}>Services</a></li>
+      <li><a href="/products" class={`nav-link ${page==='products'?'is-active':''}`}>Products</a></li>
+      <li><a href="/projects" class={`nav-link ${page==='projects'?'is-active':''}`}>Projects</a></li>
+      <li><a href="/team"     class={`nav-link ${page==='team'?'is-active':''}`}>Our Team</a></li>
+      <li><a href="/branches" class={`nav-link ${page==='branches'?'is-active':''}`}>Find Us</a></li>
+      <li><a href="/contact"  class="nav-link nav-cta">Get a Quote</a></li>
+    </ul>
+
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+      <span class="nav-lines"><span></span><span></span><span></span></span>
+    </button>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="/"         class="mobile-link">Home</a>
+    <a href="/services" class="mobile-link">Services</a>
+    <a href="/products" class="mobile-link">Products</a>
+    <a href="/projects" class="mobile-link">Projects</a>
+    <a href="/team"     class="mobile-link">Our Team</a>
+    <a href="/branches" class="mobile-link">Find Us</a>
+    <a href="/contact"  class="mobile-link is-cta">Get a Quote →</a>
+  </div>
+</nav>
+
+<main><slot /></main>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+
+      <div>
+        <div class="footer-brand-name">
+          <span style="color:#CC1417">TECIL</span><span style="color:#E8601A">Solar</span>
+        </div>
+        <div class="footer-tagline-text">...the inverter place</div>
+        <p class="footer-desc">
+          Nigeria's leading solar and inverter specialists — delivering end-to-end
+          renewable energy solutions across Lagos, Port Harcourt, Calabar, Uyo,
+          Ikom and beyond since 2008.
+        </p>
+        <p class="footer-note">A division of TECIL INTEGRATED SERVICES LIMITED</p>
+        <div class="socials">
+          <a href="https://instagram.com/tecilsolar" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+          </a>
+          <a href="https://facebook.com/tecilsolar" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://linkedin.com/company/tecil-solar" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://wa.me/2348037135545" target="_blank" rel="noopener" class="wa" aria-label="WhatsApp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>Services</h5>
+        <a href="/services#installation">System Installation</a>
+        <a href="/services#maintenance">Maintenance & Repair</a>
+        <a href="/services#assessment">Load Assessment</a>
+        <a href="/services#supply">Product Supply</a>
+        <a href="/services#projects">EPC Projects</a>
+        <a href="/services#training">Training & Support</a>
+      </div>
+
+      <div class="footer-col">
+        <h5>Company</h5>
+        <a href="/products">Products</a>
+        <a href="/projects">Our Projects</a>
+        <a href="/team">Our Team</a>
+        <a href="/branches">Find a Branch</a>
+        <a href="/contact">Get a Quote</a>
+      </div>
+
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="/contact">Get a Free Quote</a>
+        <a href="mailto:info.tecilservices@gmail.com">info.tecilservices@gmail.com</a>
+        <a href="tel:+2348037135545">0803 713 5545</a>
+        <a href="https://wa.me/2348037135545" target="_blank">WhatsApp Us</a>
+        <a href="/branches">Our Locations</a>
+        <div class="footer-quote">"Reliable power. Expert hands. Products that last."</div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {new Date().getFullYear()} Tecil Integrated Services Limited &nbsp;·&nbsp; <a href="https://www.tecilsolar.com">www.tecilsolar.com</a></p>
+      <p>Operating across Nigeria since 2008</p>
+    </div>
+  </div>
+</footer>
+
+<!-- WA Float -->
+<a href="https://wa.me/2348037135545" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+</a>
+
+</body>
+</html>
+
+<style>
+/* ════════════════════════════════════════
+   CORRECTION 1 — Brand text bigger + bolder
+   ════════════════════════════════════════ */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.nav-brand-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+.nav-wordmark {
+  display: block;
+  height: 42px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* "...the inverter place" tagline — unchanged */
+.nav-tagline {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  font-variation-settings: 'wdth' 100, 'wght' 600;
+  margin-top: 3px;
+  display: block;
+  white-space: nowrap;
+}
+.site-nav.is-light .nav-tagline { color: var(--soft); }
+
+/* ════════════════════════════════════════
+   CORRECTION 2 — Nav collapse earlier so
+   links never distort or wrap
+   ════════════════════════════════════════ */
+
+/* Desktop nav — keep all links on one line */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  list-style: none;
+  flex-wrap: nowrap;      /* ← never wrap */
+}
+
+.nav-links li {
+  flex-shrink: 0;         /* ← never squish */
+}
+
+.nav-link {
+  white-space: nowrap;    /* ← text never breaks */
+  padding: 0.45rem 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-variation-settings: 'wdth' 100, 'wght' 700;
+}
+
+/* Hamburger — hidden on desktop, shown below 1180px */
+.nav-toggle { display: none; }
+
+/* ── COLLAPSE BREAKPOINT ── 
+   Collapse to hamburger at 1180px (was probably 768px before)
+   This prevents any wrapping on medium screens              */
+@media (max-width: 1180px) {
+  .nav-links  { display: none; }
+  .nav-toggle { display: flex; }
+}
+
+/* At very small screens make brand text slightly smaller */
+@media (max-width: 480px) {
+
+  .nav-wordmark {
+    height: 32px;
+  }
+
+}
+</style>
+
+<script>
+const nav = document.getElementById('site-nav');
+function updateNav(){
+  if(!nav) return;
+  if(window.scrollY > window.innerHeight * 0.5){
+    nav.classList.replace('is-dark','is-light');
+  } else {
+    nav.classList.replace('is-light','is-dark');
+  }
+}
+window.addEventListener('scroll', updateNav, {passive:true});
+updateNav();
+
+const toggle = document.getElementById('nav-toggle');
+const mm = document.getElementById('mobile-menu');
+toggle?.addEventListener('click',()=>{
+  toggle.classList.toggle('is-open');
+  mm?.classList.toggle('is-open');
+});
+document.querySelectorAll('.mobile-link').forEach(l=>l.addEventListener('click',()=>{
+  toggle?.classList.remove('is-open');
+  mm?.classList.remove('is-open');
+}));
+
+function initReveal(){
+  const els = document.querySelectorAll('.reveal');
+  if(!els.length) return;
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+  },{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(el=>{
+    const r = el.getBoundingClientRect();
+    if(r.top < window.innerHeight - 40) el.classList.add('visible');
+    else io.observe(el);
+  });
+}
+document.addEventListener('DOMContentLoaded', initReveal);
+</script>

@@ -1,0 +1,1068 @@
+---
+const slides = [
+  {
+    src: '/gallery/home/hero-01.webp',
+    alt: 'TECIL Solar residential installation',
+  },
+  {
+    src: '/gallery/home/hero-02.webp',
+    alt: 'TECIL Solar commercial hybrid system',
+  },
+  {
+    src: '/gallery/home/hero-03.webp',
+    alt: 'TECIL Solar institutional project',
+  },
+  {
+    src: '/gallery/home/hero-04.webp',
+    alt: 'TECIL Solar engineers at work',
+  },
+  {
+    src: '/gallery/home/hero-05.webp',
+    alt: 'TECIL Solar street lighting project',
+  },
+  {
+    src: '/gallery/home/hero-06.webp',
+    alt: 'TECIL Solar showroom Calabar',
+  },
+];
+
+const metrics = [
+  {
+    value: '16+',
+    label: 'Years of Solar Engineering',
+  },
+  {
+    value: '60+',
+    label: 'Corporate Projects Delivered',
+  },
+  {
+    value: '7',
+    label: 'Nationwide Branches',
+  },
+];
+---
+
+<section class="hero" id="hero">
+
+  <!-- BACKGROUND -->
+  <div class="hero-bg">
+
+    {slides.map((slide, index) => (
+      <div class={`hero-slide ${index === 0 ? 'active' : ''}`}>
+        <img
+          src={slide.src}
+          alt={slide.alt}
+          loading={index === 0 ? 'eager' : 'lazy'}
+          fetchpriority={index === 0 ? 'high' : 'auto'}
+          decoding="async"
+        />
+      </div>
+    ))}
+
+    <div class="hero-overlay"></div>
+    <div class="hero-overlay-soft"></div>
+    <div class="hero-noise"></div>
+
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="hero-progress">
+    <div class="hero-progress-fill"></div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="container hero-grid">
+
+    <!-- LEFT -->
+    <div class="hero-content">
+
+      <div class="hero-badge reveal reveal-1">
+        <span class="badge-dot"></span>
+        Nigeria’s Trusted Solar Authority Since 2008
+      </div>
+
+      <h1 class="hero-title">
+
+        <span class="title-line reveal reveal-2">
+          Power
+        </span>
+
+         <span class="title-line reveal reveal-2">
+          Without
+        </span>
+
+        <span class="title-line accent reveal reveal-3">
+          Boundries
+        </span>
+
+      </h1>
+
+      <p class="hero-sub reveal reveal-4">
+        High-performance solar and inverter systems engineered
+        for homes, businesses, industries, and institutions
+        across Nigeria.
+      </p>
+
+      <div class="hero-actions reveal reveal-5">
+
+        <a href="/contact" class="btn-primary">
+
+          Get a Free Quote
+
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M5 12H19M12 5L19 12L12 19"
+              stroke="currentColor"
+              stroke-width="2.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+
+        </a>
+
+        <a href="/projects" class="btn-secondary">
+          Explore Projects
+        </a>
+
+      </div>
+
+      <div class="hero-trust reveal reveal-6">
+
+        <div class="trust-item">
+          <span></span>
+          Free Site Inspection
+        </div>
+
+        <div class="trust-item">
+          <span></span>
+          Nationwide Installation
+        </div>
+
+        <div class="trust-item">
+          <span></span>
+          Premium Authorised Brands
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="hero-side reveal reveal-4">
+
+      <div class="floating-card">
+
+        <div class="floating-top">
+
+          <div class="floating-line"></div>
+
+          <div>
+
+            <p class="floating-label">
+              ENGINEERED ENERGY SOLUTIONS
+            </p>
+
+            <h3>
+              Reliable solar infrastructure for modern homes,
+              enterprises, and institutions.
+            </h3>
+
+          </div>
+
+        </div>
+
+        <div class="metric-grid">
+
+          {metrics.map((metric) => (
+            <div class="metric-card">
+
+              <div class="metric-value">
+                {metric.value}
+              </div>
+
+              <div class="metric-label">
+                {metric.label}
+              </div>
+
+            </div>
+          ))}
+
+        </div>
+
+        <a
+          href="https://wa.me/2348037135545"
+          target="_blank"
+          rel="noopener"
+          class="floating-cta"
+        >
+
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207" />
+          </svg>
+
+          Talk To TECIL Solar
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- DOTS -->
+  <div class="hero-dots">
+
+    {slides.map((_, index) => (
+      <button
+        class={`hero-dot ${index === 0 ? 'active' : ''}`}
+        data-index={index}
+        type="button"
+      ></button>
+    ))}
+
+  </div>
+
+</section>
+
+<style>
+
+  .hero {
+    --hero-duration: 7000ms;
+
+    position: relative;
+    overflow: hidden;
+
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+
+    background: #05070b;
+
+    color: #fff;
+
+    isolation: isolate;
+  }
+
+  /* BACKGROUND */
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+
+    opacity: 0;
+
+    transition:
+      opacity 1.4s ease;
+  }
+
+  .hero-slide.active {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .hero-slide img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transform: scale(1.08);
+
+    transition:
+      transform 8s ease;
+
+    will-change: transform;
+  }
+
+  .hero-slide.active img {
+    transform: scale(1);
+  }
+
+  /* MAIN DARK OVERLAY */
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(3,5,8,0.96) 0%,
+      rgba(3,5,8,0.92) 18%,
+      rgba(3,5,8,0.76) 42%,
+      rgba(3,5,8,0.52) 62%,
+      rgba(3,5,8,0.82) 100%
+    );
+
+  backdrop-filter: saturate(115%);
+}
+
+  /* EXTRA TEXT PROTECTION */
+
+.hero-overlay-soft {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+
+  background:
+    radial-gradient(
+      circle at 18% 42%,
+      rgba(0,0,0,0.58),
+      transparent 38%
+    ),
+
+    radial-gradient(
+      circle at 82% 20%,
+      rgba(204,20,23,0.10),
+      transparent 34%
+    ),
+
+    radial-gradient(
+      circle at 70% 78%,
+      rgba(232,96,26,0.10),
+      transparent 30%
+    );
+}
+
+  /* NOISE */
+
+.hero-noise {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+
+  opacity: 0.025;
+
+  mix-blend-mode: soft-light;
+
+  background-image:
+    radial-gradient(circle at 25% 25%, rgba(255,255,255,0.9) 1px, transparent 1px);
+
+  background-size: 6px 6px;
+}
+
+  /* GLOW */
+
+  .hero-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    pointer-events: none;
+  }
+
+  .hero-glow-1 {
+    width: 500px;
+    height: 500px;
+
+    left: -180px;
+    top: 35%;
+
+    background:
+      radial-gradient(
+        circle,
+        rgba(232,96,26,0.22),
+        transparent 70%
+      );
+  }
+
+  .hero-glow-2 {
+    width: 400px;
+    height: 400px;
+
+    right: -120px;
+    top: 8%;
+
+    background:
+      radial-gradient(
+        circle,
+        rgba(204,20,23,0.12),
+        transparent 70%
+      );
+  }
+
+  /* PROGRESS */
+
+  .hero-progress {
+    position: absolute;
+    inset: 0 0 auto 0;
+
+    height: 3px;
+
+    z-index: 30;
+
+    background: rgba(255,255,255,0.06);
+  }
+
+  .hero-progress-fill {
+    width: 0%;
+    height: 100%;
+
+    background:
+      linear-gradient(
+        90deg,
+        var(--red),
+        var(--orange)
+      );
+  }
+
+  /* GRID */
+
+  .hero-grid {
+    position: relative;
+    z-index: 10;
+
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 720px)
+      minmax(320px, 420px);
+
+    justify-content: space-between;
+
+    gap: 4rem;
+
+    align-items: center;
+
+    padding-top: 140px;
+    padding-bottom: 100px;
+  }
+
+  /* CONTENT */
+
+  .hero-content {
+    max-width: 720px;
+  }
+
+  /* BADGE */
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 0.9rem 1.1rem;
+
+    margin-bottom: 1.8rem;
+
+    border-radius: 999px;
+
+    background: rgba(255,255,255,0.06);
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter: blur(14px);
+
+    font-size: 0.72rem;
+    font-weight: 900;
+
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+
+    color: rgba(255,255,255,0.84);
+  }
+
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: var(--orange);
+
+    box-shadow: 0 0 14px var(--orange);
+  }
+
+  /* TITLE */
+
+  .hero-title {
+    margin: 0 0 1.8rem;
+  }
+
+  .title-line {
+    display: block;
+
+    font-size: clamp(3.4rem, 6vw, 6.4rem);
+
+    line-height: 0.92;
+
+    font-weight: 950;
+
+    letter-spacing: -0.065em;
+
+    text-transform: uppercase;
+
+    color: #ffffff;
+
+    font-variation-settings:
+      'wdth' 125,
+      'wght' 950;
+
+    text-shadow:
+      0 6px 30px rgba(0,0,0,0.55);
+
+    max-width: 100%;
+  }
+
+  .title-line:first-child {
+    color: #ffffff;
+
+    white-space: nowrap;
+  }
+
+  .title-line.accent {
+
+    background:
+      linear-gradient(
+        90deg,
+        #ffffff 0%,
+        #ffe1cf 50%,
+        #ff9f5f 100%
+      );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    white-space: nowrap;
+  }
+
+  /* SUB */
+
+  .hero-sub {
+    max-width: 560px;
+
+    margin-bottom: 2.4rem;
+
+    font-size: 1.05rem;
+
+    line-height: 1.9;
+
+    color: rgba(255,255,255,0.78);
+  }
+
+  /* BUTTONS */
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+
+    margin-bottom: 2rem;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    min-height: 58px;
+
+    padding: 1rem 1.6rem;
+
+    border-radius: 18px;
+
+    text-decoration: none;
+
+    font-size: 0.95rem;
+    font-weight: 800;
+
+    transition:
+      transform .35s ease,
+      box-shadow .35s ease,
+      background .35s ease;
+  }
+
+  .btn-primary {
+    color: #fff;
+
+    background:
+      linear-gradient(
+        135deg,
+        var(--red),
+        var(--orange)
+      );
+
+    box-shadow:
+      0 24px 60px rgba(204,20,23,0.34);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-4px);
+  }
+
+  .btn-secondary {
+    color: #fff;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    background: rgba(255,255,255,0.04);
+
+    backdrop-filter: blur(10px);
+  }
+
+  .btn-secondary:hover {
+    transform: translateY(-4px);
+  }
+
+  /* TRUST */
+
+  .hero-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 0.82rem;
+    font-weight: 700;
+
+    color: rgba(255,255,255,0.68);
+  }
+
+  .trust-item span {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #25d366;
+  }
+
+  /* RIGHT */
+
+  .hero-side {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+.floating-card {
+  position: relative;
+
+  width: 100%;
+  max-width: 420px;
+
+  padding: 1.6rem;
+
+  border-radius: 32px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18,22,30,0.78),
+      rgba(18,22,30,0.52)
+    );
+
+  border: 1px solid rgba(255,255,255,0.10);
+
+  backdrop-filter:
+    blur(22px)
+    saturate(140%);
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+
+  transition:
+    transform .6s cubic-bezier(.22,1,.36,1),
+    border-color .4s ease,
+    box-shadow .5s ease;
+
+  transform-style: preserve-3d;
+}
+
+.floating-card::before {
+  content: '';
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.10),
+      transparent 35%
+    );
+
+  pointer-events: none;
+}
+
+.floating-card:hover {
+  transform:
+    translateY(-8px)
+    rotateX(2deg)
+    rotateY(-2deg);
+
+  border-color: rgba(255,255,255,0.16);
+
+  box-shadow:
+    0 45px 100px rgba(0,0,0,0.52),
+    0 0 40px rgba(204,20,23,0.12);
+}
+
+  .floating-top {
+    display: flex;
+    gap: 14px;
+
+    margin-bottom: 1.5rem;
+  }
+
+  .floating-line {
+    width: 4px;
+
+    border-radius: 999px;
+
+    background:
+      linear-gradient(
+        to bottom,
+        var(--red),
+        var(--orange)
+      );
+  }
+
+  .floating-label {
+    margin-bottom: 10px;
+
+    font-size: 0.72rem;
+    font-weight: 900;
+
+    letter-spacing: 0.16em;
+
+    text-transform: uppercase;
+
+    color: rgba(255,255,255,0.48);
+  }
+
+  .floating-top h3 {
+    font-size: 1.05rem;
+    line-height: 1.7;
+
+    font-weight: 800;
+
+    color: rgba(255,255,255,0.95);
+  }
+
+  .metric-grid {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .metric-card {
+    padding: 1rem;
+
+    border-radius: 20px;
+
+    background: rgba(255,255,255,0.04);
+
+    border: 1px solid rgba(255,255,255,0.06);
+
+    transition:
+      transform .35s ease,
+      background .35s ease;
+  }
+
+  .metric-card:hover {
+    transform: translateY(-4px);
+
+    background: rgba(255,255,255,0.06);
+  }
+
+  .metric-value {
+    margin-bottom: 6px;
+
+    font-size: 2rem;
+    font-weight: 950;
+
+    line-height: 1;
+
+    color: #ffffff;
+  }
+
+  .metric-label {
+    font-size: 0.84rem;
+
+    line-height: 1.6;
+
+    color: rgba(255,255,255,0.62);
+  }
+
+  .floating-cta {
+    margin-top: 1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    width: 100%;
+
+    padding: 1rem;
+
+    border-radius: 18px;
+
+    background: #25d366;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    font-size: 0.82rem;
+    font-weight: 900;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    transition:
+      transform .35s ease,
+      box-shadow .35s ease;
+  }
+
+  .floating-cta:hover {
+    transform: translateY(-4px);
+  }
+
+  /* DOTS */
+
+  .hero-dots {
+    position: absolute;
+
+    left: 50%;
+    bottom: 34px;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    gap: 10px;
+
+    z-index: 30;
+  }
+
+  .hero-dot {
+    width: 10px;
+    height: 10px;
+
+    border: none;
+    border-radius: 999px;
+
+    background: rgba(255,255,255,0.3);
+
+    cursor: pointer;
+
+    transition:
+      width .35s ease,
+      background .35s ease;
+  }
+
+  .hero-dot.active {
+    width: 38px;
+    background: #fff;
+  }
+
+  /* REVEAL */
+
+  .reveal {
+    opacity: 0;
+
+    animation:
+      revealUp 1s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+
+  .reveal-1 { animation-delay: .1s; }
+  .reveal-2 { animation-delay: .2s; }
+  .reveal-3 { animation-delay: .35s; }
+  .reveal-4 { animation-delay: .5s; }
+  .reveal-5 { animation-delay: .65s; }
+  .reveal-6 { animation-delay: .8s; }
+
+  @keyframes revealUp {
+
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+  }
+
+  /* RESPONSIVE */
+
+  @media (max-width: 1200px) {
+
+    .hero-grid {
+      grid-template-columns: 1fr;
+
+      gap: 3rem;
+    }
+
+    .hero-side {
+      justify-content: flex-start;
+    }
+
+  }
+
+  @media (max-width: 768px) {
+
+    .hero {
+      min-height: auto;
+    }
+
+    .hero-grid {
+      padding-top: 120px;
+      padding-bottom: 120px;
+
+      gap: 2.5rem;
+    }
+
+    .title-line {
+      font-size: clamp(2.9rem, 13vw, 5rem);
+
+      line-height: 0.95;
+
+      white-space: normal;
+    }
+
+    .title-line.accent {
+      white-space: normal;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      width: 100%;
+    }
+
+    .hero-trust {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .floating-card {
+      border-radius: 24px;
+    }
+
+    .hero-dots {
+      bottom: 24px;
+    }
+
+  }
+
+</style>
+
+<script is:inline>
+
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('.hero-dot');
+  const progress = document.querySelector('.hero-progress-fill');
+
+  if (slides.length && dots.length && progress) {
+
+    const DURATION = 7000;
+
+    let current = 0;
+    let autoplay;
+
+    function animateProgress() {
+
+      progress.style.transition = 'none';
+      progress.style.width = '0%';
+
+      requestAnimationFrame(() => {
+
+        requestAnimationFrame(() => {
+
+          progress.style.transition =
+            `width ${DURATION}ms linear`;
+
+          progress.style.width = '100%';
+
+        });
+
+      });
+
+    }
+
+    function updateSlides(index) {
+
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+
+      animateProgress();
+    }
+
+    function nextSlide() {
+
+      current = (current + 1) % slides.length;
+
+      updateSlides(current);
+    }
+
+    function startAutoplay() {
+
+      clearInterval(autoplay);
+
+      autoplay = setInterval(nextSlide, DURATION);
+    }
+
+    dots.forEach((dot) => {
+
+      dot.addEventListener('click', () => {
+
+        current = Number(dot.dataset.index);
+
+        updateSlides(current);
+
+        startAutoplay();
+      });
+
+    });
+
+    updateSlides(current);
+    startAutoplay();
+
+    document.addEventListener('visibilitychange', () => {
+
+      if (document.hidden) {
+        clearInterval(autoplay);
+      } else {
+        startAutoplay();
+      }
+
+    });
+
+  }
+
+</script>

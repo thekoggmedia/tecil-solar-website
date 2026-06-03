@@ -1,0 +1,132 @@
+---
+// HomeGallerySlider.astro
+// Sits between AboutSection and BrandsStrip on the homepage
+// Images go in: public/gallery/home/
+// Filename pattern: slide-01.webp through slide-08.webp
+
+import ImageSlider from './ImageSlider.astro';
+
+const slides = [
+  {
+    src:     '/gallery/home/slide-01.webp',
+    alt:     'TECIL Solar rooftop installation — residential system',
+    label:   'Residential',
+    caption: 'Solar rooftop system designed and installed by TECIL Solar engineers',
+  },
+  {
+    src:     '/gallery/home/slide-02.webp',
+    alt:     'TECIL Solar commercial hybrid inverter installation',
+    label:   'Commercial',
+    caption: 'Hybrid inverter and battery bank for a commercial property in Cross River State',
+  },
+  {
+    src:     '/gallery/home/slide-03.webp',
+    alt:     'TECIL Solar institutional project — university campus',
+    label:   'Institutional',
+    caption: 'Solar and backup power systems for Nigerian universities and institutions',
+  },
+  {
+    src:     '/gallery/home/slide-04.webp',
+    alt:     'TECIL Solar street lighting project',
+    label:   'Infrastructure',
+    caption: 'Solar street lighting network — government infrastructure project',
+  },
+  {
+    src:     '/gallery/home/slide-05.webp',
+    alt:     'TECIL Solar team at work — technical installation',
+    label:   'Our Engineers',
+    caption: 'Certified TECIL Solar engineers — precise installation, every time',
+  },
+  {
+    src:     '/gallery/home/slide-06.webp',
+    alt:     'TECIL Solar showroom — Calabar headquarters',
+    label:   'Our Showroom',
+    caption: 'Visit any of our 7 branches to see our full product range in person',
+  },
+];
+---
+
+<section class="hgs section bg-dark">
+  <div class="container">
+    <div class="hgs-head reveal">
+      <div>
+        <span class="section-tag">Our Work</span>
+        <h2 style="color:#fff">
+          Installations Across <span class="text-gradient">Nigeria</span>
+        </h2>
+        <p class="hgs-sub">
+          Every photo is a real TECIL Solar project — designed, installed, and
+          commissioned by our in-house engineers.
+        </p>
+      </div>
+      <a href="/projects" class="btn-outline-white hgs-link">
+        View All Projects
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="hgs-slider reveal">
+      <ImageSlider
+        slides={slides}
+        variant="gallery"
+        autoplay={5000}
+        id="home-gallery"
+      />
+    </div>
+
+    <!-- QUICK STATS BELOW SLIDER -->
+    <div class="hgs-stats reveal">
+      {[
+        { val: 'Residential', desc: 'Home backup & solar systems' },
+        { val: 'Commercial',  desc: 'SME and office installations' },
+        { val: 'Industrial',  desc: 'Off-grid & hybrid large-scale' },
+        { val: 'Government',  desc: 'Infrastructure & institutional' },
+      ].map(s => (
+        <div class="hgs-stat">
+          <strong>{s.val}</strong>
+          <span>{s.desc}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+.hgs-head {
+  display:flex; justify-content:space-between; align-items:flex-end;
+  margin-bottom:2rem; flex-wrap:wrap; gap:1.5rem;
+}
+.hgs-head h2 { margin-bottom:.5rem; }
+.hgs-sub { color:rgba(255,255,255,.5); max-width:44ch; font-size:.92rem; line-height:1.7; }
+.hgs-link { flex-shrink:0; }
+
+.hgs-slider { margin-bottom:1.5px; }
+
+.hgs-stats {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:1.5px; background:#1A1F2E;
+  border:1px solid rgba(255,255,255,.06);
+  overflow:hidden;
+}
+.hgs-stat {
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  padding:1.1rem; background:rgba(255,255,255,.025);
+  text-align:center; transition:background .2s;
+}
+.hgs-stat:hover { background:rgba(204,20,23,.07); }
+.hgs-stat strong {
+  font-family:var(--font); font-size:.88rem; font-weight:900;
+  color:#fff; text-transform:uppercase; letter-spacing:.04em;
+  font-variation-settings:'wdth' 125,'wght' 900;
+}
+.hgs-stat span {
+  font-size:.65rem; color:rgba(255,255,255,.35);
+  font-weight:500; letter-spacing:.04em;
+}
+
+@media(max-width:900px) { .hgs-stats{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:600px) {
+  .hgs-stats{ grid-template-columns:1fr 1fr; }
+  .hgs-head{ flex-direction:column; align-items:flex-start; }
+}
+</style>

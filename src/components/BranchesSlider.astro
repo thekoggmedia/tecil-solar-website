@@ -1,0 +1,65 @@
+---
+// BranchesSlider.astro
+// Images go in: public/gallery/branches/
+// Filename pattern: branch-calabar-hq.webp, branch-ph.webp etc.
+
+import ImageSlider from './ImageSlider.astro';
+
+const slides = [
+  {
+    src:     '/gallery/branches/branch-calabar-hq.webp',
+    alt:     'TECIL Solar Calabar HQ — Macson Plaza',
+    label:   'Calabar HQ',
+    caption: 'Macson Plaza, 89 Ndidem Usang Iso Road, Calabar — our flagship store since 2008',
+  },
+  {
+    src:     '/gallery/branches/branch-calabar-south.webp',
+    alt:     'TECIL Solar Calabar South branch',
+    label:   'Calabar South',
+    caption: '6 Target Road, Calabar South — serving the south Calabar corridor',
+  },
+  {
+    src:     '/gallery/branches/branch-ph.webp',
+    alt:     'TECIL Solar Port Harcourt branch — Riz Plaza',
+    label:   'Port Harcourt',
+    caption: 'Riz Plaza, Plot 54 Stadium Road, Port Harcourt — Rivers State\'s solar authority',
+  },
+  {
+    src:     '/gallery/branches/branch-uyo.webp',
+    alt:     'TECIL Solar Uyo branch — Akwa Ibom State',
+    label:   'Uyo',
+    caption: '109 Oron Road, Uyo — serving Akwa Ibom State and surrounds',
+  },
+  {
+    src:     '/gallery/branches/branch-ikom.webp',
+    alt:     'TECIL Solar Ikom branch — Cross River State',
+    label:   'Ikom',
+    caption: '16 Obudu Road, Four Corners, Ikom — gateway to the Cross River interior',
+  },
+  {
+    src:     '/gallery/branches/branch-lagos.webp',
+    alt:     'TECIL Solar Lagos branch — Ikeja',
+    label:   'Lagos / Ikeja',
+    caption: '90 Obafemi Awolowo Way, Ikeja — our West Africa commercial gateway',
+  },
+];
+---
+
+<div class="bsl reveal">
+  <div class="bsl-head">
+    <span class="section-tag">Our Locations</span>
+    <p class="bsl-note">7 branches — same product range, same TECIL standard</p>
+  </div>
+  <ImageSlider
+    slides={slides}
+    variant="gallery"
+    autoplay={5000}
+    id="branches-gallery"
+  />
+</div>
+
+<style>
+.bsl { display:flex; flex-direction:column; gap:1.25rem; margin-bottom:3rem; }
+.bsl-head { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+.bsl-note { font-size:.86rem; color:#6B7280; }
+</style>

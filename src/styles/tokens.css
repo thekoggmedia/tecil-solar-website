@@ -1,0 +1,49 @@
+:root {
+
+  /* Brand */
+  --red: #CC1417;
+  --red-dark: #A30F11;
+  --red-light: #FFF1F1;
+
+  --orange: #E8601A;
+  --orange-light: #FFF5EE;
+
+  --teal: #006D77;
+  --teal-light: #EDF7F8;
+
+  --gold: #C8960C;
+
+  /* Surfaces */
+  --white: #FFFFFF;
+  --off: #F7F8FA;
+  --cream: #FEF9F5;
+
+  --dark: #0F1117;
+  --dark-2: #181C24;
+
+  /* Text */
+  --text: #111827;
+  --muted: #4B5563;
+  --soft: #6B7280;
+  --faint: #9CA3AF;
+
+  /* Borders */
+  --border: #E5E7EB;
+  --border-2: #D1D5DB;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.10);
+  --shadow-red: 0 8px 28px rgba(204,20,23,0.22);
+
+  /* Layout */
+  --max-w: 1240px;
+  --section-pad: 6rem 5%;
+
+  /* Motion */
+  --ease: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Typography */
+  --font: 'Nunito Sans', sans-serif;
+}

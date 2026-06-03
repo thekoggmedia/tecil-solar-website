@@ -1,0 +1,104 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: inherit;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--text);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.08;
+}
+
+h4 {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.82;
+  color: var(--muted);
+}
+
+.section-intro,
+.section-sub,
+.hero-sub,
+.page-hero-sub {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--soft);
+  max-width: 62ch;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 1rem;
+
+  font-size: 0.71rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  color: var(--orange);
+}
+
+.section-tag::before {
+  content: '';
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+}
+
+small,
+.label,
+.eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+
+  h1 {
+    line-height: 0.95;
+  }
+
+  h2 {
+    line-height: 1;
+  }
+
+  p {
+    font-size: 0.97rem;
+  }
+
+  .section-intro,
+  .section-sub,
+  .hero-sub,
+  .page-hero-sub {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+}
