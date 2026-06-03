@@ -676,9 +676,7 @@ const metrics = [
 
   border: 1px solid rgba(255,255,255,0.10);
 
-  backdrop-filter:
-    blur(22px)
-    saturate(140%);
+  /* backdrop-filter removed for testing */
 
   box-shadow:
     0 30px 80px rgba(0,0,0,0.45),
@@ -881,19 +879,19 @@ const metrics = [
 
   /* REVEAL */
 
-  .reveal {
-    opacity: 0;
+  .hero .reveal {
+  opacity: 0;
 
-    animation:
-      revealUp 1s cubic-bezier(.2,.8,.2,1) forwards;
-  }
+  animation:
+    revealUp 1s cubic-bezier(.2,.8,.2,1) forwards;
+}
 
-  .reveal-1 { animation-delay: .1s; }
-  .reveal-2 { animation-delay: .2s; }
-  .reveal-3 { animation-delay: .35s; }
-  .reveal-4 { animation-delay: .5s; }
-  .reveal-5 { animation-delay: .65s; }
-  .reveal-6 { animation-delay: .8s; }
+.hero .reveal-1 { animation-delay: .1s; }
+.hero .reveal-2 { animation-delay: .2s; }
+.hero .reveal-3 { animation-delay: .35s; }
+.hero .reveal-4 { animation-delay: .5s; }
+.hero .reveal-5 { animation-delay: .65s; }
+.hero .reveal-6 { animation-delay: .8s; }
 
   @keyframes revealUp {
 

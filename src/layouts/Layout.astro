@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '../styles/transitions.css';
 interface Props { title?: string; description?: string; page?: string; }
 const {
   title = 'TECIL Solar — The Inverter Place',
@@ -87,7 +88,12 @@ const {
       <li><a href="/contact"  class="nav-link nav-cta">Get a Quote</a></li>
     </ul>
 
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+    <button
+  class="nav-toggle"
+  id="nav-toggle"
+  aria-label="Toggle menu"
+  aria-expanded="false"
+  aria-controls="mobile-menu">
       <span class="nav-lines"><span></span><span></span><span></span></span>
     </button>
   </div>
@@ -187,6 +193,11 @@ const {
 /* ════════════════════════════════════════
    CORRECTION 1 — Brand text bigger + bolder
    ════════════════════════════════════════ */
+   /* ==================================
+   GLOBAL PAGE LOADER
+================================== */
+
+
 .nav-brand {
   display: flex;
   align-items: center;
@@ -287,8 +298,18 @@ updateNav();
 const toggle = document.getElementById('nav-toggle');
 const mm = document.getElementById('mobile-menu');
 toggle?.addEventListener('click',()=>{
+
   toggle.classList.toggle('is-open');
   mm?.classList.toggle('is-open');
+
+  const expanded =
+    toggle.classList.contains('is-open');
+
+  toggle.setAttribute(
+    'aria-expanded',
+    expanded
+  );
+
 });
 document.querySelectorAll('.mobile-link').forEach(l=>l.addEventListener('click',()=>{
   toggle?.classList.remove('is-open');
@@ -308,4 +329,6 @@ function initReveal(){
   });
 }
 document.addEventListener('DOMContentLoaded', initReveal);
+document.addEventListener('astro:page-load', initReveal);
+
 </script>

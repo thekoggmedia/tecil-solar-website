@@ -202,7 +202,7 @@ const CATEGORIES = [
   </section>
 
   <CTASection />
-
+<ProductModal />
 </Layout>
 
 <!-- ─────────────────── STYLES ─────────────────── -->
@@ -771,7 +771,7 @@ function getBestImage(row) {
 }
 
 // ── QUICK ENQUIRY ──
-function quickEnquiry(name, capacity) {
+window.quickEnquiry = function(name, capacity) {
   const msg = encodeURIComponent(
     `Hello TECIL Solar, I'm interested in ${name}${capacity ? ' ('+capacity+')' : ''}. Please share details.`
   );
@@ -780,14 +780,40 @@ function quickEnquiry(name, capacity) {
 }
 
 // ── PRODUCT MODAL (PREP FOR PHASE 2) ──
-function openProductModal(id) {
-  const product = allProducts.find(p => cell(p, COL.id) === id);
-  if (!product) return;
+window.openProductModal = function(id) {
 
-  const name = cell(product, COL.modelName);
-  const brand = cell(product, COL.brand);
+  const row = allProducts.find(
+    p => cell(p, COL.id) === id
+  );
 
-  alert(`${name} (${brand})\n\nModal system coming next.`);
+  if (!row) return;
+
+  const name     = cell(row, COL.modelName) || cell(row, COL.quickName);
+  const brand    = cell(row, COL.brand);
+  const capacity = cell(row, COL.capacity);
+  const type     = cell(row, COL.type);
+  const category = cell(row, COL.category);
+  const image    = getBestImage(row);
+
+  const detail = {
+    id,
+    name,
+    brand,
+    capacity,
+    type,
+    category,
+    image,
+    price: formatPrice(cell(row, COL.price))
+  };
+
+  window.dispatchEvent(
+    new CustomEvent(
+      'open-product-modal',
+      {
+        detail
+      }
+    )
+  );
 }
 
 // ── CARD BUILDER (BALANCED UI) ──
@@ -876,7 +902,95 @@ function render() {
 
   grid.innerHTML = pageItems.map(buildCard).join('');
 }
+function populateBrandFilter() {
 
+  const select =
+    document.getElementById('brand-filter');
+
+  if (!select) return;
+
+  const brands = [
+    ...new Set(
+      allProducts
+        .map(p => cell(p, COL.brand))
+        .filter(Boolean)
+    )
+  ].sort();
+
+  select.innerHTML =
+    '<option value="">All Brands</option>' +
+    brands.map(
+      b => `<option value="${b.toLowerCase()}">${b}</option>`
+    ).join('');
+}
+function renderPagination() {
+window.goToPage = function(page) {
+
+  currentPage = page;
+
+  render();
+  renderPagination();
+
+  document
+    .getElementById('product-section')
+    ?.scrollIntoView({
+      behavior: 'smooth'
+    });
+};
+  const pagination =
+    document.getElementById('pagination');
+
+  const numbers =
+    document.getElementById('page-numbers');
+
+  if (!pagination || !numbers) return;
+
+  let filtered = allProducts.filter(row => {
+
+    const catMatch =
+      activeCategory === 'all' ||
+      cell(row, COL.category) === activeCategory;
+
+    const brandMatch =
+      !activeBrand ||
+      cell(row, COL.brand).toLowerCase() === activeBrand;
+
+    const searchMatch =
+      !searchQuery ||
+      (row._search || '').includes(searchQuery);
+
+    return catMatch && brandMatch && searchMatch;
+  });
+
+  const totalPages =
+    Math.ceil(filtered.length / ITEMS_PER_PAGE);
+
+  if (totalPages <= 1) {
+    pagination.style.display = 'none';
+    return;
+  }
+
+  pagination.style.display = 'flex';
+
+  numbers.innerHTML = '';
+
+  for (let i = 1; i <= totalPages; i++) {
+
+    numbers.innerHTML += `
+      <button
+        class="page-num ${i === currentPage ? 'active' : ''}"
+        onclick="goToPage(${i})">
+        ${i}
+      </button>
+    `;
+  }
+
+  document.getElementById('prev-page').disabled =
+    currentPage === 1;
+
+  document.getElementById('next-page').disabled =
+    currentPage === totalPages;
+}
 // ── LOAD DATA ──
 async function loadProducts() {
   try {
@@ -884,28 +998,46 @@ async function loadProducts() {
     const text = await res.text();
 
     const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
-    const rows = json.table.rows.slice(2);
+    const rows = json.table.rows || [];
+console.log('Rows found:', rows.length);
 
-    allProducts = rows.filter(r =>
-      r && r.c && cell(r, COL.id) && cell(r, COL.status).toLowerCase() === 'active'
-    ).map(r => {
-      r._search = [
-        cell(r, COL.modelName),
-        cell(r, COL.brand),
-        cell(r, COL.capacity),
-        cell(r, COL.type)
-      ].join(' ').toLowerCase();
-      return r;
-    });
+    allProducts = rows
+  .filter(r =>
+  r &&
+  r.c &&
+  cell(r, COL.id) &&
+  cell(r, COL.status).toLowerCase() !== 'inactive'
+)
+  .map(r => {
+    r._search = [
+      cell(r, COL.modelName),
+      cell(r, COL.brand),
+      cell(r, COL.capacity),
+      cell(r, COL.type)
+    ]
+      .join(' ')
+      .toLowerCase();
+
+    return r;
+  });
 
     document.getElementById('products-loading').style.display = 'none';
 
-    if (!allProducts.length) {
-      document.getElementById('products-empty').style.display = 'flex';
-      return;
-    }
+   if (!allProducts.length) {
+  document.getElementById('products-empty').style.display = 'flex';
+  return;
+}
 
-    render();
+/* LIVE PRODUCT COUNT */
+const counter = document.getElementById('product-count-stat');
+
+if (counter) {
+  counter.textContent = allProducts.length;
+}
+
+render();
+renderPagination();
+populateBrandFilter();
 
   } catch (err) {
     console.error(err);

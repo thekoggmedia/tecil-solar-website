@@ -1,0 +1,12 @@
+/* ==========================================
+   GLOBAL REVEALS
+========================================== */
+
+.reveal:not(.hero .reveal) {
+  opacity: 0;
+}
+
+.reveal.visible:not(.hero .reveal) {
+  opacity: 1;
+  transition: opacity .6s ease;
+}

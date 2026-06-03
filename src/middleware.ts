@@ -50,35 +50,44 @@ export const onRequest: MiddlewareHandler = async (
    */
 
   const csp = [
-    "default-src 'self'",
+  "default-src 'self'",
 
-    // Scripts
-    "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
+  // Scripts
+  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://plausible.io",
 
-    // Styles
-    "style-src 'self' 'unsafe-inline'",
+  // Styles
+  "style-src 'self' 'unsafe-inline'",
 
-    // Images
-    "img-src 'self' data: https:",
+  // Images
+  "img-src 'self' data: https: blob: https://drive.google.com https://*.googleusercontent.com",
 
-    // Fonts
-    "font-src 'self' data:",
+  // Fonts
+  "font-src 'self' data:",
 
-    // API / fetch
-    "connect-src 'self' https://api.resend.com https://challenges.cloudflare.com",
+  // API / Fetch
+  [
+    "connect-src",
+    "'self'",
+    "https://api.resend.com",
+    "https://challenges.cloudflare.com",
+    "https://docs.google.com",
+    "https://drive.google.com",
+    "https://*.googleusercontent.com",
+    "https://plausible.io"
+  ].join(' '),
 
-    // Frames
-    "frame-src https://challenges.cloudflare.com",
+  // Frames
+  "frame-src https://challenges.cloudflare.com",
 
-    // Forms
-    "form-action 'self'",
+  // Forms
+  "form-action 'self'",
 
-    // Base URI
-    "base-uri 'self'",
+  // Base URI
+  "base-uri 'self'",
 
-    // Prevent object/embed attacks
-    "object-src 'none'",
-  ].join('; ');
+  // Security
+  "object-src 'none'",
+].join('; ');
 
   response.headers.set(
     'Content-Security-Policy',
