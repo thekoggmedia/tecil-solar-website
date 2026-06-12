@@ -880,8 +880,24 @@ function render() {
     return catMatch && brandMatch && searchMatch;
   });
 
-  if (sortMode === 'price-asc')  filtered.sort((a,b) => parseFloat(cell(a,COL.price)||0) - parseFloat(cell(b,COL.price)||0));
-  if (sortMode === 'price-desc') filtered.sort((a,b) => parseFloat(cell(b,COL.price)||0) - parseFloat(cell(a,COL.price)||0));
+function parsePrice(value) {
+  return Number(
+    String(value || '')
+      .replace(/[^\d.]/g, '')
+  ) || 0;
+}
+
+if (sortMode === 'price-asc')
+  filtered.sort((a,b) =>
+    parsePrice(cell(a,COL.price)) -
+    parsePrice(cell(b,COL.price))
+  );
+
+if (sortMode === 'price-desc')
+  filtered.sort((a,b) =>
+    parsePrice(cell(b,COL.price)) -
+    parsePrice(cell(a,COL.price))
+  );
   if (sortMode === 'name-asc')   filtered.sort((a,b) => cell(a,COL.modelName).localeCompare(cell(b,COL.modelName)));
 
   if (!filtered.length) {
@@ -1048,3 +1064,216 @@ populateBrandFilter();
 
 // ── EVENTS ──
 document.addEventListener('DOMContentLoaded', loadProducts);
+// ─────────────────────────────────────
+// FILTER EVENTS
+// ─────────────────────────────────────
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  const searchInput =
+    document.getElementById('product-search');
+
+  const clearBtn =
+    document.getElementById('search-clear');
+
+  const brandFilter =
+    document.getElementById('brand-filter');
+
+  const sortFilter =
+    document.getElementById('sort-filter');
+
+  const tabs =
+    document.querySelectorAll('.ftab');
+
+  const prevBtn =
+    document.getElementById('prev-page');
+
+  const nextBtn =
+    document.getElementById('next-page');
+
+  // SEARCH
+
+  let searchTimer;
+
+  searchInput?.addEventListener('input', e => {
+
+    clearTimeout(searchTimer);
+
+    searchTimer = setTimeout(() => {
+
+      searchQuery =
+        e.target.value.trim().toLowerCase();
+
+      currentPage = 1;
+
+      clearBtn.style.display =
+        searchQuery ? 'block' : 'none';
+
+      render();
+      renderPagination();
+
+    }, 250);
+
+  });
+
+  // CLEAR SEARCH
+
+  clearBtn?.addEventListener('click', () => {
+
+    searchInput.value = '';
+
+    searchQuery = '';
+
+    currentPage = 1;
+
+    clearBtn.style.display = 'none';
+
+    render();
+    renderPagination();
+
+  });
+
+  // BRAND FILTER
+
+  brandFilter?.addEventListener('change', e => {
+
+    activeBrand = e.target.value;
+
+    currentPage = 1;
+
+    render();
+    renderPagination();
+
+  });
+
+  // SORT
+
+  sortFilter?.addEventListener('change', e => {
+
+    sortMode = e.target.value;
+
+    currentPage = 1;
+
+    render();
+    renderPagination();
+
+  });
+
+  // CATEGORY TABS
+
+  tabs.forEach(tab => {
+
+    tab.addEventListener('click', () => {
+
+      tabs.forEach(t =>
+        t.classList.remove('is-active')
+      );
+
+      tab.classList.add('is-active');
+
+      activeCategory =
+        tab.dataset.cat;
+
+      currentPage = 1;
+
+      render();
+      renderPagination();
+
+    });
+
+  });
+
+  // PREVIOUS PAGE
+
+  prevBtn?.addEventListener('click', () => {
+
+    if (currentPage <= 1) return;
+
+    currentPage--;
+
+    render();
+    renderPagination();
+
+  });
+
+  // NEXT PAGE
+
+  nextBtn?.addEventListener('click', () => {
+
+    const totalPages = Math.ceil(
+      allProducts.filter(row => {
+
+        const catMatch =
+          activeCategory === 'all' ||
+          cell(row, COL.category) === activeCategory;
+
+        const brandMatch =
+          !activeBrand ||
+          cell(row, COL.brand).toLowerCase() === activeBrand;
+
+        const searchMatch =
+          !searchQuery ||
+          (row._search || '').includes(searchQuery);
+
+        return catMatch && brandMatch && searchMatch;
+
+      }).length / ITEMS_PER_PAGE
+    );
+
+    if (currentPage >= totalPages) return;
+
+    currentPage++;
+
+    render();
+    renderPagination();
+
+  });
+
+});
+
+// RESET FILTERS
+
+window.resetFilters = function() {
+
+  activeCategory = 'all';
+  activeBrand = '';
+  sortMode = '';
+  searchQuery = '';
+  currentPage = 1;
+
+  document
+    .querySelectorAll('.ftab')
+    .forEach(t => t.classList.remove('is-active'));
+
+  document
+    .querySelector('.ftab[data-cat="all"]')
+    ?.classList.add('is-active');
+
+  const search =
+    document.getElementById('product-search');
+
+  if (search)
+    search.value = '';
+
+  const brand =
+    document.getElementById('brand-filter');
+
+  if (brand)
+    brand.value = '';
+
+  const sort =
+    document.getElementById('sort-filter');
+
+  if (sort)
+    sort.value = '';
+
+  const clear =
+    document.getElementById('search-clear');
+
+  if (clear)
+    clear.style.display = 'none';
+
+  render();
+  renderPagination();
+
+};

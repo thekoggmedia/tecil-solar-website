@@ -1,0 +1,785 @@
+---
+/*
+  TECIL Solar Premium Cart Drawer
+*/
+---
+
+<div id="cart-drawer" class="cart-drawer">
+
+  <div
+    id="cart-drawer-overlay"
+    class="cart-drawer-overlay"
+  ></div>
+
+  <aside
+    class="cart-panel"
+    role="dialog"
+    aria-label="Shopping Cart"
+  >
+
+    <div class="cart-header">
+
+      <div>
+        <div class="cart-label">
+          TECIL Solar
+        </div>
+
+        <h3>
+          Cart
+          (<span id="cart-total-items">0</span>)
+        </h3>
+      </div>
+
+      <button
+        id="cart-close"
+        class="cart-close"
+        aria-label="Close Cart"
+      >
+        ✕
+      </button>
+
+    </div>
+
+    <div
+      id="cart-items"
+      class="cart-items"
+    >
+
+      <div class="cart-empty">
+        Your cart is empty.
+      </div>
+
+    </div>
+
+    <div
+      id="cart-summary"
+      class="cart-summary"
+    ></div>
+
+    <div class="cart-footer">
+
+      <button
+        id="cart-clear"
+        class="cart-clear"
+      >
+        Clear Cart
+      </button>
+
+      <button
+        id="cart-whatsapp"
+        class="cart-whatsapp"
+      >
+        Request Quote via WhatsApp
+      </button>
+
+    </div>
+
+  </aside>
+
+</div>
+
+<style>
+
+.cart-drawer{
+  position:fixed;
+  inset:0;
+  z-index:7000;
+  pointer-events:none;
+}
+
+.cart-drawer.active{
+  pointer-events:auto;
+}
+
+.cart-drawer-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  opacity:0;
+  transition:opacity .35s ease;
+  backdrop-filter:blur(3px);
+}
+
+.cart-drawer.active .cart-drawer-overlay{
+  opacity:1;
+}
+
+.cart-panel{
+  position:absolute;
+  top:0;
+  right:0;
+
+  width:460px;
+  max-width:100vw;
+  height:100vh;
+
+  background:#fff;
+
+  display:flex;
+  flex-direction:column;
+
+  transform:translateX(100%);
+  transition:transform .35s ease;
+
+  box-shadow:
+    -20px 0 60px rgba(0,0,0,.15);
+}
+
+.cart-drawer.active .cart-panel{
+  transform:translateX(0);
+}
+
+.cart-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:1.5rem;
+
+  border-bottom:1px solid #E5E7EB;
+}
+
+.cart-label{
+  font-size:.7rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:#9CA3AF;
+}
+
+.cart-header h3{
+  margin:.3rem 0 0;
+  font-size:1.25rem;
+  font-weight:900;
+  color:#111827;
+}
+
+.cart-close{
+  width:42px;
+  height:42px;
+
+  border:none;
+  border-radius:50%;
+
+  background:#F3F4F6;
+  cursor:pointer;
+}
+
+.cart-items{
+  flex:1;
+  overflow-y:auto;
+  padding:1.25rem;
+}
+
+.cart-empty{
+  text-align:center;
+  color:#9CA3AF;
+  padding:4rem 1rem;
+}
+
+.cart-item{
+  border:1px solid #E5E7EB;
+  border-radius:18px;
+  padding:1rem;
+  margin-bottom:1rem;
+  background:#fff;
+}
+
+.cart-item-top{
+  display:flex;
+  gap:14px;
+}
+
+.cart-thumb{
+  width:92px;
+  height:92px;
+
+  flex-shrink:0;
+
+  border-radius:14px;
+  overflow:hidden;
+
+  border:1px solid #E5E7EB;
+  background:#F8FAFC;
+}
+
+.cart-thumb img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.cart-meta{
+  flex:1;
+  min-width:0;
+}
+
+.cart-item-brand{
+  font-size:.72rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:#9CA3AF;
+}
+
+.cart-item-name{
+  margin-top:.35rem;
+  font-weight:800;
+  line-height:1.4;
+  color:#111827;
+}
+
+.cart-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:.8rem 0;
+}
+
+.cart-tags span{
+  background:#F3F4F6;
+  border-radius:999px;
+
+  padding:.3rem .65rem;
+
+  font-size:.68rem;
+  font-weight:700;
+  color:#374151;
+}
+
+.cart-item-price{
+  color:#CC1417;
+  font-weight:900;
+}
+
+.cart-controls{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:1rem;
+}
+
+.cart-qty{
+  display:flex;
+  align-items:center;
+  gap:.75rem;
+}
+
+.cart-qty button{
+  width:34px;
+  height:34px;
+
+  border:none;
+  border-radius:10px;
+
+  background:#F3F4F6;
+  cursor:pointer;
+
+  font-size:1rem;
+  font-weight:800;
+}
+
+.cart-remove{
+  border:none;
+  background:none;
+
+  color:#CC1417;
+  cursor:pointer;
+
+  font-weight:700;
+}
+
+.cart-summary{
+  padding:0 1.25rem 1rem;
+}
+
+.summary-card{
+  background:
+    linear-gradient(
+      135deg,
+      #111827,
+      #1F2937
+    );
+
+  color:#fff;
+
+  border-radius:18px;
+  padding:1rem;
+}
+
+.summary-label{
+  font-size:.75rem;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  opacity:.7;
+}
+
+.summary-total{
+  margin-top:.4rem;
+  font-size:1.8rem;
+  font-weight:900;
+}
+
+.summary-note{
+  margin-top:.5rem;
+  font-size:.78rem;
+  line-height:1.5;
+  opacity:.75;
+}
+
+.cart-footer{
+  border-top:1px solid #E5E7EB;
+  padding:1.25rem;
+
+  display:flex;
+  flex-direction:column;
+  gap:.75rem;
+}
+
+.cart-clear{
+  padding:.95rem;
+
+  border-radius:12px;
+  border:2px solid #E5E7EB;
+
+  background:#fff;
+  cursor:pointer;
+
+  font-weight:800;
+}
+
+.cart-whatsapp{
+  padding:1rem;
+
+  border:none;
+  border-radius:12px;
+
+  color:#fff;
+
+  font-weight:900;
+
+  cursor:pointer;
+
+  background:
+    linear-gradient(
+      135deg,
+      #CC1417,
+      #E8601A
+    );
+}
+
+@media(max-width:768px){
+
+  .cart-panel{
+    width:100%;
+  }
+
+}
+
+</style>
+
+<script>
+
+const STORAGE_KEY = 'tecil-cart';
+
+let drawer;
+let itemsContainer;
+let totalItems;
+
+function getCart(){
+
+  try{
+    return JSON.parse(
+      localStorage.getItem(STORAGE_KEY)
+    ) || [];
+  }catch{
+    return [];
+  }
+
+}
+
+function saveCart(cart){
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(cart)
+  );
+
+  window.dispatchEvent(
+    new CustomEvent(
+      'cart-updated',
+      { detail: cart }
+    )
+  );
+
+}
+
+function removeFromCart(id){
+
+  saveCart(
+    getCart().filter(
+      item => item.id !== id
+    )
+  );
+
+}
+
+function updateQty(id, qty){
+
+  const cart = getCart();
+
+  const item =
+    cart.find(
+      p => p.id === id
+    );
+
+  if(!item) return;
+
+  item.qty = qty;
+
+  if(qty <= 0){
+    removeFromCart(id);
+    return;
+  }
+
+  saveCart(cart);
+
+}
+
+function closeDrawer(){
+
+  drawer?.classList.remove('active');
+  document.body.style.overflow='';
+
+}
+
+function openDrawer(){
+
+  drawer?.classList.add('active');
+  document.body.style.overflow='hidden';
+
+}
+
+function renderCart(){
+
+  if(!itemsContainer || !totalItems) return;
+
+  const cart = getCart();
+
+  const totalCount =
+    cart.reduce(
+      (sum,item)=>sum+item.qty,
+      0
+    );
+
+  totalItems.textContent = totalCount;
+
+  const totalValue =
+    cart.reduce((sum,item)=>{
+
+      const price =
+        Number(
+          String(item.price || '')
+          .replace(/[₦,]/g,'')
+        ) || 0;
+
+      return sum + (price * item.qty);
+
+    },0);
+
+  const summary =
+    document.getElementById(
+      'cart-summary'
+    );
+
+  const totalProducts = cart.length;
+
+const totalUnits =
+  cart.reduce(
+    (sum,item)=>sum + item.qty,
+    0
+  );
+
+if(summary){
+
+summary.innerHTML = cart.length
+? `
+
+<div class="summary-card">
+
+  <div class="summary-top">
+
+    <div>
+      <div class="summary-label">
+        Estimated Basket Value
+      </div>
+
+      <div class="summary-total">
+        ₦${totalValue.toLocaleString()}
+      </div>
+    </div>
+
+  </div>
+
+  <div class="summary-stats">
+
+    <div class="summary-stat">
+      <strong>${totalProducts}</strong>
+      <span>Products</span>
+    </div>
+
+    <div class="summary-stat">
+      <strong>${totalUnits}</strong>
+      <span>Units</span>
+    </div>
+
+  </div>
+
+  <div class="summary-quote">
+
+    <strong>
+      Ready for Quotation
+    </strong>
+
+    <ul>
+
+      <li>✓ Availability Check</li>
+
+      <li>✓ Delivery Timeline</li>
+
+      <li>✓ Installation Options</li>
+
+      <li>✓ Final Pricing</li>
+
+    </ul>
+
+  </div>
+
+</div>
+
+`
+: '';
+
+}
+
+  if(!cart.length){
+
+    itemsContainer.innerHTML = `
+      <div class="cart-empty">
+        Your cart is empty.
+      </div>
+    `;
+
+    return;
+  }
+
+  itemsContainer.innerHTML =
+    cart.map(item => `
+      <div class="cart-item">
+
+        <div class="cart-item-top">
+
+          <div class="cart-thumb">
+            <img
+              src="${item.image || '/images/product-fallback.webp'}"
+              alt="${item.name}"
+              loading="lazy"
+            >
+          </div>
+
+          <div class="cart-meta">
+
+            <div class="cart-item-brand">
+              ${item.brand || ''}
+            </div>
+
+            <div class="cart-item-name">
+              ${item.name}
+            </div>
+
+            <div class="cart-tags">
+              ${item.capacity ? `<span>${item.capacity}</span>` : ''}
+              ${item.type ? `<span>${item.type}</span>` : ''}
+              ${item.category ? `<span>${item.category}</span>` : ''}
+            </div>
+
+            <div class="cart-item-price">
+              ${item.price || 'Request Price'}
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="cart-controls">
+
+          <div class="cart-qty">
+
+            <button onclick="window.cartDecrease('${item.id}')">−</button>
+
+            <strong>${item.qty}</strong>
+
+            <button onclick="window.cartIncrease('${item.id}')">+</button>
+
+          </div>
+
+          <button
+            class="cart-remove"
+            onclick="window.cartRemove('${item.id}')"
+          >
+            Remove
+          </button>
+
+        </div>
+
+      </div>
+    `).join('');
+
+}
+
+window.cartIncrease = (id)=>{
+
+  const item =
+    getCart().find(
+      p => p.id === id
+    );
+
+  if(!item) return;
+
+  updateQty(id,item.qty+1);
+
+};
+
+window.cartDecrease = (id)=>{
+
+  const item =
+    getCart().find(
+      p => p.id === id
+    );
+
+  if(!item) return;
+
+  updateQty(id,item.qty-1);
+
+};
+
+window.cartRemove = (id)=>{
+  removeFromCart(id);
+};
+
+function initCartDrawer(){
+
+  drawer =
+    document.getElementById(
+      'cart-drawer'
+    );
+
+  itemsContainer =
+    document.getElementById(
+      'cart-items'
+    );
+
+  totalItems =
+    document.getElementById(
+      'cart-total-items'
+    );
+
+  if(
+    !drawer ||
+    !itemsContainer ||
+    !totalItems
+  ){
+    return;
+  }
+
+  document
+    .getElementById('cart-close')
+    ?.addEventListener(
+      'click',
+      closeDrawer
+    );
+
+  document
+    .getElementById('cart-drawer-overlay')
+    ?.addEventListener(
+      'click',
+      closeDrawer
+    );
+
+  document
+    .getElementById('cart-clear')
+    ?.addEventListener(
+      'click',
+      ()=>saveCart([])
+    );
+
+  document
+    .getElementById('cart-whatsapp')
+    ?.addEventListener(
+      'click',
+      ()=>{
+
+        const cart = getCart();
+
+        if(!cart.length) return;
+
+        const lines =
+          cart.map(
+            (item,index)=>
+              `${index+1}. ${item.name} x${item.qty}`
+          );
+
+        const message =
+          encodeURIComponent(
+`Hello TECIL Solar,
+
+I'd like a quote for:
+
+${lines.join('\n')}
+
+Please provide:
+
+• Availability
+• Installation options
+• Lead time
+• Final quotation
+
+Thank you.`
+          );
+
+        window.open(
+          `https://wa.me/2348037135545?text=${message}`,
+          '_blank'
+        );
+
+      }
+    );
+
+  window.addEventListener(
+    'cart-updated',
+    renderCart
+  );
+
+  window.addEventListener(
+    'open-cart',
+    ()=>{
+      renderCart();
+      openDrawer();
+    }
+  );
+
+  renderCart();
+
+}
+
+document.addEventListener(
+  'DOMContentLoaded',
+  initCartDrawer
+);
+
+document.addEventListener(
+  'astro:page-load',
+  initCartDrawer
+);
+
+</script>

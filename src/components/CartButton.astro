@@ -1,0 +1,186 @@
+---
+/*
+  TECIL Solar Cart Button
+  Floating cart trigger with live badge
+*/
+---
+
+<button
+  id="cart-button"
+  class="cart-button"
+  aria-label="Open Cart"
+>
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+  >
+    <circle cx="9" cy="21" r="1"></circle>
+    <circle cx="20" cy="21" r="1"></circle>
+    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+  </svg>
+
+  <span
+    id="cart-badge"
+    class="cart-badge"
+  >
+    0
+  </span>
+</button>
+
+<style>
+.cart-button {
+  position: fixed;
+  right: 24px;
+  bottom: 96px;
+
+  width: 64px;
+  height: 64px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: linear-gradient(
+    135deg,
+    #CC1417,
+    #E8601A
+  );
+
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  z-index: 5000;
+
+  box-shadow:
+    0 12px 32px rgba(204,20,23,.35);
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+.cart-button:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 18px 40px rgba(204,20,23,.45);
+}
+
+.cart-button:active {
+  transform: translateY(-1px);
+}
+
+.cart-badge {
+  position: absolute;
+
+  top: -6px;
+  right: -4px;
+
+  min-width: 24px;
+  height: 24px;
+
+  padding: 0 6px;
+
+  border-radius: 999px;
+
+  background: #fff;
+  color: #CC1417;
+
+  font-size: .75rem;
+  font-weight: 900;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 6px 16px rgba(0,0,0,.18);
+}
+
+.cart-button.hidden {
+  display: none;
+}
+
+@media (max-width: 768px) {
+
+  .cart-button {
+    width: 58px;
+    height: 58px;
+
+    right: 18px;
+    bottom: 92px;
+  }
+
+}
+</style>
+
+<script>
+function updateCartBadge() {
+
+  try {
+
+    const badge =
+      document.getElementById(
+        'cart-badge'
+      );
+
+    const cart =
+      JSON.parse(
+        localStorage.getItem(
+          'tecil-cart'
+        ) || '[]'
+      );
+
+    const count =
+      cart.reduce(
+        (sum, item) =>
+          sum + (item.qty || 0),
+        0
+      );
+
+    badge.textContent = count;
+
+  } catch (err) {
+
+    console.error(
+      'Cart badge error:',
+      err
+    );
+
+  }
+
+}
+
+document.addEventListener(
+  'DOMContentLoaded',
+  updateCartBadge
+);
+
+window.addEventListener(
+  'cart-updated',
+  updateCartBadge
+);
+
+document
+  .getElementById('cart-button')
+  ?.addEventListener(
+    'click',
+    () => {
+
+      window.dispatchEvent(
+        new CustomEvent(
+          'open-cart'
+        )
+      );
+
+    }
+  );
+</script>

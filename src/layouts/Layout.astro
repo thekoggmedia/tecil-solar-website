@@ -1,6 +1,9 @@
 ---
 import '../styles/global.css';
 import '../styles/transitions.css';
+import ProductModal from '../components/ProductModal.astro';
+import CartButton from '../components/CartButton.astro';
+import CartDrawer from '../components/CartDrawer.astro';
 interface Props { title?: string; description?: string; page?: string; }
 const {
   title = 'TECIL Solar — The Inverter Place',
@@ -180,6 +183,10 @@ const {
     </div>
   </div>
 </footer>
+
+<ProductModal />
+<CartButton />
+<CartDrawer />
 
 <!-- WA Float -->
 <a href="https://wa.me/2348037135545" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
