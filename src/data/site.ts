@@ -15,9 +15,9 @@ export const siteConfig = {
 };
 
 export const heroStats = [
-  { value: '16+', label: 'Years operating' },
+  { value: '18+', label: 'Years operating' },
   { value: '7',   label: 'Active branches' },
-  { value: '34+', label: 'Projects delivered' },
+  { value: '500+', label: 'Projects delivered' },
   { value: '15+', label: 'Brand partnerships' },
 ];
 
@@ -109,7 +109,7 @@ export const audiences = [
     title: 'Contractors & Developers',
     icon:  '🏗',
     intro: 'A reliable solar partner with proven delivery.',
-    body:  'We supply, install, commission — and document everything. Our 15+ brand partnerships and 34+ projects speak for us.',
+    body:  'We supply, install, commission — and document everything. Our 15+ brand partnerships and 500+ projects speak for us.',
     points: [
       'Verified delivery history',
       'Full project documentation',
