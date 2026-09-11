@@ -17,6 +17,12 @@ const {
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
+  <!-- GOOGLE SEARCH CONSOLE VERIFICATION -->
+  <meta name="google-site-verification" content="rTsKloCbzCDh20Tb55rfCfbJl75kLp4yDTdvZT692CA" />
+
+  <!-- CANONICAL URL (requires `site` set in astro.config.mjs) -->
+  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href}/>
+
   <!-- 🔥 FONT PRELOAD -->
 <link
   rel="preload"
@@ -39,6 +45,7 @@ const {
   <meta name="theme-color" content="#CC1417"/>
 
   <!-- OPEN GRAPH -->
+  <meta property="og:site_name" content="TECIL Solar"/>
   <meta property="og:title" content={title}/>
   <meta property="og:description" content={description}/>
   <meta property="og:type" content="website"/>
