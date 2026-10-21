@@ -77,7 +77,7 @@ export const onRequest: MiddlewareHandler = async (
   ].join(' '),
 
   // Frames
-  "frame-src https://challenges.cloudflare.com",
+  "frame-src https://challenges.cloudflare.com https://www.google.com https://maps.google.com",
 
   // Forms
   "form-action 'self'",
