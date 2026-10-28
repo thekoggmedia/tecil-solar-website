@@ -8,7 +8,7 @@ export const siteConfig = {
 
   url: 'https://www.tecilsolar.com',
 
-  ogImage: '/images/og-cover.jpg',
+  ogImage: '/images/og-cover.png',
 
   creator: '@tecilsolar',
 
@@ -34,7 +34,13 @@ export const siteConfig = {
     phone: '+2348037135545',
 
     address: {
-      addressLocality: 'Calabar',
+      streetAddress: '8 Hafsat Hamadu Bello St, Gwarinpa',
+
+      addressLocality: 'Abuja',
+
+      addressRegion: 'Federal Capital Territory',
+
+      postalCode: '900108',
 
       addressCountry: 'NG',
     },

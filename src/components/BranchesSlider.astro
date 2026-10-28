@@ -1,16 +1,22 @@
 ---
 // BranchesSlider.astro
 // Images go in: public/gallery/branches/
-// Filename pattern: branch-calabar-hq.webp, branch-ph.webp etc.
+// Filename pattern: branch-abuja.webp, branch-calabar.webp, branch-ph.webp etc.
 
 import ImageSlider from './ImageSlider.astro';
 
 const slides = [
   {
-    src:     '/gallery/branches/branch-calabar-hq.webp',
-    alt:     'TECIL Solar Calabar HQ — Macson Plaza',
-    label:   'Calabar HQ',
-    caption: 'Macson Plaza, 89 Ndidem Usang Iso Road, Calabar — our flagship store since 2008',
+    src:     '/gallery/branches/branch-abuja.webp',
+    alt:     'TECIL Solar Abuja HQ — Gwarinpa',
+    label:   'Abuja HQ',
+    caption: '8 Hafsat Hamadu Bello St, Gwarinpa, Abuja — TECIL Solar headquarters',
+  },
+  {
+    src:     '/gallery/branches/branch-calabar.webp',
+    alt:     'TECIL Solar Calabar branch — Macson Plaza',
+    label:   'Calabar',
+    caption: 'Macson Plaza, 89 Ndidem Usang Iso Road, Calabar — our founding branch since 2008',
   },
   {
     src:     '/gallery/branches/branch-calabar-south.webp',
@@ -48,7 +54,7 @@ const slides = [
 <div class="bsl reveal">
   <div class="bsl-head">
     <span class="section-tag">Our Locations</span>
-    <p class="bsl-note">7 branches — same product range, same TECIL standard</p>
+    <p class="bsl-note">8 branches — same product range, same TECIL standard</p>
   </div>
   <ImageSlider
     slides={slides}

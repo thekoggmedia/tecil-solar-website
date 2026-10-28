@@ -16,12 +16,12 @@ export const siteConfig = {
 
 export const heroStats = [
   { value: '18+', label: 'Years operating' },
-  { value: '7',   label: 'Active branches' },
+  { value: '8',   label: 'Active branches' },
   { value: '500+', label: 'Projects delivered' },
   { value: '15+', label: 'Brand partnerships' },
 ];
 
-export const heroTrust = ['Lagos','Port Harcourt','Calabar','Uyo','Ikom'];
+export const heroTrust = ['Abuja','Lagos','Port Harcourt','Calabar','Uyo','Ikom'];
 
 export const services = [
   {
@@ -202,9 +202,10 @@ export const branches = [
   { city:'Port Harcourt 1',state:'Rivers State',       address:'Riz Plaza, Plot 54 Stadium Road, Port Harcourt',            phone:'0701 616 4397', telHref:'tel:+2347016164397', waHref:'https://wa.me/2347016164397' },
   { city:'Port Harcourt 2',state:'Rivers State',       address:'18 Ogbunabali Road, Port Harcourt',                         phone:'0701 616 4397', telHref:'tel:+2347016164397', waHref:'https://wa.me/2347016164397' },
   { city:'Uyo',            state:'Akwa Ibom State',    address:'109 Oron Road, Uyo',                                        phone:'0812 113 8060', telHref:'tel:+2348121138060', waHref:'https://wa.me/2348121138060' },
-  { city:'Calabar',        state:'Cross River State',  address:'Macson Plaza, 89 Ndidem Usang Iso Road, Calabar',           phone:'0803 713 5545', telHref:'tel:+2348037135545', waHref:'https://wa.me/2348037135545', hq:true },
+  { city:'Calabar',        state:'Cross River State',  address:'Macson Plaza, 89 Ndidem Usang Iso Road, Calabar',           phone:'0803 713 5545', telHref:'tel:+2348037135545', waHref:'https://wa.me/2348037135545' },
   { city:'Calabar South',  state:'Cross River State',  address:'6 Target Road, Calabar South',                              phone:'0907 124 2120', telHref:'tel:+2349071242120', waHref:'https://wa.me/2349071242120' },
   { city:'Ikom',           state:'Cross River State',  address:'16 Obudu Road, Four Corners, Ikom',                         phone:'0803 560 1371', telHref:'tel:+2348035601371', waHref:'https://wa.me/2348035601371' },
+  { city:'Abuja',          state:'Federal Capital Territory', address:'8 Hafsat Hamadu Bello St, Gwarinpa, Abuja 900108',    phone:'0912 813 6115', telHref:'tel:+2349128136115', waHref:'https://wa.me/2348037135545', hq:true },
 ];
 
 export const contactChannels = [

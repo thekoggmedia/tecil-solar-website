@@ -7,6 +7,11 @@ import { branches } from '../data/site';
 
 const stateGroups = [
   {
+    state: 'Federal Capital Territory',
+    color: 'teal',
+    branches: branches.filter(b => b.state === 'Federal Capital Territory'),
+  },
+  {
     state: 'Cross River State',
     color: 'red',
     branches: branches.filter(b => b.state === 'Cross River State'),
@@ -36,12 +41,13 @@ const mapLinks: Record<string, string> = {
   'Calabar':         'https://maps.google.com/?q=89+Ndidem+Usang+Iso+Road+Calabar',
   'Calabar South':   'https://maps.google.com/?q=6+Target+Road+Calabar+South',
   'Ikom':            'https://maps.google.com/?q=16+Obudu+Road+Ikom+Cross+River',
+  'Abuja':           'https://maps.google.com/?q=9.1129639,7.4024967',
 };
 ---
 
 <Layout
   title="Find a Branch — TECIL Solar"
-  description="TECIL Solar has 7 branches across 5 Nigerian states — Lagos, Port Harcourt, Calabar, Uyo, and Ikom. Walk in or call your nearest branch."
+  description="TECIL Solar has 8 branches across 5 Nigerian states — Abuja, Lagos, Port Harcourt, Calabar, Uyo, and Ikom. Walk in or call your nearest branch."
   page="branches"
 >
 
@@ -52,7 +58,7 @@ const mapLinks: Record<string, string> = {
     <div class="page-hero-orb b"></div>
     <div class="container">
       <span class="section-tag">Find Us</span>
-      <h1>7 Branches.<br/><span class="text-gradient">5 States.</span></h1>
+      <h1>8 Branches.<br/><span class="text-gradient">5 States.</span></h1>
       <p class="page-hero-sub">
         Walk into any TECIL Solar location and receive the same product quality,
         technical depth, and customer service. Our branches are staffed with trained
@@ -69,7 +75,7 @@ const mapLinks: Record<string, string> = {
       {[
         { val: '8',   label: 'Active Branches' },
         { val: '5',   label: 'States Covered' },
-        { val: '1',   label: 'HQ — Calabar, CRS' },
+        { val: '1',   label: 'HQ — Abuja, FCT' },
         { val: '18+', label: 'Years Operating' },
       ].map(s => (
         <div class="cov-stat">
@@ -153,11 +159,11 @@ const mapLinks: Record<string, string> = {
           </p>
         </div>
         <div class="remote-actions">
-          <a href="tel:+2348037135545" class="ra-card ra-phone">
+          <a href="tel:+2349128136115" class="ra-card ra-phone">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38a2 2 0 0 1 1.99-1.8h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
             <div>
               <strong>Call HQ Direct</strong>
-              <span>0803 713 5545</span>
+              <span>0912 813 6115</span>
             </div>
           </a>
           <a href="https://wa.me/2348037135545" target="_blank" rel="noopener" class="ra-card ra-wa">

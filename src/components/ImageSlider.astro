@@ -181,6 +181,21 @@ const {
   const dots   = root.querySelectorAll('.dot');
   const bar    = root.querySelector('.bar');
 
+  // Graceful fallback for gallery photos that haven't been uploaded yet.
+  // Drop the real file at the original path and it will replace the placeholder automatically.
+  const FALLBACK = '/images/gallery-placeholder.svg';
+  root.querySelectorAll('.img').forEach(img => {
+    const useFallback = () => {
+      if (img.dataset.fallback === '1') return;
+      img.dataset.fallback = '1';
+      img.src = FALLBACK;
+      img.alt = `Photo coming soon: ${img.alt}`;
+      img.classList.add('is-placeholder');
+    };
+    img.addEventListener('error', useFallback);
+    if (img.complete && img.naturalWidth === 0) useFallback();
+  });
+
   let i=0, timer, paused=false, startX=0;
 
   function show(n){

@@ -7,7 +7,7 @@ import CartDrawer from '../components/CartDrawer.astro';
 interface Props { title?: string; description?: string; page?: string; }
 const {
   title = 'TECIL Solar — The Inverter Place',
-  description = "Nigeria's leading solar and inverter specialists. End-to-end renewable energy solutions for homes, businesses, and institutions across Lagos, Port Harcourt, Calabar, Uyo, Ikom and beyond.",
+  description = "Nigeria's leading solar and inverter specialists. End-to-end renewable energy solutions for homes, businesses, and institutions across Abuja, Lagos, Port Harcourt, Calabar, Uyo, Ikom and beyond.",
   page = '',
 } = Astro.props;
 ---
@@ -49,14 +49,14 @@ const {
   <meta property="og:title" content={title}/>
   <meta property="og:description" content={description}/>
   <meta property="og:type" content="website"/>
-  <meta property="og:image" content="/api/og.png"/>
+  <meta property="og:image" content={new URL('/images/og-cover.png', Astro.site).href}/>
   <meta property="og:url" content={Astro.url}/>
 
   <!-- TWITTER -->
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content={title}/>
   <meta name="twitter:description" content={description}/>
-  <meta name="twitter:image" content="/api/og.png"/>
+  <meta name="twitter:image" content={new URL('/images/og-cover.png', Astro.site).href}/>
 
   <link rel="icon" type="image/svg+xml" href="/logo-mark.svg"/>
 
@@ -133,7 +133,7 @@ const {
         <div class="footer-tagline-text">...the inverter place</div>
         <p class="footer-desc">
           Nigeria's leading solar and inverter specialists — delivering end-to-end
-          renewable energy solutions across Lagos, Port Harcourt, Calabar, Uyo,
+          renewable energy solutions across Abuja, Lagos, Port Harcourt, Calabar, Uyo,
           Ikom and beyond since 2008.
         </p>
         <p class="footer-note">A division of TECIL INTEGRATED SERVICES LIMITED</p>

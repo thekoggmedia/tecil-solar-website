@@ -10,7 +10,7 @@ export function generateOrganizationSchema() {
 
     url: siteConfig.url,
 
-    logo: `${siteConfig.url}/logo.png`,
+    logo: `${siteConfig.url}/logo-mark.svg`,
 
     email: siteConfig.business.email,
 
@@ -20,9 +20,21 @@ export function generateOrganizationSchema() {
     address: {
       '@type': 'PostalAddress',
 
+      streetAddress:
+        siteConfig.business.address
+          .streetAddress,
+
       addressLocality:
         siteConfig.business.address
           .addressLocality,
+
+      addressRegion:
+        siteConfig.business.address
+          .addressRegion,
+
+      postalCode:
+        siteConfig.business.address
+          .postalCode,
 
       addressCountry:
         siteConfig.business.address
