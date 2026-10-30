@@ -3,10 +3,16 @@ import { z } from 'zod';
 const envSchema = z.object({
   RESEND_API_KEY: z.string().min(1),
 
+  // Comma-separated list of recipient addresses.
+  // e.g. "info@tecilsolar.com,info.tecilservices@gmail.com"
   CONTACT_EMAIL: z
     .string()
-    .email()
+    .min(3)
     .default('tecilsolarcustomercare@gmail.com'),
+
+  // Optional custom sender, e.g. "TECIL Solar <info@tecilsolar.com>".
+  // Falls back to the Resend sandbox address until the domain is verified.
+  RESEND_FROM: z.string().optional(),
 
   PUBLIC_SITE_URL: z.string().url(),
 

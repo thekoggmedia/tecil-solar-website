@@ -166,9 +166,12 @@ export const POST: APIRoute = async ({ request }) => {
       await withTimeout(
         resend.emails.send({
           from:
+            env.RESEND_FROM ||
             'TECIL Solar <onboarding@resend.dev>',
 
-          to: [env.CONTACT_EMAIL],
+          to: env.CONTACT_EMAIL.split(',')
+            .map(addr => addr.trim())
+            .filter(Boolean),
 
           subject:
             `New Website Enquiry — ${safeData.name}`,
