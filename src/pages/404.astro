@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Page Not Found — TECIL Solar"
+  description="The page you are looking for could not be found."
+  page="404"
+>
+
+  <section class="page-hero" style="min-height: 70vh; display: flex; align-items: center;">
+    <div class="page-hero-grid"></div>
+    <div class="page-hero-orb a"></div>
+    <div class="page-hero-orb b"></div>
+    <div class="container" style="text-align: center;">
+      <span class="section-tag">404</span>
+      <h1>This page is<br/><span class="text-gradient">off the grid.</span></h1>
+      <p class="page-hero-sub">
+        The page you're looking for doesn't exist or may have been moved.
+        Let's get you back to reliable power.
+      </p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+        <a href="/" class="btn btn-primary">Back to Home</a>
+        <a href="/contact" class="btn btn-outline">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+</Layout>

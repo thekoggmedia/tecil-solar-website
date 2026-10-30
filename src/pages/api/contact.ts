@@ -18,16 +18,27 @@ export const POST: APIRoute = async ({ request }) => {
   try {
 
     // ─────────────────────────────────────
+    // PARSE BODY
+    // ─────────────────────────────────────
+    let rawBody: Record<string, unknown>;
+
+    try {
+      rawBody = await request.json();
+    } catch {
+      return errorResponse(
+        'Invalid request body',
+        400
+      );
+    }
+
+    // ─────────────────────────────────────
     // RESEND CLIENT
+    // (created only after basic checks so
+    // malformed requests stay cheap)
     // ─────────────────────────────────────
     const resend = new Resend(
       env.RESEND_API_KEY
     );
-
-    // ─────────────────────────────────────
-    // PARSE BODY
-    // ─────────────────────────────────────
-    const rawBody = await request.json();
 
     // ─────────────────────────────────────
     // CLIENT IP
@@ -73,7 +84,7 @@ export const POST: APIRoute = async ({ request }) => {
     // ─────────────────────────────────────
     const isHuman =
       await verifyTurnstile(
-        rawBody.turnstileToken,
+        String(rawBody.turnstileToken ?? ''),
         ip
       );
 
@@ -89,35 +100,37 @@ export const POST: APIRoute = async ({ request }) => {
     // ─────────────────────────────────────
     const sanitizedBody = {
       name: sanitizeInput(
-        rawBody.name || ''
+        String(rawBody.name ?? '')
       ),
 
       phone: sanitizeInput(
-        rawBody.phone || ''
+        String(rawBody.phone ?? '')
       ),
 
       email: sanitizeInput(
-        rawBody.email || ''
+        String(rawBody.email ?? '')
       ),
 
       location: sanitizeInput(
-        rawBody.location || ''
+        String(rawBody.location ?? '')
       ),
 
       branch: sanitizeInput(
-        rawBody.branch || ''
+        String(rawBody.branch ?? '')
       ),
 
       type: sanitizeInput(
-        rawBody.type || ''
+        String(rawBody.type ?? '')
       ),
 
       message: sanitizeInput(
-        rawBody.message || ''
+        String(rawBody.message ?? '')
       ),
 
       website:
-        rawBody.website || '',
+        typeof rawBody.website === 'string'
+          ? rawBody.website
+          : '',
     };
 
     // ─────────────────────────────────────
